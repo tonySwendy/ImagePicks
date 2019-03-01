@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+//apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 27
 
@@ -26,5 +26,17 @@ dependencies {
         exclude group: 'com.android.support'
     }
 }
-
-//apply from: '../bintray.gradle'
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options.encoding = "UTF-8"
+}
+//publish {
+//    userOrg = 'cysion1989'
+//    groupId = 'com.cysion'
+//    artifactId = 'ImagePicker'
+//    repoName='maven'
+//    publishVersion = '1.0.0'
+//    desc = '仿微信选择图片'
+//    website = 'https://**'
+//}

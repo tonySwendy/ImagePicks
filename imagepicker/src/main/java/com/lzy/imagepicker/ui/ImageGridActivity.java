@@ -36,15 +36,15 @@ import java.util.List;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šjeasonlzyï¼ˆå»–å­å°§ Githubåœ°å€ï¼šhttps://github.com/jeasonlzy0216
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š2016/5/19
- * æ    è¿°ï¼š
- * ä¿®è®¢å†å²ï¼š
+ * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º2016/5/19
+ * Ãè    Êö£º
+ * ĞŞ¶©ÀúÊ·£º
  * 2017-03-17
  *
  * @author nanchen
- *         æ–°å¢å¯ç›´æ¥ä¼ é€’æ˜¯å¦è£å‰ªå‚æ•°ï¼Œä»¥åŠç›´æ¥æ‹ç…§
+ *         ĞÂÔö¿ÉÖ±½Ó´«µİÊÇ·ñ²Ã¼ô²ÎÊı£¬ÒÔ¼°Ö±½ÓÅÄÕÕ
  *         ================================================
  */
 public class ImageGridActivity extends ImageBaseActivity implements ImageDataSource.OnImagesLoadedListener, OnImageItemClickListener, ImagePicker.OnImageSelectedListener, View.OnClickListener {
@@ -56,17 +56,17 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
     private ImagePicker imagePicker;
 
-    private boolean isOrigin = false;  //æ˜¯å¦é€‰ä¸­åŸå›¾
-    private View mFooterBar;     //åº•éƒ¨æ 
-    private Button mBtnOk;       //ç¡®å®šæŒ‰é’®
-    private View mllDir; //æ–‡ä»¶å¤¹åˆ‡æ¢æŒ‰é’®
-    private TextView mtvDir; //æ˜¾ç¤ºå½“å‰æ–‡ä»¶å¤¹
-    private TextView mBtnPre;      //é¢„è§ˆæŒ‰é’®
-    private ImageFolderAdapter mImageFolderAdapter;    //å›¾ç‰‡æ–‡ä»¶å¤¹çš„é€‚é…å™¨
-    private FolderPopUpWindow mFolderPopupWindow;  //ImageSetçš„PopupWindow
-    private List<ImageFolder> mImageFolders;   //æ‰€æœ‰çš„å›¾ç‰‡æ–‡ä»¶å¤¹
-    //    private ImageGridAdapter mImageGridAdapter;  //å›¾ç‰‡ä¹å®«æ ¼å±•ç¤ºçš„é€‚é…å™¨
-    private boolean directPhoto = false; // é»˜è®¤ä¸æ˜¯ç›´æ¥è°ƒå–ç›¸æœº
+    private boolean isOrigin = false;  //ÊÇ·ñÑ¡ÖĞÔ­Í¼
+    private View mFooterBar;     //µ×²¿À¸
+    private Button mBtnOk;       //È·¶¨°´Å¥
+    private View mllDir; //ÎÄ¼ş¼ĞÇĞ»»°´Å¥
+    private TextView mtvDir; //ÏÔÊ¾µ±Ç°ÎÄ¼ş¼Ğ
+    private TextView mBtnPre;      //Ô¤ÀÀ°´Å¥
+    private ImageFolderAdapter mImageFolderAdapter;    //Í¼Æ¬ÎÄ¼ş¼ĞµÄÊÊÅäÆ÷
+    private FolderPopUpWindow mFolderPopupWindow;  //ImageSetµÄPopupWindow
+    private List<ImageFolder> mImageFolders;   //ËùÓĞµÄÍ¼Æ¬ÎÄ¼ş¼Ğ
+    //    private ImageGridAdapter mImageGridAdapter;  //Í¼Æ¬¾Å¹¬¸ñÕ¹Ê¾µÄÊÊÅäÆ÷
+    private boolean directPhoto = false; // Ä¬ÈÏ²»ÊÇÖ±½Óµ÷È¡Ïà»ú
     private RecyclerView mRecyclerView;
     private ImageRecyclerAdapter mRecyclerAdapter;
 
@@ -92,9 +92,9 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         imagePicker.addOnImageSelectedListener(this);
 
         Intent data = getIntent();
-        // æ–°å¢å¯ç›´æ¥æ‹ç…§
+        // ĞÂÔö¿ÉÖ±½ÓÅÄÕÕ
         if (data != null && data.getExtras() != null) {
-            directPhoto = data.getBooleanExtra(EXTRAS_TAKE_PICKERS, false); // é»˜è®¤ä¸æ˜¯ç›´æ¥æ‰“å¼€ç›¸æœº
+            directPhoto = data.getBooleanExtra(EXTRAS_TAKE_PICKERS, false); // Ä¬ÈÏ²»ÊÇÖ±½Ó´ò¿ªÏà»ú
             if (directPhoto) {
                 if (!(checkPermission(Manifest.permission.CAMERA))) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
@@ -149,13 +149,13 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 new ImageDataSource(this, null, this);
             } else {
-                showToast("æƒé™è¢«ç¦æ­¢ï¼Œæ— æ³•é€‰æ‹©æœ¬åœ°å›¾ç‰‡");
+                showToast("È¨ÏŞ±»½ûÖ¹£¬ÎŞ·¨Ñ¡Ôñ±¾µØÍ¼Æ¬");
             }
         } else if (requestCode == REQUEST_PERMISSION_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
             } else {
-                showToast("æƒé™è¢«ç¦æ­¢ï¼Œæ— æ³•æ‰“å¼€ç›¸æœº");
+                showToast("È¨ÏŞ±»½ûÖ¹£¬ÎŞ·¨´ò¿ªÏà»ú");
             }
         }
     }
@@ -172,21 +172,21 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         if (id == R.id.btn_ok) {
             Intent intent = new Intent();
             intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-            setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //å¤šé€‰ä¸å…è®¸è£å‰ªè£å‰ªï¼Œè¿”å›æ•°æ®
+            setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //¶àÑ¡²»ÔÊĞí²Ã¼ô²Ã¼ô£¬·µ»ØÊı¾İ
             finish();
         } else if (id == R.id.ll_dir) {
             if (mImageFolders == null) {
-                Log.i("ImageGridActivity", "æ‚¨çš„æ‰‹æœºæ²¡æœ‰å›¾ç‰‡");
+                Log.i("ImageGridActivity", "ÄúµÄÊÖ»úÃ»ÓĞÍ¼Æ¬");
                 return;
             }
-            //ç‚¹å‡»æ–‡ä»¶å¤¹æŒ‰é’®
+            //µã»÷ÎÄ¼ş¼Ğ°´Å¥
             createPopupFolderList();
-            mImageFolderAdapter.refreshData(mImageFolders);  //åˆ·æ–°æ•°æ®
+            mImageFolderAdapter.refreshData(mImageFolders);  //Ë¢ĞÂÊı¾İ
             if (mFolderPopupWindow.isShowing()) {
                 mFolderPopupWindow.dismiss();
             } else {
                 mFolderPopupWindow.showAtLocation(mFooterBar, Gravity.NO_GRAVITY, 0, 0);
-                //é»˜è®¤é€‰æ‹©å½“å‰é€‰æ‹©çš„ä¸Šä¸€ä¸ªï¼Œå½“ç›®å½•å¾ˆå¤šæ—¶ï¼Œç›´æ¥å®šä½åˆ°å·²é€‰ä¸­çš„æ¡ç›®
+                //Ä¬ÈÏÑ¡Ôñµ±Ç°Ñ¡ÔñµÄÉÏÒ»¸ö£¬µ±Ä¿Â¼ºÜ¶àÊ±£¬Ö±½Ó¶¨Î»µ½ÒÑÑ¡ÖĞµÄÌõÄ¿
                 int index = mImageFolderAdapter.getSelectIndex();
                 index = index == 0 ? index : index - 1;
                 mFolderPopupWindow.setSelection(index);
@@ -199,13 +199,13 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             intent.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
             startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);
         } else if (id == R.id.btn_back) {
-            //ç‚¹å‡»è¿”å›æŒ‰é’®
+            //µã»÷·µ»Ø°´Å¥
             finish();
         }
     }
 
     /**
-     * åˆ›å»ºå¼¹å‡ºçš„ListView
+     * ´´½¨µ¯³öµÄListView
      */
     private void createPopupFolderList() {
         mFolderPopupWindow = new FolderPopUpWindow(this, mImageFolderAdapter);
@@ -247,7 +247,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
     @Override
     public void onImageItemClick(View view, ImageItem imageItem, int position) {
-        //æ ¹æ®æ˜¯å¦æœ‰ç›¸æœºæŒ‰é’®ç¡®å®šä½ç½®
+        //¸ù¾İÊÇ·ñÓĞÏà»ú°´Å¥È·¶¨Î»ÖÃ
         position = imagePicker.isShowCamera() ? position - 1 : position;
         if (imagePicker.isMultiMode()) {
             Intent intent = new Intent(ImageGridActivity.this, ImagePreviewActivity.class);
@@ -256,26 +256,26 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             /**
              * 2017-03-20
              *
-             * ä¾ç„¶é‡‡ç”¨å¼±å¼•ç”¨è¿›è¡Œè§£å†³ï¼Œé‡‡ç”¨å•ä¾‹åŠ é”æ–¹å¼å¤„ç†
+             * ÒÀÈ»²ÉÓÃÈõÒıÓÃ½øĞĞ½â¾ö£¬²ÉÓÃµ¥Àı¼ÓËø·½Ê½´¦Àí
              */
 
-            // æ®è¯´è¿™æ ·ä¼šå¯¼è‡´å¤§é‡å›¾ç‰‡çš„æ—¶å€™å´©æºƒ
+            // ¾İËµÕâÑù»áµ¼ÖÂ´óÁ¿Í¼Æ¬µÄÊ±ºò±ÀÀ£
 //            intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getCurrentImageFolderItems());
 
-            // ä½†é‡‡ç”¨å¼±å¼•ç”¨ä¼šå¯¼è‡´é¢„è§ˆå¼±å¼•ç”¨ç›´æ¥è¿”å›ç©ºæŒ‡é’ˆ
+            // µ«²ÉÓÃÈõÒıÓÃ»áµ¼ÖÂÔ¤ÀÀÈõÒıÓÃÖ±½Ó·µ»Ø¿ÕÖ¸Õë
             DataHolder.getInstance().save(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS, imagePicker.getCurrentImageFolderItems());
             intent.putExtra(ImagePreviewActivity.ISORIGIN, isOrigin);
-            startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);  //å¦‚æœæ˜¯å¤šé€‰ï¼Œç‚¹å‡»å›¾ç‰‡è¿›å…¥é¢„è§ˆç•Œé¢
+            startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);  //Èç¹ûÊÇ¶àÑ¡£¬µã»÷Í¼Æ¬½øÈëÔ¤ÀÀ½çÃæ
         } else {
             imagePicker.clearSelectedImages();
             imagePicker.addSelectedImageItem(position, imagePicker.getCurrentImageFolderItems().get(position), true);
             if (imagePicker.isCrop()) {
                 Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //å•é€‰éœ€è¦è£å‰ªï¼Œè¿›å…¥è£å‰ªç•Œé¢
+                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //µ¥Ñ¡ĞèÒª²Ã¼ô£¬½øÈë²Ã¼ô½çÃæ
             } else {
                 Intent intent = new Intent();
                 intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //å•é€‰ä¸éœ€è¦è£å‰ªï¼Œè¿”å›æ•°æ®
+                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //µ¥Ñ¡²»ĞèÒª²Ã¼ô£¬·µ»ØÊı¾İ
                 finish();
             }
         }
@@ -317,24 +317,24 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             if (resultCode == ImagePicker.RESULT_CODE_BACK) {
                 isOrigin = data.getBooleanExtra(ImagePreviewActivity.ISORIGIN, false);
             } else {
-                //ä»æ‹ç…§ç•Œé¢è¿”å›
-                //ç‚¹å‡» X , æ²¡æœ‰é€‰æ‹©ç…§ç‰‡
+                //´ÓÅÄÕÕ½çÃæ·µ»Ø
+                //µã»÷ X , Ã»ÓĞÑ¡ÔñÕÕÆ¬
                 if (data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) == null) {
-                    //ä»€ä¹ˆéƒ½ä¸åš ç›´æ¥è°ƒèµ·ç›¸æœº
+                    //Ê²Ã´¶¼²»×ö Ö±½Óµ÷ÆğÏà»ú
                 } else {
-                    //è¯´æ˜æ˜¯ä»è£å‰ªé¡µé¢è¿‡æ¥çš„æ•°æ®ï¼Œç›´æ¥è¿”å›å°±å¯ä»¥
+                    //ËµÃ÷ÊÇ´Ó²Ã¼ôÒ³Ãæ¹ıÀ´µÄÊı¾İ£¬Ö±½Ó·µ»Ø¾Í¿ÉÒÔ
                     setResult(ImagePicker.RESULT_CODE_ITEMS, data);
                 }
                 finish();
             }
         } else {
-            //å¦‚æœæ˜¯è£å‰ªï¼Œå› ä¸ºè£å‰ªæŒ‡å®šäº†å­˜å‚¨çš„Uriï¼Œæ‰€ä»¥è¿”å›çš„dataä¸€å®šä¸ºnull
+            //Èç¹ûÊÇ²Ã¼ô£¬ÒòÎª²Ã¼ôÖ¸¶¨ÁË´æ´¢µÄUri£¬ËùÒÔ·µ»ØµÄdataÒ»¶¨Îªnull
             if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_TAKE) {
-                //å‘é€å¹¿æ’­é€šçŸ¥å›¾ç‰‡å¢åŠ äº†
+                //·¢ËÍ¹ã²¥Í¨ÖªÍ¼Æ¬Ôö¼ÓÁË
                 ImagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
 
                 /**
-                 * 2017-03-21 å¯¹æœºå‹åšæ—‹è½¬å¤„ç†
+                 * 2017-03-21 ¶Ô»úĞÍ×öĞı×ª´¦Àí
                  */
                 String path = imagePicker.getTakeImageFile().getAbsolutePath();
 //                int degree = BitmapUtil.getBitmapDegree(path);
@@ -359,11 +359,11 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 imagePicker.addSelectedImageItem(0, imageItem, true);
                 if (imagePicker.isCrop()) {
                     Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                    startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //å•é€‰éœ€è¦è£å‰ªï¼Œè¿›å…¥è£å‰ªç•Œé¢
+                    startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //µ¥Ñ¡ĞèÒª²Ã¼ô£¬½øÈë²Ã¼ô½çÃæ
                 } else {
                     Intent intent = new Intent();
                     intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-                    setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //å•é€‰ä¸éœ€è¦è£å‰ªï¼Œè¿”å›æ•°æ®
+                    setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //µ¥Ñ¡²»ĞèÒª²Ã¼ô£¬·µ»ØÊı¾İ
                     finish();
                 }
             } else if (directPhoto) {

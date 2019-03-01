@@ -14,16 +14,16 @@ import android.view.WindowManager;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šjeasonlzyï¼ˆå»–å­å°§ Githubåœ°å€ï¼šhttps://github.com/jeasonlzy0216
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š2016/5/19
- * æ    è¿°ï¼š
- * ä¿®è®¢å†å²ï¼š
+ * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º2016/5/19
+ * Ãè    Êö£º
+ * ĞŞ¶©ÀúÊ·£º
  * ================================================
  */
 public class Utils {
 
-    /** è·å¾—çŠ¶æ€æ çš„é«˜åº¦ */
+    /** »ñµÃ×´Ì¬À¸µÄ¸ß¶È */
     public static int getStatusHeight(Context context) {
         int statusHeight = -1;
         try {
@@ -37,7 +37,7 @@ public class Utils {
         return statusHeight;
     }
 
-    /** æ ¹æ®å±å¹•å®½åº¦ä¸å¯†åº¦è®¡ç®—GridViewæ˜¾ç¤ºçš„åˆ—æ•°ï¼Œ æœ€å°‘ä¸ºä¸‰åˆ—ï¼Œå¹¶è·å–Itemå®½åº¦ */
+    /** ¸ù¾İÆÁÄ»¿í¶ÈÓëÃÜ¶È¼ÆËãGridViewÏÔÊ¾µÄÁĞÊı£¬ ×îÉÙÎªÈıÁĞ£¬²¢»ñÈ¡Item¿í¶È */
     public static int getImageItemWidth(Activity activity) {
         int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
         int densityDpi = activity.getResources().getDisplayMetrics().densityDpi;
@@ -48,14 +48,14 @@ public class Utils {
     }
 
     /**
-     * åˆ¤æ–­SDCardæ˜¯å¦å¯ç”¨
+     * ÅĞ¶ÏSDCardÊÇ·ñ¿ÉÓÃ
      */
     public static boolean existSDCard() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
-     * è·å–æ‰‹æœºå¤§å°ï¼ˆåˆ†è¾¨ç‡ï¼‰
+     * »ñÈ¡ÊÖ»ú´óĞ¡£¨·Ö±æÂÊ£©
      */
     public static DisplayMetrics getScreenPix(Activity activity) {
         DisplayMetrics displaysMetrics = new DisplayMetrics();
@@ -63,13 +63,13 @@ public class Utils {
         return displaysMetrics;
     }
 
-    /** dpè½¬px */
+    /** dp×ªpx */
     public static int dp2px(Context context, float dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, context.getResources().getDisplayMetrics());
     }
 
     /**
-     * åˆ¤æ–­æ‰‹æœºæ˜¯å¦å«æœ‰è™šæ‹ŸæŒ‰é”®  99%
+     * ÅĞ¶ÏÊÖ»úÊÇ·ñº¬ÓĞĞéÄâ°´¼ü  99%
      */
     public static boolean hasVirtualNavigationBar(Context context) {
         boolean hasSoftwareKeys = true;
@@ -100,7 +100,7 @@ public class Utils {
     }
 
     /**
-     * è·å–å¯¼èˆªæ é«˜åº¦ï¼Œæœ‰äº›æ²¡æœ‰è™šæ‹Ÿå¯¼èˆªæ çš„æ‰‹æœºä¹Ÿèƒ½è·å–åˆ°ï¼Œå»ºè®®å…ˆåˆ¤æ–­æ˜¯å¦æœ‰è™šæ‹ŸæŒ‰é”®
+     * »ñÈ¡µ¼º½À¸¸ß¶È£¬ÓĞĞ©Ã»ÓĞĞéÄâµ¼º½À¸µÄÊÖ»úÒ²ÄÜ»ñÈ¡µ½£¬½¨ÒéÏÈÅĞ¶ÏÊÇ·ñÓĞĞéÄâ°´¼ü
      */
     public static int getNavigationBarHeight(Context context) {
         int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");

@@ -19,11 +19,11 @@ import com.lzy.imagepicker.R;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šjeasonlzyï¼ˆå»–å­å°§ï¼‰Githubåœ°å€ï¼šhttps://github.com/jeasonlzy0216
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š16/8/1
- * æ    è¿°ï¼š
- * ä¿®è®¢å†å²ï¼š
+ * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢£©GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º16/8/1
+ * Ãè    Êö£º
+ * ĞŞ¶©ÀúÊ·£º
  * ================================================
  */
 public class FolderPopUpWindow extends PopupWindow implements View.OnClickListener {
@@ -46,7 +46,7 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
         listView.setAdapter(adapter);
 
         setContentView(view);
-        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);  //å¦‚æœä¸è®¾ç½®ï¼Œå°±æ˜¯ AnchorView çš„å®½åº¦
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);  //Èç¹û²»ÉèÖÃ£¬¾ÍÊÇ AnchorView µÄ¿í¶È
         setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         setFocusable(true);
         setOutsideTouchable(true);

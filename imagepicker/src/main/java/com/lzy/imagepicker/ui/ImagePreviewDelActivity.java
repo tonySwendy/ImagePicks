@@ -16,11 +16,11 @@ import com.lzy.imagepicker.util.NavigationBarChangeListener;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šjeasonlzyï¼ˆå»–å­å°§ï¼‰ï¼Œikkong ï¼ˆikkong@163.comï¼‰
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š2016/5/19
- * æ    è¿°ï¼š
- * ä¿®è®¢åŽ†å²ï¼šé¢„è§ˆå·²ç»é€‰æ‹©çš„å›¾ç‰‡ï¼Œå¹¶å¯ä»¥åˆ é™¤, æ„Ÿè°¢ ikkong çš„æäº¤
+ * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢£©£¬ikkong £¨ikkong@163.com£©
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º2016/5/19
+ * Ãè    Êö£º
+ * ÐÞ¶©ÀúÊ·£ºÔ¤ÀÀÒÑ¾­Ñ¡ÔñµÄÍ¼Æ¬£¬²¢¿ÉÒÔÉ¾³ý, ¸ÐÐ» ikkong µÄÌá½»
  * ================================================
  */
 public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements View.OnClickListener {
@@ -35,7 +35,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         topBar.findViewById(R.id.btn_back).setOnClickListener(this);
 
         mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
-        //æ»‘åŠ¨ViewPagerçš„æ—¶å€™ï¼Œæ ¹æ®å¤–ç•Œçš„æ•°æ®æ”¹å˜å½“å‰çš„é€‰ä¸­çŠ¶æ€å’Œå½“å‰çš„å›¾ç‰‡çš„ä½ç½®æè¿°æ–‡æœ¬
+        //»¬¶¯ViewPagerµÄÊ±ºò£¬¸ù¾ÝÍâ½çµÄÊý¾Ý¸Ä±äµ±Ç°µÄÑ¡ÖÐ×´Ì¬ºÍµ±Ç°µÄÍ¼Æ¬µÄÎ»ÖÃÃèÊöÎÄ±¾
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -67,16 +67,16 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         }
     }
 
-    /** æ˜¯å¦åˆ é™¤æ­¤å¼ å›¾ç‰‡ */
+    /** ÊÇ·ñÉ¾³ý´ËÕÅÍ¼Æ¬ */
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("æç¤º");
-        builder.setMessage("è¦åˆ é™¤è¿™å¼ ç…§ç‰‡å—ï¼Ÿ");
-        builder.setNegativeButton("å–æ¶ˆ", null);
-        builder.setPositiveButton("ç¡®å®š", new DialogInterface.OnClickListener() {
+        builder.setTitle("ÌáÊ¾");
+        builder.setMessage("ÒªÉ¾³ýÕâÕÅÕÕÆ¬Âð£¿");
+        builder.setNegativeButton("È¡Ïû", null);
+        builder.setPositiveButton("È·¶¨", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //ç§»é™¤å½“å‰å›¾ç‰‡åˆ·æ–°ç•Œé¢
+                //ÒÆ³ýµ±Ç°Í¼Æ¬Ë¢ÐÂ½çÃæ
                 mImageItems.remove(mCurrentPosition);
                 if (mImageItems.size() > 0) {
                     mAdapter.setData(mImageItems);
@@ -93,27 +93,27 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        //å¸¦å›žæœ€æ–°æ•°æ®
+        //´ø»Ø×îÐÂÊý¾Ý
         intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
         setResult(ImagePicker.RESULT_CODE_BACK, intent);
         finish();
         super.onBackPressed();
     }
 
-    /** å•å‡»æ—¶ï¼Œéšè—å¤´å’Œå°¾ */
+    /** µ¥»÷Ê±£¬Òþ²ØÍ·ºÍÎ² */
     @Override
     public void onImageSingleTap() {
         if (topBar.getVisibility() == View.VISIBLE) {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_out));
             topBar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//é€šçŸ¥æ æ‰€éœ€é¢œè‰²
-            //ç»™æœ€å¤–å±‚å¸ƒå±€åŠ ä¸Šè¿™ä¸ªå±žæ€§è¡¨ç¤ºï¼ŒActivityå…¨å±æ˜¾ç¤ºï¼Œä¸”çŠ¶æ€æ è¢«éšè—è¦†ç›–æŽ‰ã€‚
+            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//Í¨ÖªÀ¸ËùÐèÑÕÉ«
+            //¸ø×îÍâ²ã²¼¾Ö¼ÓÉÏÕâ¸öÊôÐÔ±íÊ¾£¬ActivityÈ«ÆÁÏÔÊ¾£¬ÇÒ×´Ì¬À¸±»Òþ²Ø¸²¸Çµô¡£
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         } else {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_in));
             topBar.setVisibility(View.VISIBLE);
-            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//é€šçŸ¥æ æ‰€éœ€é¢œè‰²
-            //Activityå…¨å±æ˜¾ç¤ºï¼Œä½†çŠ¶æ€æ ä¸ä¼šè¢«éšè—è¦†ç›–ï¼ŒçŠ¶æ€æ ä¾ç„¶å¯è§ï¼ŒActivityé¡¶ç«¯å¸ƒå±€éƒ¨åˆ†ä¼šè¢«çŠ¶æ€é®ä½
+            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//Í¨ÖªÀ¸ËùÐèÑÕÉ«
+            //ActivityÈ«ÆÁÏÔÊ¾£¬µ«×´Ì¬À¸²»»á±»Òþ²Ø¸²¸Ç£¬×´Ì¬À¸ÒÀÈ»¿É¼û£¬Activity¶¥¶Ë²¼¾Ö²¿·Ö»á±»×´Ì¬ÕÚ×¡
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }

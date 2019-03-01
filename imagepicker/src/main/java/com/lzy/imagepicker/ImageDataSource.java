@@ -17,35 +17,35 @@ import java.util.List;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šjeasonlzyï¼ˆå»–å­å°§ Githubåœ°å€ï¼šhttps://github.com/jeasonlzy0216
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š2016/5/19
- * æ    è¿°ï¼šåŠ è½½æ‰‹æœºå›¾ç‰‡å®ç°ç±»
- * ä¿®è®¢å†å²ï¼š
+ * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º2016/5/19
+ * Ãè    Êö£º¼ÓÔØÊÖ»úÍ¼Æ¬ÊµÏÖÀà
+ * ĞŞ¶©ÀúÊ·£º
  * ================================================
  */
 public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final int LOADER_ALL = 0;         //åŠ è½½æ‰€æœ‰å›¾ç‰‡
-    public static final int LOADER_CATEGORY = 1;    //åˆ†ç±»åŠ è½½å›¾ç‰‡
-    private final String[] IMAGE_PROJECTION = {     //æŸ¥è¯¢å›¾ç‰‡éœ€è¦çš„æ•°æ®åˆ—
-            MediaStore.Images.Media.DISPLAY_NAME,   //å›¾ç‰‡çš„æ˜¾ç¤ºåç§°  aaa.jpg
-            MediaStore.Images.Media.DATA,           //å›¾ç‰‡çš„çœŸå®è·¯å¾„  /storage/emulated/0/pp/downloader/wallpaper/aaa.jpg
-            MediaStore.Images.Media.SIZE,           //å›¾ç‰‡çš„å¤§å°ï¼Œlongå‹  132492
-            MediaStore.Images.Media.WIDTH,          //å›¾ç‰‡çš„å®½åº¦ï¼Œintå‹  1920
-            MediaStore.Images.Media.HEIGHT,         //å›¾ç‰‡çš„é«˜åº¦ï¼Œintå‹  1080
-            MediaStore.Images.Media.MIME_TYPE,      //å›¾ç‰‡çš„ç±»å‹     image/jpeg
-            MediaStore.Images.Media.DATE_ADDED};    //å›¾ç‰‡è¢«æ·»åŠ çš„æ—¶é—´ï¼Œlongå‹  1450518608
+    public static final int LOADER_ALL = 0;         //¼ÓÔØËùÓĞÍ¼Æ¬
+    public static final int LOADER_CATEGORY = 1;    //·ÖÀà¼ÓÔØÍ¼Æ¬
+    private final String[] IMAGE_PROJECTION = {     //²éÑ¯Í¼Æ¬ĞèÒªµÄÊı¾İÁĞ
+            MediaStore.Images.Media.DISPLAY_NAME,   //Í¼Æ¬µÄÏÔÊ¾Ãû³Æ  aaa.jpg
+            MediaStore.Images.Media.DATA,           //Í¼Æ¬µÄÕæÊµÂ·¾¶  /storage/emulated/0/pp/downloader/wallpaper/aaa.jpg
+            MediaStore.Images.Media.SIZE,           //Í¼Æ¬µÄ´óĞ¡£¬longĞÍ  132492
+            MediaStore.Images.Media.WIDTH,          //Í¼Æ¬µÄ¿í¶È£¬intĞÍ  1920
+            MediaStore.Images.Media.HEIGHT,         //Í¼Æ¬µÄ¸ß¶È£¬intĞÍ  1080
+            MediaStore.Images.Media.MIME_TYPE,      //Í¼Æ¬µÄÀàĞÍ     image/jpeg
+            MediaStore.Images.Media.DATE_ADDED};    //Í¼Æ¬±»Ìí¼ÓµÄÊ±¼ä£¬longĞÍ  1450518608
 
     private FragmentActivity activity;
-    private OnImagesLoadedListener loadedListener;                     //å›¾ç‰‡åŠ è½½å®Œæˆçš„å›è°ƒæ¥å£
-    private ArrayList<ImageFolder> imageFolders = new ArrayList<>();   //æ‰€æœ‰çš„å›¾ç‰‡æ–‡ä»¶å¤¹
+    private OnImagesLoadedListener loadedListener;                     //Í¼Æ¬¼ÓÔØÍê³ÉµÄ»Øµ÷½Ó¿Ú
+    private ArrayList<ImageFolder> imageFolders = new ArrayList<>();   //ËùÓĞµÄÍ¼Æ¬ÎÄ¼ş¼Ğ
     private int mLoadedCount = 0;
 
     /**
-     * @param activity       ç”¨äºåˆå§‹åŒ–LoaderManagerï¼Œéœ€è¦å…¼å®¹åˆ°2.3
-     * @param path           æŒ‡å®šæ‰«æçš„æ–‡ä»¶å¤¹ç›®å½•ï¼Œå¯ä»¥ä¸º nullï¼Œè¡¨ç¤ºæ‰«ææ‰€æœ‰å›¾ç‰‡
-     * @param loadedListener å›¾ç‰‡åŠ è½½å®Œæˆçš„ç›‘å¬
+     * @param activity       ÓÃÓÚ³õÊ¼»¯LoaderManager£¬ĞèÒª¼æÈİµ½2.3
+     * @param path           Ö¸¶¨É¨ÃèµÄÎÄ¼ş¼ĞÄ¿Â¼£¬¿ÉÒÔÎª null£¬±íÊ¾É¨ÃèËùÓĞÍ¼Æ¬
+     * @param loadedListener Í¼Æ¬¼ÓÔØÍê³ÉµÄ¼àÌı
      */
     public ImageDataSource(FragmentActivity activity, String path, OnImagesLoadedListener loadedListener) {
         this.activity = activity;
@@ -54,9 +54,9 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
         LoaderManager loaderManager = activity.getSupportLoaderManager();
         if (path == null) {
-            loaderManager.initLoader(LOADER_ALL, null, this);//åŠ è½½æ‰€æœ‰çš„å›¾ç‰‡
+            loaderManager.initLoader(LOADER_ALL, null, this);//¼ÓÔØËùÓĞµÄÍ¼Æ¬
         } else {
-            //åŠ è½½æŒ‡å®šç›®å½•çš„å›¾ç‰‡
+            //¼ÓÔØÖ¸¶¨Ä¿Â¼µÄÍ¼Æ¬
             Bundle bundle = new Bundle();
             bundle.putString("path", path);
             loaderManager.initLoader(LOADER_CATEGORY, bundle, this);
@@ -66,10 +66,10 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         CursorLoader cursorLoader = null;
-        //æ‰«ææ‰€æœ‰å›¾ç‰‡
+        //É¨ÃèËùÓĞÍ¼Æ¬
         if (id == LOADER_ALL)
             cursorLoader = new CursorLoader(activity, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[6] + " DESC");
-        //æ‰«ææŸä¸ªå›¾ç‰‡æ–‡ä»¶å¤¹
+        //É¨ÃèÄ³¸öÍ¼Æ¬ÎÄ¼ş¼Ğ
         if (id == LOADER_CATEGORY)
             cursorLoader = new CursorLoader(activity, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, IMAGE_PROJECTION[1] + " like '%" + args.getString("path") + "%'", null, IMAGE_PROJECTION[6] + " DESC");
 
@@ -86,9 +86,9 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
         }
         imageFolders.clear();
         mLoadedCount = data.getCount();
-        ArrayList<ImageItem> allImages = new ArrayList<>();   //æ‰€æœ‰å›¾ç‰‡çš„é›†åˆ,ä¸åˆ†æ–‡ä»¶å¤¹
+        ArrayList<ImageItem> allImages = new ArrayList<>();   //ËùÓĞÍ¼Æ¬µÄ¼¯ºÏ,²»·ÖÎÄ¼ş¼Ğ
         while (data.moveToNext()) {
-            //æŸ¥è¯¢æ•°æ®
+            //²éÑ¯Êı¾İ
             String imageName = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
             String imagePath = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
 
@@ -102,7 +102,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
             int imageHeight = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]));
             String imageMimeType = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[5]));
             long imageAddTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[6]));
-            //å°è£…å®ä½“
+            //·â×°ÊµÌå
             ImageItem imageItem = new ImageItem();
             imageItem.name = imageName;
             imageItem.path = imagePath;
@@ -112,7 +112,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
             imageItem.mimeType = imageMimeType;
             imageItem.addTime = imageAddTime;
             allImages.add(imageItem);
-            //æ ¹æ®çˆ¶è·¯å¾„åˆ†ç±»å­˜æ”¾å›¾ç‰‡
+            //¸ù¾İ¸¸Â·¾¶·ÖÀà´æ·ÅÍ¼Æ¬
             File imageFile = new File(imagePath);
             File imageParentFile = imageFile.getParentFile();
             ImageFolder imageFolder = new ImageFolder();
@@ -129,18 +129,18 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
                 imageFolders.get(imageFolders.indexOf(imageFolder)).images.add(imageItem);
             }
         }
-        //é˜²æ­¢æ²¡æœ‰å›¾ç‰‡æŠ¥å¼‚å¸¸
+        //·ÀÖ¹Ã»ÓĞÍ¼Æ¬±¨Òì³£
         if (data.getCount() > 0 && allImages.size() > 0) {
-            //æ„é€ æ‰€æœ‰å›¾ç‰‡çš„é›†åˆ
+            //¹¹ÔìËùÓĞÍ¼Æ¬µÄ¼¯ºÏ
             ImageFolder allImagesFolder = new ImageFolder();
             allImagesFolder.name = activity.getResources().getString(R.string.ip_all_images);
             allImagesFolder.path = "/";
             allImagesFolder.cover = allImages.get(0);
             allImagesFolder.images = allImages;
-            imageFolders.add(0, allImagesFolder);  //ç¡®ä¿ç¬¬ä¸€æ¡æ˜¯æ‰€æœ‰å›¾ç‰‡
+            imageFolders.add(0, allImagesFolder);  //È·±£µÚÒ»ÌõÊÇËùÓĞÍ¼Æ¬
         }
 
-        //å›è°ƒæ¥å£ï¼Œé€šçŸ¥å›¾ç‰‡æ•°æ®å‡†å¤‡å®Œæˆ
+        //»Øµ÷½Ó¿Ú£¬Í¨ÖªÍ¼Æ¬Êı¾İ×¼±¸Íê³É
         ImagePicker.getInstance().setImageFolders(imageFolders);
         loadedListener.onImagesLoaded(imageFolders);
     }
@@ -151,7 +151,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     /**
-     * æ‰€æœ‰å›¾ç‰‡åŠ è½½å®Œæˆçš„å›è°ƒæ¥å£
+     * ËùÓĞÍ¼Æ¬¼ÓÔØÍê³ÉµÄ»Øµ÷½Ó¿Ú
      */
     public interface OnImagesLoadedListener {
         void onImagesLoaded(List<ImageFolder> imageFolders);

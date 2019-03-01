@@ -6,21 +6,21 @@ import java.util.List;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šjeasonlzyï¼ˆå»–å­å°§ Githubåœ°å€ï¼šhttps://github.com/jeasonlzy0216
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š2016/5/19
- * æ    è¿°ï¼šå›¾ç‰‡æ–‡ä»¶å¤¹
- * ä¿®è®¢å†å²ï¼š
+ * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º2016/5/19
+ * Ãè    Êö£ºÍ¼Æ¬ÎÄ¼ş¼Ğ
+ * ĞŞ¶©ÀúÊ·£º
  * ================================================
  */
 public class ImageFolder implements Serializable {
 
-    public String name;  //å½“å‰æ–‡ä»¶å¤¹çš„åå­—
-    public String path;  //å½“å‰æ–‡ä»¶å¤¹çš„è·¯å¾„
-    public ImageItem cover;   //å½“å‰æ–‡ä»¶å¤¹éœ€è¦è¦æ˜¾ç¤ºçš„ç¼©ç•¥å›¾ï¼Œé»˜è®¤ä¸ºæœ€è¿‘çš„ä¸€æ¬¡å›¾ç‰‡
-    public ArrayList<ImageItem> images;  //å½“å‰æ–‡ä»¶å¤¹ä¸‹æ‰€æœ‰å›¾ç‰‡çš„é›†åˆ
+    public String name;  //µ±Ç°ÎÄ¼ş¼ĞµÄÃû×Ö
+    public String path;  //µ±Ç°ÎÄ¼ş¼ĞµÄÂ·¾¶
+    public ImageItem cover;   //µ±Ç°ÎÄ¼ş¼ĞĞèÒªÒªÏÔÊ¾µÄËõÂÔÍ¼£¬Ä¬ÈÏÎª×î½üµÄÒ»´ÎÍ¼Æ¬
+    public ArrayList<ImageItem> images;  //µ±Ç°ÎÄ¼ş¼ĞÏÂËùÓĞÍ¼Æ¬µÄ¼¯ºÏ
 
-    /** åªè¦æ–‡ä»¶å¤¹çš„è·¯å¾„å’Œåå­—ç›¸åŒï¼Œå°±è®¤ä¸ºæ˜¯ç›¸åŒçš„æ–‡ä»¶å¤¹ */
+    /** Ö»ÒªÎÄ¼ş¼ĞµÄÂ·¾¶ºÍÃû×ÖÏàÍ¬£¬¾ÍÈÏÎªÊÇÏàÍ¬µÄÎÄ¼ş¼Ğ */
     @Override
     public boolean equals(Object o) {
         try {

@@ -3,7 +3,7 @@ package com.lzy.imagepicker;
 import android.support.v4.content.FileProvider;
 
 /**
- * 鑷畾涔変竴涓狿rovider锛屼互鍏嶅拰寮曞叆鐨勯」鐩殑provider鍐茬獊
+ * 自定义一个Provider，以免和引入的项目的provider冲突
  *
  * Author: nanchen
  * Email: liushilin520@foxmail.com

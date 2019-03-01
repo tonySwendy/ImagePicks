@@ -7,12 +7,12 @@ import android.view.ViewTreeObserver;
 
 /**
  * Created by z-chu on 2017/9/4
- * ç”¨äºç›‘å¬å¯¼èˆªæ çš„æ˜¾ç¤ºå’Œéšè—ï¼Œä¸»è¦ç”¨äºé€‚é…åä¸ºEMUIç³»ç»Ÿä¸Šè™šæ‹Ÿå¯¼èˆªæ å¯éšæ—¶æ”¶èµ·å’Œå±•å¼€çš„æƒ…å†µ
+ * ÓÃÓÚ¼àÌıµ¼º½À¸µÄÏÔÊ¾ºÍÒş²Ø£¬Ö÷ÒªÓÃÓÚÊÊÅä»ªÎªEMUIÏµÍ³ÉÏĞéÄâµ¼º½À¸¿ÉËæÊ±ÊÕÆğºÍÕ¹¿ªµÄÇé¿ö
  */
 public class NavigationBarChangeListener implements ViewTreeObserver.OnGlobalLayoutListener {
 
-    public static final int ORIENTATION_VERTICAL = 1;           //ç›‘å¬ç«–å±æ¨¡å¼å¯¼èˆªæ çš„æ˜¾ç¤ºå’Œéšè—
-    public static final int ORIENTATION_HORIZONTAL = 2;         //ç›‘å¬æ¨ªå±æ¨¡å¼å¯¼èˆªæ çš„æ˜¾ç¤ºå’Œéšè—
+    public static final int ORIENTATION_VERTICAL = 1;           //¼àÌıÊúÆÁÄ£Ê½µ¼º½À¸µÄÏÔÊ¾ºÍÒş²Ø
+    public static final int ORIENTATION_HORIZONTAL = 2;         //¼àÌıºáÆÁÄ£Ê½µ¼º½À¸µÄÏÔÊ¾ºÍÒş²Ø
 
     private Rect rect;
     private View rootView;

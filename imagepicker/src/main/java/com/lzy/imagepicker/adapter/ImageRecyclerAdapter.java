@@ -23,13 +23,13 @@ import com.lzy.imagepicker.view.SuperCheckBox;
 import java.util.ArrayList;
 
 /**
- * åŠ è½½ç›¸å†Œå›¾ç‰‡çš„RecyclerViewé€‚é…å™¨
+ * ¼ÓÔØÏà²áÍ¼Æ¬µÄRecyclerViewÊÊÅäÆ÷
  *
- * ç”¨äºæ›¿æ¢åŸé¡¹ç›®çš„GridViewï¼Œä½¿ç”¨å±€éƒ¨åˆ·æ–°è§£å†³é€‰ä¸­ç…§ç‰‡å‡ºç°é—ªåŠ¨é—®é¢˜
+ * ÓÃÓÚÌæ»»Ô­ÏîÄ¿µÄGridView£¬Ê¹ÓÃ¾Ö²¿Ë¢ĞÂ½â¾öÑ¡ÖĞÕÕÆ¬³öÏÖÉÁ¶¯ÎÊÌâ
  *
- * æ›¿æ¢ä¸ºRecyclerViewååªæ˜¯ä¸å†ä¼šå¯¼è‡´å…¨å±€åˆ·æ–°ï¼Œ
+ * Ìæ»»ÎªRecyclerViewºóÖ»ÊÇ²»ÔÙ»áµ¼ÖÂÈ«¾ÖË¢ĞÂ£¬
  *
- * ä½†è¿˜æ˜¯ä¼šå‡ºç°æ˜æ˜¾çš„é‡æ–°åŠ è½½å›¾ç‰‡ï¼Œå¯èƒ½æ˜¯picassoå›¾ç‰‡åŠ è½½æ¡†æ¶çš„é—®é¢˜
+ * µ«»¹ÊÇ»á³öÏÖÃ÷ÏÔµÄÖØĞÂ¼ÓÔØÍ¼Æ¬£¬¿ÉÄÜÊÇpicassoÍ¼Æ¬¼ÓÔØ¿ò¼ÜµÄÎÊÌâ
  *
  * Author: nanchen
  * Email: liushilin520@foxmail.com
@@ -39,16 +39,16 @@ import java.util.ArrayList;
 public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
 
-    private static final int ITEM_TYPE_CAMERA = 0;  //ç¬¬ä¸€ä¸ªæ¡ç›®æ˜¯ç›¸æœº
-    private static final int ITEM_TYPE_NORMAL = 1;  //ç¬¬ä¸€ä¸ªæ¡ç›®ä¸æ˜¯ç›¸æœº
+    private static final int ITEM_TYPE_CAMERA = 0;  //µÚÒ»¸öÌõÄ¿ÊÇÏà»ú
+    private static final int ITEM_TYPE_NORMAL = 1;  //µÚÒ»¸öÌõÄ¿²»ÊÇÏà»ú
     private ImagePicker imagePicker;
     private Activity mActivity;
-    private ArrayList<ImageItem> images;       //å½“å‰éœ€è¦æ˜¾ç¤ºçš„æ‰€æœ‰çš„å›¾ç‰‡æ•°æ®
-    private ArrayList<ImageItem> mSelectedImages; //å…¨å±€ä¿å­˜çš„å·²ç»é€‰ä¸­çš„å›¾ç‰‡æ•°æ®
-    private boolean isShowCamera;         //æ˜¯å¦æ˜¾ç¤ºæ‹ç…§æŒ‰é’®
-    private int mImageSize;               //æ¯ä¸ªæ¡ç›®çš„å¤§å°
+    private ArrayList<ImageItem> images;       //µ±Ç°ĞèÒªÏÔÊ¾µÄËùÓĞµÄÍ¼Æ¬Êı¾İ
+    private ArrayList<ImageItem> mSelectedImages; //È«¾Ö±£´æµÄÒÑ¾­Ñ¡ÖĞµÄÍ¼Æ¬Êı¾İ
+    private boolean isShowCamera;         //ÊÇ·ñÏÔÊ¾ÅÄÕÕ°´Å¥
+    private int mImageSize;               //Ã¿¸öÌõÄ¿µÄ´óĞ¡
     private LayoutInflater mInflater;
-    private OnImageItemClickListener listener;   //å›¾ç‰‡è¢«ç‚¹å‡»çš„ç›‘å¬
+    private OnImageItemClickListener listener;   //Í¼Æ¬±»µã»÷µÄ¼àÌı
 
     public void setOnImageItemClickListener(OnImageItemClickListener listener) {
         this.listener = listener;
@@ -65,7 +65,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     /**
-     * æ„é€ æ–¹æ³•
+     * ¹¹Ôì·½·¨
      */
     public ImageRecyclerAdapter(Activity activity, ArrayList<ImageItem> images) {
         this.mActivity = activity;
@@ -137,7 +137,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             mask = itemView.findViewById(R.id.mask);
             checkView=itemView.findViewById(R.id.checkView);
             cbCheck = (SuperCheckBox) itemView.findViewById(R.id.cb_check);
-            itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //è®©å›¾ç‰‡æ˜¯ä¸ªæ­£æ–¹å½¢
+            itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //ÈÃÍ¼Æ¬ÊÇ¸öÕı·½ĞÎ
         }
 
         void bind(final int position){
@@ -163,7 +163,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                     }
                 }
             });
-            //æ ¹æ®æ˜¯å¦å¤šé€‰ï¼Œæ˜¾ç¤ºæˆ–éšè—checkbox
+            //¸ù¾İÊÇ·ñ¶àÑ¡£¬ÏÔÊ¾»òÒş²Øcheckbox
             if (imagePicker.isMultiMode()) {
                 cbCheck.setVisibility(View.VISIBLE);
                 boolean checked = mSelectedImages.contains(imageItem);
@@ -177,7 +177,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             } else {
                 cbCheck.setVisibility(View.GONE);
             }
-            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize); //æ˜¾ç¤ºå›¾ç‰‡
+            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize); //ÏÔÊ¾Í¼Æ¬
         }
 
     }
@@ -192,7 +192,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         }
 
         void bindCamera(){
-            mItemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //è®©å›¾ç‰‡æ˜¯ä¸ªæ­£æ–¹å½¢
+            mItemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //ÈÃÍ¼Æ¬ÊÇ¸öÕı·½ĞÎ
             mItemView.setTag(null);
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -35,69 +35,69 @@ import java.util.Locale;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šå»–å­å°§
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š2016/1/7
- * æ    è¿°ï¼š
- * Matrix çš„9ä¸ªå€¼åˆ†åˆ«ä¸º  ç¼©æ”¾  å¹³ç§»  å€¾æ–œ
+ * ×÷    Õß£ºÁÎ×ÓÒ¢
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º2016/1/7
+ * Ãè    Êö£º
+ * Matrix µÄ9¸öÖµ·Ö±ğÎª  Ëõ·Å  Æ½ÒÆ  ÇãĞ±
  * MSCALE_X	 MSKEW_X	MTRANS_X
  * MSKEW_Y	 MSCALE_Y	MTRANS_Y
  * MPERSP_0  MPERSP_1	MPERSP_2
- * ä¿®è®¢å†å²ï¼š
+ * ĞŞ¶©ÀúÊ·£º
  * ================================================
  */
 
 public class CropImageView extends AppCompatImageView {
 
-    /******************************** ä¸­é—´çš„FocusViewç»˜å›¾ç›¸å…³çš„å‚æ•° *****************************/
+    /******************************** ÖĞ¼äµÄFocusView»æÍ¼Ïà¹ØµÄ²ÎÊı *****************************/
     public enum Style {
         RECTANGLE, CIRCLE
     }
 
     private Style[] styles = {Style.RECTANGLE, Style.CIRCLE};
 
-    private int mMaskColor = 0xAF000000;   //æš—è‰²
-    private int mBorderColor = 0xAA808080; //ç„¦ç‚¹æ¡†çš„è¾¹æ¡†é¢œè‰²
-    private int mBorderWidth = 1;         //ç„¦ç‚¹è¾¹æ¡†çš„å®½åº¦ï¼ˆç”»ç¬”å®½åº¦ï¼‰
-    private int mFocusWidth = 250;         //ç„¦ç‚¹æ¡†çš„å®½åº¦
-    private int mFocusHeight = 250;        //ç„¦ç‚¹æ¡†çš„é«˜åº¦
-    private int mDefaultStyleIndex = 0;    //é»˜è®¤ç„¦ç‚¹æ¡†çš„å½¢çŠ¶
+    private int mMaskColor = 0xAF000000;   //°µÉ«
+    private int mBorderColor = 0xAA808080; //½¹µã¿òµÄ±ß¿òÑÕÉ«
+    private int mBorderWidth = 1;         //½¹µã±ß¿òµÄ¿í¶È£¨»­±Ê¿í¶È£©
+    private int mFocusWidth = 250;         //½¹µã¿òµÄ¿í¶È
+    private int mFocusHeight = 250;        //½¹µã¿òµÄ¸ß¶È
+    private int mDefaultStyleIndex = 0;    //Ä¬ÈÏ½¹µã¿òµÄĞÎ×´
 
     private Style mStyle = styles[mDefaultStyleIndex];
     private Paint mBorderPaint = new Paint();
     private Path mFocusPath = new Path();
     private RectF mFocusRect = new RectF();
 
-    /******************************** å›¾ç‰‡ç¼©æ”¾ä½ç§»æ§åˆ¶çš„å‚æ•° ************************************/
-    private static final float MAX_SCALE = 4.0f;  //æœ€å¤§ç¼©æ”¾æ¯”ï¼Œå›¾ç‰‡ç¼©æ”¾åçš„å¤§å°ä¸ä¸­é—´é€‰ä¸­åŒºåŸŸçš„æ¯”å€¼
-    private static final int NONE = 0;   // åˆå§‹åŒ–
-    private static final int DRAG = 1;   // æ‹–æ‹½
-    private static final int ZOOM = 2;   // ç¼©æ”¾
-    private static final int ROTATE = 3; // æ—‹è½¬
-    private static final int ZOOM_OR_ROTATE = 4;  // ç¼©æ”¾æˆ–æ—‹è½¬
+    /******************************** Í¼Æ¬Ëõ·ÅÎ»ÒÆ¿ØÖÆµÄ²ÎÊı ************************************/
+    private static final float MAX_SCALE = 4.0f;  //×î´óËõ·Å±È£¬Í¼Æ¬Ëõ·ÅºóµÄ´óĞ¡ÓëÖĞ¼äÑ¡ÖĞÇøÓòµÄ±ÈÖµ
+    private static final int NONE = 0;   // ³õÊ¼»¯
+    private static final int DRAG = 1;   // ÍÏ×§
+    private static final int ZOOM = 2;   // Ëõ·Å
+    private static final int ROTATE = 3; // Ğı×ª
+    private static final int ZOOM_OR_ROTATE = 4;  // Ëõ·Å»òĞı×ª
 
-    private static final int SAVE_SUCCESS = 1001;  // ç¼©æ”¾æˆ–æ—‹è½¬
-    private static final int SAVE_ERROR = 1002;  // ç¼©æ”¾æˆ–æ—‹è½¬
+    private static final int SAVE_SUCCESS = 1001;  // Ëõ·Å»òĞı×ª
+    private static final int SAVE_ERROR = 1002;  // Ëõ·Å»òĞı×ª
 
     private int mImageWidth;
     private int mImageHeight;
     private int mRotatedImageWidth;
     private int mRotatedImageHeight;
-    private Matrix matrix = new Matrix();      //å›¾ç‰‡å˜æ¢çš„matrix
-    private Matrix savedMatrix = new Matrix(); //å¼€å§‹å˜å¹»çš„æ—¶å€™ï¼Œå›¾ç‰‡çš„matrix
-    private PointF pA = new PointF();          //ç¬¬ä¸€ä¸ªæ‰‹æŒ‡æŒ‰ä¸‹ç‚¹çš„åæ ‡
-    private PointF pB = new PointF();          //ç¬¬äºŒä¸ªæ‰‹æŒ‡æŒ‰ä¸‹ç‚¹çš„åæ ‡
-    private PointF midPoint = new PointF();    //ä¸¤ä¸ªæ‰‹æŒ‡çš„ä¸­é—´ç‚¹
-    private PointF doubleClickPos = new PointF();  //åŒå‡»å›¾ç‰‡çš„æ—¶å€™ï¼ŒåŒå‡»ç‚¹çš„åæ ‡
-    private PointF mFocusMidPoint = new PointF();  //ä¸­é—´Viewçš„ä¸­é—´ç‚¹
-    private int mode = NONE;            //åˆå§‹çš„æ¨¡å¼
-    private long doubleClickTime = 0;   //ç¬¬äºŒæ¬¡åŒå‡»çš„æ—¶é—´
-    private double rotation = 0;        //æ‰‹æŒ‡æ—‹è½¬çš„è§’åº¦ï¼Œä¸æ˜¯90çš„æ•´æ•°å€ï¼Œå¯èƒ½ä¸ºä»»æ„å€¼ï¼Œéœ€è¦è½¬æ¢æˆlevel
-    private float oldDist = 1;          //åŒæŒ‡ç¬¬ä¸€æ¬¡çš„è·ç¦»
-    private int sumRotateLevel = 0;     //æ—‹è½¬çš„è§’åº¦ï¼Œ90çš„æ•´æ•°å€
-    private float mMaxScale = MAX_SCALE;//ç¨‹åºæ ¹æ®ä¸åŒå›¾ç‰‡çš„å¤§å°ï¼ŒåŠ¨æ€å¾—åˆ°çš„æœ€å¤§ç¼©æ”¾æ¯”
-    private boolean isInited = false;   //æ˜¯å¦ç»è¿‡äº† onSizeChanged åˆå§‹åŒ–
-    private boolean mSaving = false;    //æ˜¯å¦æ­£åœ¨ä¿å­˜
+    private Matrix matrix = new Matrix();      //Í¼Æ¬±ä»»µÄmatrix
+    private Matrix savedMatrix = new Matrix(); //¿ªÊ¼±ä»ÃµÄÊ±ºò£¬Í¼Æ¬µÄmatrix
+    private PointF pA = new PointF();          //µÚÒ»¸öÊÖÖ¸°´ÏÂµãµÄ×ø±ê
+    private PointF pB = new PointF();          //µÚ¶ş¸öÊÖÖ¸°´ÏÂµãµÄ×ø±ê
+    private PointF midPoint = new PointF();    //Á½¸öÊÖÖ¸µÄÖĞ¼äµã
+    private PointF doubleClickPos = new PointF();  //Ë«»÷Í¼Æ¬µÄÊ±ºò£¬Ë«»÷µãµÄ×ø±ê
+    private PointF mFocusMidPoint = new PointF();  //ÖĞ¼äViewµÄÖĞ¼äµã
+    private int mode = NONE;            //³õÊ¼µÄÄ£Ê½
+    private long doubleClickTime = 0;   //µÚ¶ş´ÎË«»÷µÄÊ±¼ä
+    private double rotation = 0;        //ÊÖÖ¸Ğı×ªµÄ½Ç¶È£¬²»ÊÇ90µÄÕûÊı±¶£¬¿ÉÄÜÎªÈÎÒâÖµ£¬ĞèÒª×ª»»³Élevel
+    private float oldDist = 1;          //Ë«Ö¸µÚÒ»´ÎµÄ¾àÀë
+    private int sumRotateLevel = 0;     //Ğı×ªµÄ½Ç¶È£¬90µÄÕûÊı±¶
+    private float mMaxScale = MAX_SCALE;//³ÌĞò¸ù¾İ²»Í¬Í¼Æ¬µÄ´óĞ¡£¬¶¯Ì¬µÃµ½µÄ×î´óËõ·Å±È
+    private boolean isInited = false;   //ÊÇ·ñ¾­¹ıÁË onSizeChanged ³õÊ¼»¯
+    private boolean mSaving = false;    //ÊÇ·ñÕıÔÚ±£´æ
     private static Handler mHandler = new InnerHandler();
 
     public CropImageView(Context context) {
@@ -124,7 +124,7 @@ public class CropImageView extends AppCompatImageView {
         mStyle = styles[mDefaultStyleIndex];
         a.recycle();
 
-        //åªå…è®¸å›¾ç‰‡ä¸ºå½“å‰çš„ç¼©æ”¾æ¨¡å¼
+        //Ö»ÔÊĞíÍ¼Æ¬Îªµ±Ç°µÄËõ·ÅÄ£Ê½
         setScaleType(ScaleType.MATRIX);
     }
 
@@ -159,7 +159,7 @@ public class CropImageView extends AppCompatImageView {
         initImage();
     }
 
-    /** åˆå§‹åŒ–å›¾ç‰‡å’Œç„¦ç‚¹æ¡† */
+    /** ³õÊ¼»¯Í¼Æ¬ºÍ½¹µã¿ò */
     private void initImage() {
         Drawable d = getDrawable();
         if (!isInited || d == null) return;
@@ -168,7 +168,7 @@ public class CropImageView extends AppCompatImageView {
         matrix = getImageMatrix();
         mImageWidth = mRotatedImageWidth = d.getIntrinsicWidth();
         mImageHeight = mRotatedImageHeight = d.getIntrinsicHeight();
-        //è®¡ç®—å‡ºç„¦ç‚¹æ¡†çš„ä¸­ç‚¹çš„åæ ‡å’Œä¸Šã€ä¸‹ã€å·¦ã€å³è¾¹çš„xæˆ–yçš„å€¼
+        //¼ÆËã³ö½¹µã¿òµÄÖĞµãµÄ×ø±êºÍÉÏ¡¢ÏÂ¡¢×ó¡¢ÓÒ±ßµÄx»òyµÄÖµ
         int viewWidth = getWidth();
         int viewHeight = getHeight();
         float midPointX = viewWidth / 2;
@@ -185,27 +185,27 @@ public class CropImageView extends AppCompatImageView {
         mFocusRect.top = mFocusMidPoint.y - mFocusHeight / 2;
         mFocusRect.bottom = mFocusMidPoint.y + mFocusHeight / 2;
 
-        //é€‚é…ç„¦ç‚¹æ¡†çš„ç¼©æ”¾æ¯”ä¾‹ï¼ˆå›¾ç‰‡çš„æœ€å°è¾¹ä¸å°äºç„¦ç‚¹æ¡†çš„æœ€å°è¾¹ï¼‰
+        //ÊÊÅä½¹µã¿òµÄËõ·Å±ÈÀı£¨Í¼Æ¬µÄ×îĞ¡±ß²»Ğ¡ÓÚ½¹µã¿òµÄ×îĞ¡±ß£©
         float fitFocusScale = getScale(mImageWidth, mImageHeight, mFocusWidth, mFocusHeight, true);
         mMaxScale = fitFocusScale * MAX_SCALE;
-        //é€‚é…æ˜¾ç¤ºå›¾ç‰‡çš„ImageViewçš„ç¼©æ”¾æ¯”ä¾‹ï¼ˆå›¾ç‰‡è‡³å°‘æœ‰ä¸€è¾¹æ˜¯é“ºæ»¡å±å¹•çš„æ˜¾ç¤ºçš„æƒ…å½¢ï¼‰
+        //ÊÊÅäÏÔÊ¾Í¼Æ¬µÄImageViewµÄËõ·Å±ÈÀı£¨Í¼Æ¬ÖÁÉÙÓĞÒ»±ßÊÇÆÌÂúÆÁÄ»µÄÏÔÊ¾µÄÇéĞÎ£©
         float fitViewScale = getScale(mImageWidth, mImageHeight, viewWidth, viewHeight, false);
-        //ç¡®å®šæœ€ç»ˆçš„ç¼©æ”¾æ¯”ä¾‹,åœ¨é€‚é…ç„¦ç‚¹æ¡†çš„å‰æä¸‹é€‚é…æ˜¾ç¤ºå›¾ç‰‡çš„ImageViewï¼Œ
-        //æ–¹æ¡ˆï¼šé¦–å…ˆæ»¡è¶³é€‚é…ç„¦ç‚¹æ¡†ï¼Œå¦‚æœè¿˜èƒ½é€‚é…æ˜¾ç¤ºå›¾ç‰‡çš„ImageViewï¼Œåˆ™é€‚é…å®ƒï¼Œå³å–ç¼©æ”¾æ¯”ä¾‹çš„æœ€å¤§å€¼ã€‚
-        //é‡‡å–è¿™ç§æ–¹æ¡ˆçš„åŸå› ï¼šæœ‰å¯èƒ½å›¾ç‰‡å¾ˆé•¿æˆ–è€…å¾ˆé«˜ï¼Œé€‚é…äº†ImageViewçš„æ—¶å€™å¯èƒ½ä¼šå®½/é«˜å·²ç»å°äºç„¦ç‚¹æ¡†çš„å®½/é«˜
+        //È·¶¨×îÖÕµÄËõ·Å±ÈÀı,ÔÚÊÊÅä½¹µã¿òµÄÇ°ÌáÏÂÊÊÅäÏÔÊ¾Í¼Æ¬µÄImageView£¬
+        //·½°¸£ºÊ×ÏÈÂú×ãÊÊÅä½¹µã¿ò£¬Èç¹û»¹ÄÜÊÊÅäÏÔÊ¾Í¼Æ¬µÄImageView£¬ÔòÊÊÅäËü£¬¼´È¡Ëõ·Å±ÈÀıµÄ×î´óÖµ¡£
+        //²ÉÈ¡ÕâÖÖ·½°¸µÄÔ­Òò£ºÓĞ¿ÉÄÜÍ¼Æ¬ºÜ³¤»òÕßºÜ¸ß£¬ÊÊÅäÁËImageViewµÄÊ±ºò¿ÉÄÜ»á¿í/¸ßÒÑ¾­Ğ¡ÓÚ½¹µã¿òµÄ¿í/¸ß
         float scale = fitViewScale > fitFocusScale ? fitViewScale : fitFocusScale;
-        //å›¾åƒä¸­ç‚¹ä¸ºä¸­å¿ƒè¿›è¡Œç¼©æ”¾
+        //Í¼ÏñÖĞµãÎªÖĞĞÄ½øĞĞËõ·Å
         matrix.setScale(scale, scale, mImageWidth / 2, mImageHeight / 2);
         float[] mImageMatrixValues = new float[9];
-        matrix.getValues(mImageMatrixValues); //è·å–ç¼©æ”¾åçš„mImageMatrixçš„å€¼
-        float transX = mFocusMidPoint.x - (mImageMatrixValues[2] + mImageWidth * mImageMatrixValues[0] / 2);  //Xè½´æ–¹å‘çš„ä½ç§»
-        float transY = mFocusMidPoint.y - (mImageMatrixValues[5] + mImageHeight * mImageMatrixValues[4] / 2); //Yè½´æ–¹å‘çš„ä½ç§»
+        matrix.getValues(mImageMatrixValues); //»ñÈ¡Ëõ·ÅºóµÄmImageMatrixµÄÖµ
+        float transX = mFocusMidPoint.x - (mImageMatrixValues[2] + mImageWidth * mImageMatrixValues[0] / 2);  //XÖá·½ÏòµÄÎ»ÒÆ
+        float transY = mFocusMidPoint.y - (mImageMatrixValues[5] + mImageHeight * mImageMatrixValues[4] / 2); //YÖá·½ÏòµÄÎ»ÒÆ
         matrix.postTranslate(transX, transY);
         setImageMatrix(matrix);
         invalidate();
     }
 
-    /** è®¡ç®—è¾¹ç•Œç¼©æ”¾æ¯”ä¾‹ isMinScale æ˜¯å¦æœ€å°æ¯”ä¾‹ï¼Œtrue æœ€å°ç¼©æ”¾æ¯”ä¾‹ï¼Œ false æœ€å¤§ç¼©æ”¾æ¯”ä¾‹ */
+    /** ¼ÆËã±ß½çËõ·Å±ÈÀı isMinScale ÊÇ·ñ×îĞ¡±ÈÀı£¬true ×îĞ¡Ëõ·Å±ÈÀı£¬ false ×î´óËõ·Å±ÈÀı */
     private float getScale(int bitmapWidth, int bitmapHeight, int minWidth, int minHeight, boolean isMinScale) {
         float scale;
         float scaleX = (float) minWidth / bitmapWidth;
@@ -218,7 +218,7 @@ public class CropImageView extends AppCompatImageView {
         return scale;
     }
 
-    /** ç»˜åˆ¶ç„¦ç‚¹æ¡† */
+    /** »æÖÆ½¹µã¿ò */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -252,20 +252,20 @@ public class CropImageView extends AppCompatImageView {
             return super.onTouchEvent(event);
         }
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_DOWN:  //ç¬¬ä¸€ä¸ªç‚¹æŒ‰ä¸‹
-                savedMatrix.set(matrix);   //ä»¥åæ¯æ¬¡éœ€è¦å˜æ¢çš„æ—¶å€™ï¼Œä»¥ç°åœ¨çš„çŠ¶æ€ä¸ºåŸºç¡€è¿›è¡Œå˜æ¢
+            case MotionEvent.ACTION_DOWN:  //µÚÒ»¸öµã°´ÏÂ
+                savedMatrix.set(matrix);   //ÒÔºóÃ¿´ÎĞèÒª±ä»»µÄÊ±ºò£¬ÒÔÏÖÔÚµÄ×´Ì¬Îª»ù´¡½øĞĞ±ä»»
                 pA.set(event.getX(), event.getY());
                 pB.set(event.getX(), event.getY());
                 mode = DRAG;
                 break;
-            case MotionEvent.ACTION_POINTER_DOWN:  //ç¬¬äºŒä¸ªç‚¹æŒ‰ä¸‹
+            case MotionEvent.ACTION_POINTER_DOWN:  //µÚ¶ş¸öµã°´ÏÂ
                 if (event.getActionIndex() > 1) break;
                 pA.set(event.getX(0), event.getY(0));
                 pB.set(event.getX(1), event.getY(1));
                 midPoint.set((pA.x + pB.x) / 2, (pA.y + pB.y) / 2);
                 oldDist = spacing(pA, pB);
-                savedMatrix.set(matrix);  //ä»¥åæ¯æ¬¡éœ€è¦å˜æ¢çš„æ—¶å€™ï¼Œä»¥ç°åœ¨çš„çŠ¶æ€ä¸ºåŸºç¡€è¿›è¡Œå˜æ¢
-                if (oldDist > 10f) mode = ZOOM_OR_ROTATE;//ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»å¤§äº10æ‰æœ‰æ•ˆ
+                savedMatrix.set(matrix);  //ÒÔºóÃ¿´ÎĞèÒª±ä»»µÄÊ±ºò£¬ÒÔÏÖÔÚµÄ×´Ì¬Îª»ù´¡½øĞĞ±ä»»
+                if (oldDist > 10f) mode = ZOOM_OR_ROTATE;//Á½µãÖ®¼äµÄ¾àÀë´óÓÚ10²ÅÓĞĞ§
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (mode == ZOOM_OR_ROTATE) {
@@ -277,7 +277,7 @@ public class CropImageView extends AppCompatImageView {
                         double cosB = (a * a + c * c - b * b) / (2 * a * c);
                         double angleB = Math.acos(cosB);
                         double PID4 = Math.PI / 4;
-                        //æ—‹è½¬æ—¶ï¼Œé»˜è®¤è§’åº¦åœ¨ 45 - 135 åº¦ä¹‹é—´
+                        //Ğı×ªÊ±£¬Ä¬ÈÏ½Ç¶ÈÔÚ 45 - 135 ¶ÈÖ®¼ä
                         if (angleB > PID4 && angleB < 3 * PID4) mode = ROTATE;
                         else mode = ZOOM;
                     }
@@ -291,7 +291,7 @@ public class CropImageView extends AppCompatImageView {
                     float newDist = spacing(event.getX(0), event.getY(0), event.getX(1), event.getY(1));
                     if (newDist > 10f) {
                         matrix.set(savedMatrix);
-                        // è¿™é‡Œä¹‹æ‰€ä»¥ç”¨ maxPostScale çŸ«æ­£ä¸€ä¸‹ï¼Œä¸»è¦æ˜¯é˜²æ­¢ç¼©æ”¾åˆ°æœ€å¤§æ—¶ï¼Œç»§ç»­ç¼©æ”¾å›¾ç‰‡ä¼šäº§ç”Ÿä½ç§»
+                        // ÕâÀïÖ®ËùÒÔÓÃ maxPostScale ½ÃÕıÒ»ÏÂ£¬Ö÷ÒªÊÇ·ÀÖ¹Ëõ·Åµ½×î´óÊ±£¬¼ÌĞøËõ·ÅÍ¼Æ¬»á²úÉúÎ»ÒÆ
                         float tScale = Math.min(newDist / oldDist, maxPostScale());
                         if (tScale != 0) {
                             matrix.postScale(tScale, tScale, midPoint.x, midPoint.y);
@@ -352,12 +352,12 @@ public class CropImageView extends AppCompatImageView {
                 mode = NONE;
                 break;
         }
-        //è§£å†³éƒ¨åˆ†æœºå‹æ— æ³•æ‹–åŠ¨çš„é—®é¢˜
+        //½â¾ö²¿·Ö»úĞÍÎŞ·¨ÍÏ¶¯µÄÎÊÌâ
         ViewCompat.postInvalidateOnAnimation(this);
         return true;
     }
 
-    /** ä¿®æ­£å›¾ç‰‡çš„ç¼©æ”¾æ¯” */
+    /** ĞŞÕıÍ¼Æ¬µÄËõ·Å±È */
     private void fixScale() {
         float imageMatrixValues[] = new float[9];
         matrix.getValues(imageMatrixValues);
@@ -365,7 +365,7 @@ public class CropImageView extends AppCompatImageView {
         float minScale = getScale(mRotatedImageWidth, mRotatedImageHeight, mFocusWidth, mFocusHeight, true);
         mMaxScale = minScale * MAX_SCALE;
 
-        //ä¿è¯å›¾ç‰‡æœ€å°æ˜¯å æ»¡ä¸­é—´çš„ç„¦ç‚¹ç©ºé—´
+        //±£Ö¤Í¼Æ¬×îĞ¡ÊÇÕ¼ÂúÖĞ¼äµÄ½¹µã¿Õ¼ä
         if (currentScale < minScale) {
             float scale = minScale / currentScale;
             matrix.postScale(scale, scale);
@@ -375,10 +375,10 @@ public class CropImageView extends AppCompatImageView {
         }
     }
 
-    /** ä¿®æ­£å›¾ç‰‡çš„ä½ç§» */
+    /** ĞŞÕıÍ¼Æ¬µÄÎ»ÒÆ */
     private void fixTranslation() {
         RectF imageRect = new RectF(0, 0, mImageWidth, mImageHeight);
-        matrix.mapRect(imageRect);  //è·å–å½“å‰å›¾ç‰‡ï¼ˆç¼©æ”¾ä»¥åçš„ï¼‰ç›¸å¯¹äºå½“å‰æ§ä»¶çš„ä½ç½®åŒºåŸŸï¼Œè¶…è¿‡æ§ä»¶çš„ä¸Šè¾¹ç¼˜æˆ–å·¦è¾¹ç¼˜ä¸ºè´Ÿ
+        matrix.mapRect(imageRect);  //»ñÈ¡µ±Ç°Í¼Æ¬£¨Ëõ·ÅÒÔºóµÄ£©Ïà¶ÔÓÚµ±Ç°¿Ø¼şµÄÎ»ÖÃÇøÓò£¬³¬¹ı¿Ø¼şµÄÉÏ±ßÔµ»ò×ó±ßÔµÎª¸º
         float deltaX = 0, deltaY = 0;
         if (imageRect.left > mFocusRect.left) {
             deltaX = -imageRect.left + mFocusRect.left;
@@ -393,7 +393,7 @@ public class CropImageView extends AppCompatImageView {
         matrix.postTranslate(deltaX, deltaY);
     }
 
-    /** è·å–å½“å‰å›¾ç‰‡å…è®¸çš„æœ€å¤§ç¼©æ”¾æ¯” */
+    /** »ñÈ¡µ±Ç°Í¼Æ¬ÔÊĞíµÄ×î´óËõ·Å±È */
     private float maxPostScale() {
         float imageMatrixValues[] = new float[9];
         matrix.getValues(imageMatrixValues);
@@ -401,26 +401,26 @@ public class CropImageView extends AppCompatImageView {
         return mMaxScale / curScale;
     }
 
-    /** è®¡ç®—ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦» */
+    /** ¼ÆËãÁ½µãÖ®¼äµÄ¾àÀë */
     private float spacing(float x1, float y1, float x2, float y2) {
         float x = x1 - x2;
         float y = y1 - y2;
         return (float) Math.sqrt(x * x + y * y);
     }
 
-    /** è®¡ç®—ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦» */
+    /** ¼ÆËãÁ½µãÖ®¼äµÄ¾àÀë */
     private float spacing(PointF pA, PointF pB) {
         return spacing(pA.x, pA.y, pB.x, pB.y);
     }
 
-    /** åŒå‡»è§¦å‘çš„æ–¹æ³• */
+    /** Ë«»÷´¥·¢µÄ·½·¨ */
     private void doubleClick(float x, float y) {
         float p[] = new float[9];
         matrix.getValues(p);
         float curScale = Math.abs(p[0]) + Math.abs(p[1]);
         float minScale = getScale(mRotatedImageWidth, mRotatedImageHeight, mFocusWidth, mFocusHeight, true);
         if (curScale < mMaxScale) {
-            //æ¯æ¬¡åŒå‡»çš„æ—¶å€™ï¼Œç¼©æ”¾åŠ  minScale
+            //Ã¿´ÎË«»÷µÄÊ±ºò£¬Ëõ·Å¼Ó minScale
             float toScale = Math.min(curScale + minScale, mMaxScale) / curScale;
             matrix.postScale(toScale, toScale, x, y);
         } else {
@@ -432,22 +432,22 @@ public class CropImageView extends AppCompatImageView {
     }
 
     /**
-     * @param expectWidth     æœŸæœ›çš„å®½åº¦
-     * @param exceptHeight    æœŸæœ›çš„é«˜åº¦
-     * @param isSaveRectangle æ˜¯å¦æŒ‰çŸ©å½¢åŒºåŸŸä¿å­˜å›¾ç‰‡
-     * @return è£å‰ªåçš„Bitmap
+     * @param expectWidth     ÆÚÍûµÄ¿í¶È
+     * @param exceptHeight    ÆÚÍûµÄ¸ß¶È
+     * @param isSaveRectangle ÊÇ·ñ°´¾ØĞÎÇøÓò±£´æÍ¼Æ¬
+     * @return ²Ã¼ôºóµÄBitmap
      */
     public Bitmap getCropBitmap(int expectWidth, int exceptHeight, boolean isSaveRectangle) {
         if (expectWidth <= 0 || exceptHeight < 0) return null;
         Bitmap srcBitmap = ((BitmapDrawable) getDrawable()).getBitmap();
-        srcBitmap = rotate(srcBitmap, sumRotateLevel * 90);  //æœ€å¥½ç”¨levelï¼Œå› ä¸ºè§’åº¦å¯èƒ½ä¸æ˜¯90çš„æ•´æ•°
+        srcBitmap = rotate(srcBitmap, sumRotateLevel * 90);  //×îºÃÓÃlevel£¬ÒòÎª½Ç¶È¿ÉÄÜ²»ÊÇ90µÄÕûÊı
         return makeCropBitmap(srcBitmap, mFocusRect, getImageMatrixRect(), expectWidth, exceptHeight, isSaveRectangle);
     }
 
     /**
-     * @param bitmap  è¦æ—‹è½¬çš„å›¾ç‰‡
-     * @param degrees é€‰æ‹©çš„è§’åº¦ï¼ˆå•ä½ åº¦ï¼‰
-     * @return æ—‹è½¬åçš„Bitmap
+     * @param bitmap  ÒªĞı×ªµÄÍ¼Æ¬
+     * @param degrees Ñ¡ÔñµÄ½Ç¶È£¨µ¥Î» ¶È£©
+     * @return Ğı×ªºóµÄBitmap
      */
     public Bitmap rotate(Bitmap bitmap, int degrees) {
         if (degrees != 0 && bitmap != null) {
@@ -467,7 +467,7 @@ public class CropImageView extends AppCompatImageView {
     }
 
     /**
-     * @return è·å–å½“å‰å›¾ç‰‡æ˜¾ç¤ºçš„çŸ©å½¢åŒºåŸŸ
+     * @return »ñÈ¡µ±Ç°Í¼Æ¬ÏÔÊ¾µÄ¾ØĞÎÇøÓò
      */
     private RectF getImageMatrixRect() {
         RectF rectF = new RectF();
@@ -477,13 +477,13 @@ public class CropImageView extends AppCompatImageView {
     }
 
     /**
-     * @param bitmap          éœ€è¦è£å‰ªçš„å›¾ç‰‡
-     * @param focusRect       ä¸­é—´éœ€è¦è£å‰ªçš„çŸ©å½¢åŒºåŸŸ
-     * @param imageMatrixRect å½“å‰å›¾ç‰‡åœ¨å±å¹•ä¸Šçš„æ˜¾ç¤ºçŸ©å½¢åŒºåŸŸ
-     * @param expectWidth     å¸Œæœ›è·å¾—çš„å›¾ç‰‡å®½åº¦ï¼Œå¦‚æœå›¾ç‰‡å®½åº¦ä¸è¶³æ—¶ï¼Œæ‹‰ä¼¸å›¾ç‰‡
-     * @param exceptHeight    å¸Œæœ›è·å¾—çš„å›¾ç‰‡é«˜åº¦ï¼Œå¦‚æœå›¾ç‰‡é«˜åº¦ä¸è¶³æ—¶ï¼Œæ‹‰ä¼¸å›¾ç‰‡
-     * @param isSaveRectangle æ˜¯å¦å¸Œæœ›æŒ‰çŸ©å½¢åŒºåŸŸä¿å­˜å›¾ç‰‡
-     * @return è£å‰ªåçš„å›¾ç‰‡çš„Bitmap
+     * @param bitmap          ĞèÒª²Ã¼ôµÄÍ¼Æ¬
+     * @param focusRect       ÖĞ¼äĞèÒª²Ã¼ôµÄ¾ØĞÎÇøÓò
+     * @param imageMatrixRect µ±Ç°Í¼Æ¬ÔÚÆÁÄ»ÉÏµÄÏÔÊ¾¾ØĞÎÇøÓò
+     * @param expectWidth     Ï£Íû»ñµÃµÄÍ¼Æ¬¿í¶È£¬Èç¹ûÍ¼Æ¬¿í¶È²»×ãÊ±£¬À­ÉìÍ¼Æ¬
+     * @param exceptHeight    Ï£Íû»ñµÃµÄÍ¼Æ¬¸ß¶È£¬Èç¹ûÍ¼Æ¬¸ß¶È²»×ãÊ±£¬À­ÉìÍ¼Æ¬
+     * @param isSaveRectangle ÊÇ·ñÏ£Íû°´¾ØĞÎÇøÓò±£´æÍ¼Æ¬
+     * @return ²Ã¼ôºóµÄÍ¼Æ¬µÄBitmap
      */
     private Bitmap makeCropBitmap(Bitmap bitmap, RectF focusRect, RectF imageMatrixRect, int expectWidth, int exceptHeight, boolean isSaveRectangle) {
         if (imageMatrixRect == null || bitmap == null){
@@ -505,7 +505,7 @@ public class CropImageView extends AppCompatImageView {
             if (expectWidth != width || exceptHeight != height) {
                 bitmap = Bitmap.createScaledBitmap(bitmap, expectWidth, exceptHeight, true);
                 if (mStyle == CropImageView.Style.CIRCLE && !isSaveRectangle) {
-                    //å¦‚æœæ˜¯åœ†å½¢ï¼Œå°±å°†å›¾ç‰‡è£å‰ªæˆåœ†çš„
+                    //Èç¹ûÊÇÔ²ĞÎ£¬¾Í½«Í¼Æ¬²Ã¼ô³ÉÔ²µÄ
                     int length = Math.min(expectWidth, exceptHeight);
                     int radius = length / 2;
                     Bitmap circleBitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
@@ -524,10 +524,10 @@ public class CropImageView extends AppCompatImageView {
     }
 
     /**
-     * @param folder          å¸Œæœ›ä¿å­˜çš„æ–‡ä»¶å¤¹
-     * @param expectWidth     å¸Œæœ›ä¿å­˜çš„å›¾ç‰‡å®½åº¦
-     * @param exceptHeight    å¸Œæœ›ä¿å­˜çš„å›¾ç‰‡é«˜åº¦
-     * @param isSaveRectangle æ˜¯å¦å¸Œæœ›æŒ‰çŸ©å½¢åŒºåŸŸä¿å­˜å›¾ç‰‡
+     * @param folder          Ï£Íû±£´æµÄÎÄ¼ş¼Ğ
+     * @param expectWidth     Ï£Íû±£´æµÄÍ¼Æ¬¿í¶È
+     * @param exceptHeight    Ï£Íû±£´æµÄÍ¼Æ¬¸ß¶È
+     * @param isSaveRectangle ÊÇ·ñÏ£Íû°´¾ØĞÎÇøÓò±£´æÍ¼Æ¬
      */
     public void saveBitmapToFile(File folder, int expectWidth, int exceptHeight, boolean isSaveRectangle) {
         if (mSaving) return;
@@ -549,11 +549,11 @@ public class CropImageView extends AppCompatImageView {
         }.start();
     }
 
-    /** æ ¹æ®ç³»ç»Ÿæ—¶é—´ã€å‰ç¼€ã€åç¼€äº§ç”Ÿä¸€ä¸ªæ–‡ä»¶ */
+    /** ¸ù¾İÏµÍ³Ê±¼ä¡¢Ç°×º¡¢ºó×º²úÉúÒ»¸öÎÄ¼ş */
     private File createFile(File folder, String prefix, String suffix) {
         if (!folder.exists() || !folder.isDirectory()) folder.mkdirs();
         try {
-            File nomedia = new File(folder, ".nomedia");  //åœ¨å½“å‰æ–‡ä»¶å¤¹åº•ä¸‹åˆ›å»ºä¸€ä¸ª .nomedia æ–‡ä»¶
+            File nomedia = new File(folder, ".nomedia");  //ÔÚµ±Ç°ÎÄ¼ş¼Ğµ×ÏÂ´´½¨Ò»¸ö .nomedia ÎÄ¼ş
             if (!nomedia.exists()) nomedia.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
@@ -563,7 +563,7 @@ public class CropImageView extends AppCompatImageView {
         return new File(folder, filename);
     }
 
-    /** å°†å›¾ç‰‡ä¿å­˜åœ¨æœ¬åœ° */
+    /** ½«Í¼Æ¬±£´æÔÚ±¾µØ */
     private void saveOutput(Bitmap croppedImage, Bitmap.CompressFormat outputFormat, File saveFile) {
         OutputStream outputStream = null;
         try {
@@ -605,7 +605,7 @@ public class CropImageView extends AppCompatImageView {
         }
     }
 
-    /** å›¾ç‰‡ä¿å­˜å®Œæˆçš„ç›‘å¬ */
+    /** Í¼Æ¬±£´æÍê³ÉµÄ¼àÌı */
     private static OnBitmapSaveCompleteListener mListener;
 
     public interface OnBitmapSaveCompleteListener {
@@ -618,68 +618,68 @@ public class CropImageView extends AppCompatImageView {
         mListener = listener;
     }
 
-    /** è¿”å›ç„¦ç‚¹æ¡†å®½åº¦ */
+    /** ·µ»Ø½¹µã¿ò¿í¶È */
     public int getFocusWidth() {
         return mFocusWidth;
     }
 
-    /** è®¾ç½®ç„¦ç‚¹æ¡†çš„å®½åº¦ */
+    /** ÉèÖÃ½¹µã¿òµÄ¿í¶È */
     public void setFocusWidth(int width) {
         mFocusWidth = width;
         initImage();
     }
 
-    /** è·å–ç„¦ç‚¹æ¡†çš„é«˜åº¦ */
+    /** »ñÈ¡½¹µã¿òµÄ¸ß¶È */
     public int getFocusHeight() {
         return mFocusHeight;
     }
 
-    /** è®¾ç½®ç„¦ç‚¹æ¡†çš„é«˜åº¦ */
+    /** ÉèÖÃ½¹µã¿òµÄ¸ß¶È */
     public void setFocusHeight(int height) {
         mFocusHeight = height;
         initImage();
     }
 
-    /** è¿”å›é˜´å½±é¢œè‰² */
+    /** ·µ»ØÒõÓ°ÑÕÉ« */
     public int getMaskColor() {
         return mMaskColor;
     }
 
-    /** è®¾ç½®é˜´å½±é¢œè‰² */
+    /** ÉèÖÃÒõÓ°ÑÕÉ« */
     public void setMaskColor(int color) {
         mMaskColor = color;
         invalidate();
     }
 
-    /** è¿”å›ç„¦ç‚¹æ¡†è¾¹æ¡†é¢œè‰² */
+    /** ·µ»Ø½¹µã¿ò±ß¿òÑÕÉ« */
     public int getFocusColor() {
         return mBorderColor;
     }
 
-    /** è®¾ç½®ç„¦ç‚¹æ¡†è¾¹æ¡†é¢œè‰² */
+    /** ÉèÖÃ½¹µã¿ò±ß¿òÑÕÉ« */
     public void setBorderColor(int color) {
         mBorderColor = color;
         invalidate();
     }
 
-    /** è¿”å›ç„¦ç‚¹æ¡†è¾¹æ¡†ç»˜åˆ¶å®½åº¦ */
+    /** ·µ»Ø½¹µã¿ò±ß¿ò»æÖÆ¿í¶È */
     public float getBorderWidth() {
         return mBorderWidth;
     }
 
-    /** è®¾ç½®ç„¦ç‚¹è¾¹æ¡†å®½åº¦ */
+    /** ÉèÖÃ½¹µã±ß¿ò¿í¶È */
     public void setBorderWidth(int width) {
         mBorderWidth = width;
         invalidate();
     }
 
-    /** è®¾ç½®ç„¦ç‚¹æ¡†çš„å½¢çŠ¶ */
+    /** ÉèÖÃ½¹µã¿òµÄĞÎ×´ */
     public void setFocusStyle(Style style) {
         this.mStyle = style;
         invalidate();
     }
 
-    /** è·å–ç„¦ç‚¹æ¡†çš„å½¢çŠ¶ */
+    /** »ñÈ¡½¹µã¿òµÄĞÎ×´ */
     public Style getFocusStyle() {
         return mStyle;
     }

@@ -7,24 +7,24 @@ import java.io.Serializable;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šjeasonlzyï¼ˆå»–å­å°§ Githubåœ°å€ï¼šhttps://github.com/jeasonlzy0216
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š2016/5/19
- * æ    è¿°ï¼šå›¾ç‰‡ä¿¡æ¯
- * ä¿®è®¢å†å²ï¼š
+ * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º2016/5/19
+ * Ãè    Êö£ºÍ¼Æ¬ĞÅÏ¢
+ * ĞŞ¶©ÀúÊ·£º
  * ================================================
  */
 public class ImageItem implements Serializable, Parcelable {
 
-    public String name;       //å›¾ç‰‡çš„åå­—
-    public String path;       //å›¾ç‰‡çš„è·¯å¾„
-    public long size;         //å›¾ç‰‡çš„å¤§å°
-    public int width;         //å›¾ç‰‡çš„å®½åº¦
-    public int height;        //å›¾ç‰‡çš„é«˜åº¦
-    public String mimeType;   //å›¾ç‰‡çš„ç±»å‹
-    public long addTime;      //å›¾ç‰‡çš„åˆ›å»ºæ—¶é—´
+    public String name;       //Í¼Æ¬µÄÃû×Ö
+    public String path;       //Í¼Æ¬µÄÂ·¾¶
+    public long size;         //Í¼Æ¬µÄ´óĞ¡
+    public int width;         //Í¼Æ¬µÄ¿í¶È
+    public int height;        //Í¼Æ¬µÄ¸ß¶È
+    public String mimeType;   //Í¼Æ¬µÄÀàĞÍ
+    public long addTime;      //Í¼Æ¬µÄ´´½¨Ê±¼ä
 
-    /** å›¾ç‰‡çš„è·¯å¾„å’Œåˆ›å»ºæ—¶é—´ç›¸åŒå°±è®¤ä¸ºæ˜¯åŒä¸€å¼ å›¾ç‰‡ */
+    /** Í¼Æ¬µÄÂ·¾¶ºÍ´´½¨Ê±¼äÏàÍ¬¾ÍÈÏÎªÊÇÍ¬Ò»ÕÅÍ¼Æ¬ */
     @Override
     public boolean equals(Object o) {
         if (o instanceof ImageItem) {

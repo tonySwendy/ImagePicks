@@ -21,21 +21,21 @@ import com.lzy.imagepicker.view.SuperCheckBox;
 
 /**
  * ================================================
- * ä½œ    è€…ï¼šjeasonlzyï¼ˆå»–å­å°§ Githubåœ°å€ï¼šhttps://github.com/jeasonlzy0216
- * ç‰ˆ    æœ¬ï¼š1.0
- * åˆ›å»ºæ—¥æœŸï¼š2016/5/19
- * æ    è¿°ï¼š
- * ä¿®è®¢åŽ†å²ï¼š
+ * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
+ * °æ    ±¾£º1.0
+ * ´´½¨ÈÕÆÚ£º2016/5/19
+ * Ãè    Êö£º
+ * ÐÞ¶©ÀúÊ·£º
  * ================================================
  */
 public class ImagePreviewActivity extends ImagePreviewBaseActivity implements ImagePicker.OnImageSelectedListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public static final String ISORIGIN = "isOrigin";
 
-    private boolean isOrigin;                      //æ˜¯å¦é€‰ä¸­åŽŸå›¾
-    private SuperCheckBox mCbCheck;                //æ˜¯å¦é€‰ä¸­å½“å‰å›¾ç‰‡çš„CheckBox
-    private SuperCheckBox mCbOrigin;               //åŽŸå›¾
-    private Button mBtnOk;                         //ç¡®è®¤å›¾ç‰‡çš„é€‰æ‹©
+    private boolean isOrigin;                      //ÊÇ·ñÑ¡ÖÐÔ­Í¼
+    private SuperCheckBox mCbCheck;                //ÊÇ·ñÑ¡ÖÐµ±Ç°Í¼Æ¬µÄCheckBox
+    private SuperCheckBox mCbOrigin;               //Ô­Í¼
+    private Button mBtnOk;                         //È·ÈÏÍ¼Æ¬µÄÑ¡Ôñ
     private View bottomBar;
     private View marginView;
 
@@ -59,13 +59,13 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
         mCbOrigin.setOnCheckedChangeListener(this);
         mCbOrigin.setChecked(isOrigin);
 
-        //åˆå§‹åŒ–å½“å‰é¡µé¢çš„çŠ¶æ€
+        //³õÊ¼»¯µ±Ç°Ò³ÃæµÄ×´Ì¬
         onImageSelected(0, null, false);
         ImageItem item = mImageItems.get(mCurrentPosition);
         boolean isSelected = imagePicker.isSelect(item);
         mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
         mCbCheck.setChecked(isSelected);
-        //æ»‘åŠ¨ViewPagerçš„æ—¶å€™ï¼Œæ ¹æ®å¤–ç•Œçš„æ•°æ®æ”¹å˜å½“å‰çš„é€‰ä¸­çŠ¶æ€å’Œå½“å‰çš„å›¾ç‰‡çš„ä½ç½®æè¿°æ–‡æœ¬
+        //»¬¶¯ViewPagerµÄÊ±ºò£¬¸ù¾ÝÍâ½çµÄÊý¾Ý¸Ä±äµ±Ç°µÄÑ¡ÖÐ×´Ì¬ºÍµ±Ç°µÄÍ¼Æ¬µÄÎ»ÖÃÃèÊöÎÄ±¾
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -76,7 +76,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
                 mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
             }
         });
-        //å½“ç‚¹å‡»å½“å‰é€‰ä¸­æŒ‰é’®çš„æ—¶å€™ï¼Œéœ€è¦æ ¹æ®å½“å‰çš„é€‰ä¸­çŠ¶æ€æ·»åŠ å’Œç§»é™¤å›¾ç‰‡
+        //µ±µã»÷µ±Ç°Ñ¡ÖÐ°´Å¥µÄÊ±ºò£¬ÐèÒª¸ù¾Ýµ±Ç°µÄÑ¡ÖÐ×´Ì¬Ìí¼ÓºÍÒÆ³ýÍ¼Æ¬
         mCbCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,8 +125,8 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
 
 
     /**
-     * å›¾ç‰‡æ·»åŠ æˆåŠŸåŽï¼Œä¿®æ”¹å½“å‰å›¾ç‰‡çš„é€‰ä¸­æ•°é‡
-     * å½“è°ƒç”¨ addSelectedImageItem æˆ– deleteSelectedImageItem éƒ½ä¼šè§¦å‘å½“å‰å›žè°ƒ
+     * Í¼Æ¬Ìí¼Ó³É¹¦ºó£¬ÐÞ¸Äµ±Ç°Í¼Æ¬µÄÑ¡ÖÐÊýÁ¿
+     * µ±µ÷ÓÃ addSelectedImageItem »ò deleteSelectedImageItem ¶¼»á´¥·¢µ±Ç°»Øµ÷
      */
     @Override
     public void onImageSelected(int position, ImageItem item, boolean isAdd) {
@@ -201,7 +201,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
     }
 
     /**
-     * å•å‡»æ—¶ï¼Œéšè—å¤´å’Œå°¾
+     * µ¥»÷Ê±£¬Òþ²ØÍ·ºÍÎ²
      */
     @Override
     public void onImageSingleTap() {
@@ -210,16 +210,16 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
             bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
             topBar.setVisibility(View.GONE);
             bottomBar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//é€šçŸ¥æ æ‰€éœ€é¢œè‰²
-            //ç»™æœ€å¤–å±‚å¸ƒå±€åŠ ä¸Šè¿™ä¸ªå±žæ€§è¡¨ç¤ºï¼ŒActivityå…¨å±æ˜¾ç¤ºï¼Œä¸”çŠ¶æ€æ è¢«éšè—è¦†ç›–æŽ‰ã€‚
+            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//Í¨ÖªÀ¸ËùÐèÑÕÉ«
+            //¸ø×îÍâ²ã²¼¾Ö¼ÓÉÏÕâ¸öÊôÐÔ±íÊ¾£¬ActivityÈ«ÆÁÏÔÊ¾£¬ÇÒ×´Ì¬À¸±»Òþ²Ø¸²¸Çµô¡£
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         } else {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
             bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             topBar.setVisibility(View.VISIBLE);
             bottomBar.setVisibility(View.VISIBLE);
-            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//é€šçŸ¥æ æ‰€éœ€é¢œè‰²
-            //Activityå…¨å±æ˜¾ç¤ºï¼Œä½†çŠ¶æ€æ ä¸ä¼šè¢«éšè—è¦†ç›–ï¼ŒçŠ¶æ€æ ä¾ç„¶å¯è§ï¼ŒActivityé¡¶ç«¯å¸ƒå±€éƒ¨åˆ†ä¼šè¢«çŠ¶æ€é®ä½
+            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//Í¨ÖªÀ¸ËùÐèÑÕÉ«
+            //ActivityÈ«ÆÁÏÔÊ¾£¬µ«×´Ì¬À¸²»»á±»Òþ²Ø¸²¸Ç£¬×´Ì¬À¸ÒÀÈ»¿É¼û£¬Activity¶¥¶Ë²¼¾Ö²¿·Ö»á±»×´Ì¬ÕÚ×¡
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }

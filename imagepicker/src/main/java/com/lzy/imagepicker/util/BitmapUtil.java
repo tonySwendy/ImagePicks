@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  *
- * Bitmapå·¥å…·ç±»ï¼Œä¸»è¦æ˜¯è§£å†³æ‹ç…§æ—‹è½¬çš„é€‚é…
+ * Bitmap¹¤¾ßÀà£¬Ö÷ÒªÊÇ½â¾öÅÄÕÕĞı×ªµÄÊÊÅä
  *
  * Author: nanchen
  * Email: liushilin520@foxmail.com
@@ -27,17 +27,17 @@ public class BitmapUtil {
     }
 
     /**
-     * è·å–å›¾ç‰‡çš„æ—‹è½¬è§’åº¦
+     * »ñÈ¡Í¼Æ¬µÄĞı×ª½Ç¶È
      *
-     * @param path å›¾ç‰‡ç»å¯¹è·¯å¾„
-     * @return å›¾ç‰‡çš„æ—‹è½¬è§’åº¦
+     * @param path Í¼Æ¬¾ø¶ÔÂ·¾¶
+     * @return Í¼Æ¬µÄĞı×ª½Ç¶È
      */
     public static int getBitmapDegree(String path) {
         int degree = 0;
         try {
-            // ä»æŒ‡å®šè·¯å¾„ä¸‹è¯»å–å›¾ç‰‡ï¼Œå¹¶è·å–å…¶EXIFä¿¡æ¯
+            // ´ÓÖ¸¶¨Â·¾¶ÏÂ¶ÁÈ¡Í¼Æ¬£¬²¢»ñÈ¡ÆäEXIFĞÅÏ¢
             ExifInterface exifInterface = new ExifInterface(path);
-            // è·å–å›¾ç‰‡çš„æ—‹è½¬ä¿¡æ¯
+            // »ñÈ¡Í¼Æ¬µÄĞı×ªĞÅÏ¢
             int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             switch (orientation) {
                 case ExifInterface.ORIENTATION_ROTATE_90:
@@ -57,17 +57,17 @@ public class BitmapUtil {
     }
 
     /**
-     * å°†å›¾ç‰‡æŒ‰ç…§æŒ‡å®šçš„è§’åº¦è¿›è¡Œæ—‹è½¬
+     * ½«Í¼Æ¬°´ÕÕÖ¸¶¨µÄ½Ç¶È½øĞĞĞı×ª
      *
-     * @param bitmap éœ€è¦æ—‹è½¬çš„å›¾ç‰‡
-     * @param degree æŒ‡å®šçš„æ—‹è½¬è§’åº¦
-     * @return æ—‹è½¬åçš„å›¾ç‰‡
+     * @param bitmap ĞèÒªĞı×ªµÄÍ¼Æ¬
+     * @param degree Ö¸¶¨µÄĞı×ª½Ç¶È
+     * @return Ğı×ªºóµÄÍ¼Æ¬
      */
     public static Bitmap rotateBitmapByDegree(Bitmap bitmap, int degree) {
-        // æ ¹æ®æ—‹è½¬è§’åº¦ï¼Œç”Ÿæˆæ—‹è½¬çŸ©é˜µ
+        // ¸ù¾İĞı×ª½Ç¶È£¬Éú³ÉĞı×ª¾ØÕó
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
-        // å°†åŸå§‹å›¾ç‰‡æŒ‰ç…§æ—‹è½¬çŸ©é˜µè¿›è¡Œæ—‹è½¬ï¼Œå¹¶å¾—åˆ°æ–°çš„å›¾ç‰‡
+        // ½«Ô­Ê¼Í¼Æ¬°´ÕÕĞı×ª¾ØÕó½øĞĞĞı×ª£¬²¢µÃµ½ĞÂµÄÍ¼Æ¬
         Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         if (!bitmap.isRecycled()) {
             bitmap.recycle();
@@ -76,10 +76,10 @@ public class BitmapUtil {
     }
 
     /**
-     * è·å–æˆ‘ä»¬éœ€è¦çš„æ•´ç†è¿‡æ—‹è½¬è§’åº¦çš„Uri
-     * @param activity  ä¸Šä¸‹æ–‡ç¯å¢ƒ
-     * @param path      è·¯å¾„
-     * @return          æ­£å¸¸çš„Uri
+     * »ñÈ¡ÎÒÃÇĞèÒªµÄÕûÀí¹ıĞı×ª½Ç¶ÈµÄUri
+     * @param activity  ÉÏÏÂÎÄ»·¾³
+     * @param path      Â·¾¶
+     * @return          Õı³£µÄUri
      */
     public static Uri getRotatedUri(Activity activity, String path){
         int degree = BitmapUtil.getBitmapDegree(path);
@@ -93,11 +93,11 @@ public class BitmapUtil {
     }
 
     /**
-     * å°†å›¾ç‰‡æŒ‰ç…§æŒ‡å®šçš„è§’åº¦è¿›è¡Œæ—‹è½¬
+     * ½«Í¼Æ¬°´ÕÕÖ¸¶¨µÄ½Ç¶È½øĞĞĞı×ª
      *
-     * @param path   éœ€è¦æ—‹è½¬çš„å›¾ç‰‡çš„è·¯å¾„
-     * @param degree æŒ‡å®šçš„æ—‹è½¬è§’åº¦
-     * @return æ—‹è½¬åçš„å›¾ç‰‡
+     * @param path   ĞèÒªĞı×ªµÄÍ¼Æ¬µÄÂ·¾¶
+     * @param degree Ö¸¶¨µÄĞı×ª½Ç¶È
+     * @return Ğı×ªºóµÄÍ¼Æ¬
      */
     public static Bitmap rotateBitmapByDegree(String path, int degree) {
         Bitmap bitmap = BitmapFactory.decodeFile(path);
