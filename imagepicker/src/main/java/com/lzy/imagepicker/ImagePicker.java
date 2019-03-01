@@ -18,6 +18,7 @@ import android.util.Log;
 import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.loader.ImageLoader;
+import com.lzy.imagepicker.util.InnerToaster;
 import com.lzy.imagepicker.util.ProviderUtil;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.CropImageView;
@@ -39,8 +40,8 @@ import java.util.Locale;
  * 2017-03-20
  *
  * @author nanchen
- *         采用单例和弱引用解决Intent传值限制导致的异常
- *         ================================================
+ * 采用单例和弱引用解决Intent传值限制导致的异常
+ * ================================================
  */
 public class ImagePicker {
 
@@ -77,6 +78,7 @@ public class ImagePicker {
     private List<OnImageSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
 
     private static ImagePicker mInstance;
+
 
     private ImagePicker() {
     }
@@ -253,10 +255,16 @@ public class ImagePicker {
      * 拍照的方法
      */
     public void takePicture(Activity activity, int requestCode) {
+        PackageManager packageManager = activity.getPackageManager();
+        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            InnerToaster.obj(activity).show(R.string.ip_str_no_camera);
+            return;
+        }
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
-            if (Utils.existSDCard()) takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
+            if (Utils.existSDCard())
+                takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
             else takeImageFile = Environment.getDataDirectory();
             takeImageFile = createFile(takeImageFile, "IMG_", ".jpg");
             if (takeImageFile != null) {
@@ -383,6 +391,12 @@ public class ImagePicker {
         outState.putInt("outPutY", outPutY);
         outState.putInt("focusWidth", focusWidth);
         outState.putInt("focusHeight", focusHeight);
+    }
+
+
+    //设置内部toast展示风格
+    public void setIToaster(Context aContext, InnerToaster.IToaster aIToaster) {
+        InnerToaster.obj(aContext).setIToaster(aIToaster);
     }
 
 }

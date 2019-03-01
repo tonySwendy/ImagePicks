@@ -90,6 +90,7 @@ protected void onCreate(Bundle savedInstanceState) {
     imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
     imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
     imagePicker.setOutPutY(1000);//保存文件的高度。单位像素
+    imagePicker.setIToaster(this, new InnerToaster.IToaster());//设置吐司代理,保持lib与app中吐司风格一致
 }
 ```
 
@@ -129,11 +130,18 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ## 更新日志
 
 
+V1.0.1
+
+ * 依赖方式改为  api 'com.cysion:ImagePicker:1.0.1'（暂未发布）
+ * 支持中英文下的多语言支持(若翻译不符合，可通过覆盖res-string的方式);
+ * 增加无摄像头设备拍照时的校验;
+ * 增加吐司注入，保持lib与app中吐司风格一致;
+
 V1.0.0
 
  * 新作者重新发布，依赖方式改为  api 'com.cysion:ImagePicker:1.0.0'
  * 更新至Android sdk 27;
- * 修复loader生命周期造成的index问题，即闪退和黑屏问题
+ * 修复loader生命周期造成的index问题，即图片列表页闪退和黑屏问题(预览返回和桌面重回场景)
 
 V 0.6.1
  * [合并] [优化图片选择页UI， 适配预览页的横竖屏切换 #195](https://github.com/jeasonlzy/ImagePicker/pull/195)

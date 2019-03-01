@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.util.InnerToaster;
 import com.lzy.imagepicker.view.CropImageView;
 import com.lzy.imagepickerdemo.imageloader.GlideImageLoader;
 import com.lzy.imagepickerdemo.imageloader.PicassoImageLoader;
@@ -71,7 +72,17 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
 
         imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker.setIToaster(this, new InnerToaster.IToaster() {
+            @Override
+            public void show(String msg) {
+                Toast.makeText(ImagePickerActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void show(int resId) {
+                Toast.makeText(ImagePickerActivity.this, resId, Toast.LENGTH_SHORT).show();
+            }
+        });
         rb_uil = (RadioButton) findViewById(R.id.rb_uil);
         rb_glide = (RadioButton) findViewById(R.id.rb_glide);
         rb_picasso = (RadioButton) findViewById(R.id.rb_picasso);
@@ -127,9 +138,11 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
             case R.id.btn_open_gallery:
                 if (rb_uil.isChecked()) imagePicker.setImageLoader(new UILImageLoader());
                 else if (rb_glide.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-                else if (rb_picasso.isChecked()) imagePicker.setImageLoader(new PicassoImageLoader());
+                else if (rb_picasso.isChecked())
+                    imagePicker.setImageLoader(new PicassoImageLoader());
                 else if (rb_fresco.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-                else if (rb_xutils3.isChecked()) imagePicker.setImageLoader(new XUtils3ImageLoader());
+                else if (rb_xutils3.isChecked())
+                    imagePicker.setImageLoader(new XUtils3ImageLoader());
                 else if (rb_xutils.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
 
                 if (rb_single_select.isChecked()) imagePicker.setMultiMode(false);
@@ -155,7 +168,7 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
                 imagePicker.setOutPutY(Integer.valueOf(et_outputy.getText().toString()));
 
                 Intent intent = new Intent(this, ImageGridActivity.class);
-                intent.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
+                intent.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
                 //ImagePicker.getInstance().setSelectedImages(images);
                 startActivityForResult(intent, 100);
                 break;
@@ -210,7 +223,6 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
             }
         }
     }
-
 
 
     private class MyAdapter extends BaseAdapter {
