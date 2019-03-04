@@ -90,6 +90,10 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         imagePicker = ImagePicker.getInstance();
         imagePicker.clear();
         imagePicker.addOnImageSelectedListener(this);
+        if (imagePicker.getSelectLimit() == 0 || imagePicker.getSelectLimit() == 1) {
+            imagePicker.setSelectLimit(1);
+            imagePicker.setMultiMode(false);
+        }
 
         Intent data = getIntent();
         // 新增可直接拍照
@@ -271,9 +275,12 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         } else {
             imagePicker.clearSelectedImages();
             imagePicker.addSelectedImageItem(position, imagePicker.getCurrentImageFolderItems().get(position), true);
-            if (imagePicker.isCrop()) {
+            if (imagePicker.isFreeCrop) {
+                Intent intent = new Intent(ImageGridActivity.this, FreeCropActivity.class);
+                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //进入自由裁剪界面
+            } else if (imagePicker.isCrop()) {
                 Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
+                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //进入老版本裁剪界面
             } else {
                 Intent intent = new Intent();
                 intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
@@ -330,7 +337,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 finish();
             }
         } else {
-            //如果是裁剪，因为裁剪指定了存储的Uri，所以返回的data一定为null
+            //如果是拍照，因为裁剪指定了存储的Uri，所以返回的data一定为null
             if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_TAKE) {
                 //发送广播通知图片增加了
                 ImagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
@@ -339,35 +346,27 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                  * 2017-03-21 对机型做旋转处理
                  */
                 String path = imagePicker.getTakeImageFile().getAbsolutePath();
-//                int degree = BitmapUtil.getBitmapDegree(path);
-//                if (degree != 0){
-//                    Bitmap bitmap = BitmapUtil.rotateBitmapByDegree(path,degree);
-//                    if (bitmap != null){
-//                        File file = new File(path);
-//                        try {
-//                            FileOutputStream bos = new FileOutputStream(file);
-//                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-//                            bos.flush();
-//                            bos.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
 
+                //单选模式才支持裁剪
+                if (!imagePicker.isMultiMode()) {
+                    if (imagePicker.isFreeCrop) {
+                        Intent intent = new Intent(ImageGridActivity.this, FreeCropActivity.class);
+                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //进入自由裁剪界面
+                        return;
+                    } else if (imagePicker.isCrop()) {
+                        Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
+                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //进入老版本裁剪界面
+                        return;
+                    }
+                }
+                //以下，多选模式，直接返回已选择的条目
                 ImageItem imageItem = new ImageItem();
                 imageItem.path = path;
-                imagePicker.clearSelectedImages();
                 imagePicker.addSelectedImageItem(0, imageItem, true);
-                if (imagePicker.isCrop()) {
-                    Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                    startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
-                } else {
-                    Intent intent = new Intent();
-                    intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-                    setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
-                    finish();
-                }
+                Intent intent = new Intent();
+                intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
+                finish();
             } else if (directPhoto) {
                 finish();
             }

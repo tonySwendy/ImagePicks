@@ -20,6 +20,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.isseiaoki.simplecropview.FreeCropImageView;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -120,6 +121,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         CheckBox cb_crop = (CheckBox) findViewById(R.id.cb_crop);
         cb_crop.setOnCheckedChangeListener(this);
         cb_crop.setChecked(true);
+        CheckBox freeCrop = (CheckBox) findViewById(R.id.cb_free_crop);
+        freeCrop.setOnCheckedChangeListener(this);
+        freeCrop.setChecked(false);
         CheckBox cb_isSaveRectangle = (CheckBox) findViewById(R.id.cb_isSaveRectangle);
         cb_isSaveRectangle.setOnCheckedChangeListener(this);
         cb_isSaveRectangle.setChecked(true);
@@ -186,6 +190,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
                 break;
             case R.id.cb_crop:
                 imagePicker.setCrop(isChecked);
+                break;
+            case R.id.cb_free_crop:
+                imagePicker.setFreeCrop(isChecked, FreeCropImageView.CropMode.FREE);
                 break;
             case R.id.cb_isSaveRectangle:
                 imagePicker.setSaveRectangle(isChecked);

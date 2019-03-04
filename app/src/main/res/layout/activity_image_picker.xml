@@ -154,13 +154,18 @@
                 android:id="@+id/cb_show_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="显示相机(Show Camera)"/>
+                android:text="显示相机"/>
 
             <CheckBox
                 android:id="@+id/cb_crop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="裁剪(Crop)"/>
+            <CheckBox
+                android:id="@+id/cb_free_crop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自由裁剪"/>
         </LinearLayout>
 
         <CheckBox

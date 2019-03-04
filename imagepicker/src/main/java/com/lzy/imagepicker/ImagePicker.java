@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -15,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.isseiaoki.simplecropview.FreeCropImageView;
 import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.loader.ImageLoader;
@@ -70,8 +70,10 @@ public class ImagePicker {
     private CropImageView.Style style = CropImageView.Style.RECTANGLE; //裁剪框的形状
     private File cropCacheFolder;
     private File takeImageFile;
-    public Bitmap cropBitmap;
 
+    //设置自由裁剪时的模式，默认自由模式
+    public FreeCropImageView.CropMode mFreeCropMode = com.isseiaoki.simplecropview.FreeCropImageView.CropMode.FREE;
+    public boolean isFreeCrop = false;//是否开启自由裁剪模式，与原来的裁剪模式进行区分
     private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();   //选中的图片集合
     private List<ImageFolder> mImageFolders;      //所有的图片文件夹
     private int mCurrentImageFolderPosition = 0;  //当前选中的文件夹位置 0表示所有图片
@@ -399,4 +401,8 @@ public class ImagePicker {
         InnerToaster.obj(aContext).setIToaster(aIToaster);
     }
 
+    public void setFreeCrop(boolean need, FreeCropImageView.CropMode aCropMode) {
+        mFreeCropMode = aCropMode;
+        isFreeCrop = need;
+    }
 }
