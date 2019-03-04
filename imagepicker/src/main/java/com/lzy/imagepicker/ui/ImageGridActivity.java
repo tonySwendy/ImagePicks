@@ -44,8 +44,8 @@ import java.util.List;
  * 2017-03-17
  *
  * @author nanchen
- *         新增可直接传递是否裁剪参数，以及直接拍照
- *         ================================================
+ * 新增可直接传递是否裁剪参数，以及直接拍照
+ * ================================================
  */
 public class ImageGridActivity extends ImageBaseActivity implements ImageDataSource.OnImagesLoadedListener, OnImageItemClickListener, ImagePicker.OnImageSelectedListener, View.OnClickListener {
 
@@ -240,7 +240,9 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 //        mImageGridAdapter.setOnImageItemClickListener(this);
         mRecyclerAdapter.setOnImageItemClickListener(this);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 2), false));
+        if (mRecyclerView.getItemDecorationCount() < 1) {
+            mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 2), false));
+        }
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mImageFolderAdapter.refreshData(imageFolders);
     }
