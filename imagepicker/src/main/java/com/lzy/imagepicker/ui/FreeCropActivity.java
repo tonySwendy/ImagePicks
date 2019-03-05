@@ -16,7 +16,6 @@ import com.isseiaoki.simplecropview.FreeCropImageView;
 import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
-import com.isseiaoki.simplecropview.util.Alert;
 import com.isseiaoki.simplecropview.util.Logger;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
@@ -38,6 +37,7 @@ public class FreeCropActivity extends ImageBaseActivity implements View.OnClickL
     private Bitmap.CompressFormat mCompressFormat = Bitmap.CompressFormat.JPEG;
     private Uri mSourceUri = null;
     private static String croppedPath;
+    private View mLoadingBox;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +52,7 @@ public class FreeCropActivity extends ImageBaseActivity implements View.OnClickL
         Button btn_ok = findViewById(R.id.btn_ok);
         btn_ok.setText(getString(R.string.ip_complete));
         btn_ok.setOnClickListener(this);
+        mLoadingBox = (View) findViewById(R.id.ip_rl_box);
 
         mImageItems = imagePicker.getSelectedImages();
         mImagePath = mImageItems.get(0).path;
@@ -71,7 +72,7 @@ public class FreeCropActivity extends ImageBaseActivity implements View.OnClickL
             setResult(RESULT_CANCELED);
             finish();
         } else if (id == R.id.btn_ok) {
-            Alert.obj().loading(this);
+            mLoadingBox.setVisibility(View.VISIBLE);
             mCropImageView.crop(mSourceUri).execute(mCropCallback);
         }
     }
@@ -95,13 +96,14 @@ public class FreeCropActivity extends ImageBaseActivity implements View.OnClickL
 
         @Override
         public void onError(Throwable e) {
-            Alert.obj().loaded();
+
+            mLoadingBox.setVisibility(View.GONE);
         }
     };
     private final SaveCallback mSaveCallback = new SaveCallback() {
         @Override
         public void onSuccess(Uri outputUri) {
-            Alert.obj().loaded();
+            mLoadingBox.setVisibility(View.GONE);
             //裁剪后替换掉返回数据的内容，但是不要改变全局中的选中数据
             mImageItems.remove(0);
             ImageItem imageItem = new ImageItem();
@@ -115,7 +117,7 @@ public class FreeCropActivity extends ImageBaseActivity implements View.OnClickL
 
         @Override
         public void onError(Throwable e) {
-            Alert.obj().loaded();
+            mLoadingBox.setVisibility(View.GONE);
         }
     };
 

@@ -144,6 +144,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         } else {
             new ImageDataSource(this, null, this);
         }
+
     }
 
     @Override
@@ -153,13 +154,13 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 new ImageDataSource(this, null, this);
             } else {
-                showToast("权限被禁止，无法选择本地图片");
+                showToast(getString(R.string.ip_str_no_permission));
             }
         } else if (requestCode == REQUEST_PERMISSION_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
             } else {
-                showToast("权限被禁止，无法打开相机");
+                showToast(getString(R.string.ip_str_no_camera_permission));
             }
         }
     }
@@ -347,7 +348,11 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                  */
                 String path = imagePicker.getTakeImageFile().getAbsolutePath();
 
-                //单选模式才支持裁剪
+                //照相回来，首先添加至已选列表中
+                ImageItem imageItem = new ImageItem();
+                imageItem.path = path;
+                imagePicker.addSelectedImageItem(0, imageItem, true);
+                //是否需要裁剪，单选模式才支持裁剪
                 if (!imagePicker.isMultiMode()) {
                     if (imagePicker.isFreeCrop) {
                         Intent intent = new Intent(ImageGridActivity.this, FreeCropActivity.class);
@@ -359,10 +364,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                         return;
                     }
                 }
-                //以下，多选模式，直接返回已选择的条目
-                ImageItem imageItem = new ImageItem();
-                imageItem.path = path;
-                imagePicker.addSelectedImageItem(0, imageItem, true);
+
                 Intent intent = new Intent();
                 intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
                 setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据

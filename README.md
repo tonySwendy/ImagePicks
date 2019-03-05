@@ -7,13 +7,13 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
 
  对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
- ```java
+ ```
  api 'com.cysion:ImagePicker:1.0.0'
  ```
 
 ## 演示
  ![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo1.png)![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo2.gif)
- ![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo3.gif)![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo5.gif)
+
 
 ## 1.用法
 对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
@@ -30,7 +30,6 @@ api('com.cysion:ImagePicker:1.0.1'){
 
 ## 2.功能和参数含义
 
-### 温馨提示:目前库中的预览界面有个原图的复选框,暂时只做了UI,还没有做压缩的逻辑
 
 |配置参数|参数含义|
 |:--:|--|
@@ -38,13 +37,14 @@ api('com.cysion:ImagePicker:1.0.1'){
 |selectLimit|多选限制数量，默认为9|
 |showCamera|选择照片时是否显示拍照按钮|
 |crop|是否允许裁剪（单选有效）|
+|isFreeCrop|是否允许自由裁剪(单选有效,默认FREE,自由比例)新版本添加，推荐使用，会覆盖crop|
 |style|有裁剪时，裁剪框是矩形还是圆形|
 |focusWidth|矩形裁剪框宽度（圆形自动取宽高最小值）|
 |focusHeight|矩形裁剪框高度（圆形自动取宽高最小值）|
 |outPutX|裁剪后需要保存的图片宽度|
 |outPutY|裁剪后需要保存的图片高度|
 |isSaveRectangle|裁剪后的图片是按矩形区域保存还是裁剪框的形状，例如圆形裁剪的时候，该参数给true，那么保存的图片是矩形区域，如果该参数给fale，保存的图片是圆形区域|
-|imageLoader|需要使用的图片加载器，自需要实现ImageLoader接口即可|
+|imageLoader|需要使用的图片加载器，自需要实现ImageLoader接口即可,推荐glide|
 
 ## 3.代码参考
 
@@ -83,6 +83,7 @@ protected void onCreate(Bundle savedInstanceState) {
     imagePicker.setImageLoader(new PicassoImageLoader());   //设置图片加载器
     imagePicker.setShowCamera(true);  //显示拍照按钮
     imagePicker.setCrop(true);        //允许裁剪（单选才有效）
+    imagePicker.setFreeCrop(true, FreeCropImageView.CropMode.FREE);//新版添加,自由裁剪，优先于setCrop
     imagePicker.setSaveRectangle(true); //是否按矩形区域保存
     imagePicker.setSelectLimit(9);    //选中数量限制
     imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
@@ -132,11 +133,13 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 V1.0.1
 
- * 依赖方式改为  api 'com.cysion:ImagePicker:1.0.1'（暂未发布）
+ * 依赖方式改为  api 'com.cysion:ImagePicker:1.0.1'
  * 支持中英文下的多语言支持(若翻译不符合，可通过覆盖res-string的方式);
  * 增加无摄像头设备拍照时的校验;
  * 增加吐司注入，保持lib与app中吐司风格一致;
  * 解决图片裁剪时点击取消，返回后列表间隔变大的bug;
+ * 加入一种新的裁剪方式--自由裁剪，可以按任意比例拖动裁剪;
+ * 修复使用原裁剪时，取消后会多选一张图片的bug;
 
 V1.0.0
 
@@ -189,7 +192,7 @@ V 0.3.5
 
 ## Licenses
 ```
- Copyright 2016 jeasonlzy(廖子尧)
+ Copyright 2016 jeasonlzy(廖子尧)，2019 CysionLiu
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.

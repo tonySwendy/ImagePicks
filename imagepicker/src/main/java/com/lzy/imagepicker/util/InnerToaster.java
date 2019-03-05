@@ -10,8 +10,10 @@ public class InnerToaster {
 
 
     public interface IToaster {
+        //提示msg
         void show(String msg);
 
+        //提示resId资源对应的字符串
         void show(int resId);
 
     }
