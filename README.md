@@ -8,7 +8,7 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
  对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
  ```
- api 'com.cysion:ImagePicker:1.0.0'
+ api 'com.cysion:ImagePicker:1.0.1'
  ```
 
 ## 演示
