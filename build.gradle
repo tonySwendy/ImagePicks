@@ -21,6 +21,10 @@ allprojects {
         mavenCentral()
         maven { url "https://jitpack.io" }
     }
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'GBK')
+    }
 }
 
 task clean(type: Delete) {
