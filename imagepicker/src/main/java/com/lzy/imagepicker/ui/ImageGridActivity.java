@@ -100,11 +100,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         if (data != null && data.getExtras() != null) {
             directPhoto = data.getBooleanExtra(EXTRAS_TAKE_PICKERS, false); // 默认不是直接打开相机
             if (directPhoto) {
-                if (!(checkPermission(Manifest.permission.CAMERA))) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
-                } else {
-                    imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
-                }
+                checkToCapture();
             }
             ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(EXTRAS_IMAGES);
             imagePicker.setSelectedImages(images);
@@ -147,6 +143,15 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
     }
 
+    private void checkToCapture() {
+        if (!(checkPermission(Manifest.permission.CAMERA)) || !checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
+        } else {
+            imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -157,7 +162,13 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 showToast(getString(R.string.ip_str_no_permission));
             }
         } else if (requestCode == REQUEST_PERMISSION_CAMERA) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            boolean denied = false;
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    denied = true;
+                }
+            }
+            if (!denied) {
                 imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
             } else {
                 showToast(getString(R.string.ip_str_no_camera_permission));

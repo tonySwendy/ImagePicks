@@ -15,5 +15,5 @@
     <string name="ip_str_choose">Choose</string>
     <string name="ip_str_picture">Picture</string>
     <string name="ip_str_no_permission">No permission</string>
-    <string name="ip_str_no_camera_permission">No camera permission</string>
+    <string name="ip_str_no_camera_permission">No permission to capture photo</string>
 </resources>

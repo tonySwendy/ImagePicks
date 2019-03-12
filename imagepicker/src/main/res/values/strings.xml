@@ -15,5 +15,5 @@
     <string name="ip_str_choose">选择</string>
     <string name="ip_str_picture">图片</string>
     <string name="ip_str_no_permission">权限被禁止，无法选择本地图片</string>
-    <string name="ip_str_no_camera_permission">权限被禁止，无法打开相机</string>
+    <string name="ip_str_no_camera_permission">权限被禁止，无法拍照</string>
 </resources>

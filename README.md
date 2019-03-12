@@ -8,7 +8,7 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
  对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
  ```
- api 'com.cysion:ImagePicker:1.0.1'
+ api 'com.cysion:ImagePicker:1.0.2'
  ```
 
 ## 演示
@@ -19,10 +19,10 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
 对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
 ```
-api 'com.cysion:ImagePicker:1.0.1'
+api 'com.cysion:ImagePicker:1.0.2'
 
 //若出现依赖重复问题，可以这样
-api('com.cysion:ImagePicker:1.0.1'){
+api('com.cysion:ImagePicker:1.0.2'){
    exclude group: 'com.android.support'
 }
 ```
@@ -105,10 +105,20 @@ public void onClick(View v) {
 ```
 
 4. 如果你想直接调用相机
-```java
+```
+
+//1.0.2版本加入了更明确的权限申请，解决原程序直接打开拍照可能出现没数据的情况
+
 Intent intent = new Intent(this, ImageGridActivity.class);
 intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS,true); // 是否是直接打开相机
-      startActivityForResult(intent, REQUEST_CODE_SELECT);
+startActivityForResult(intent, REQUEST_CODE_SELECT);
+
+//若拍照之后需要裁剪，则在使用前，需要关闭多选模式，支持裁剪
+
+ImagePicker.getInstance().setMultiMode(false);
+ImagePicker.getInstance().setFreeCrop(true, FreeCropImageView.CropMode.FREE);
+...
+
 ```
 
 5. 重写`onActivityResult`方法,回调结果
@@ -129,6 +139,13 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 ## 更新日志
+
+
+V1.0.2
+
+ * 依赖方式改为  api 'com.cysion:ImagePicker:1.0.2'
+ * 加入了更明确的权限申请，解决原程序直接打开拍照可能出现没数据的情况
+ * 增加 点击直接拍照时，选择单选模式，并支持裁剪的说明
 
 
 V1.0.1

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.isseiaoki.simplecropview.FreeCropImageView;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -105,6 +106,8 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
                                  */
                                 //打开选择,本次允许选择的数量
                                 ImagePicker.getInstance().setSelectLimit(maxImgCount - selImageList.size());
+                                ImagePicker.getInstance().setMultiMode(false);
+                                ImagePicker.getInstance().setFreeCrop(true, FreeCropImageView.CropMode.FREE);
                                 Intent intent = new Intent(WxDemoActivity.this, ImageGridActivity.class);
                                 intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
                                 startActivityForResult(intent, REQUEST_CODE_SELECT);
