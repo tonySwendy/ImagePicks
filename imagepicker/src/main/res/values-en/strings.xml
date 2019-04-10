@@ -11,9 +11,13 @@
     <string name="ip_origin">Origin Image</string>
     <string name="ip_origin_size">Origin Image(%1$s)</string>
     <string name="ip_str_no_camera">Detect no camera</string>
-    <string name="ip_str_capture">Capture</string>
+    <string name="ip_str_capture">Camara</string>
     <string name="ip_str_choose">Choose</string>
     <string name="ip_str_picture">Picture</string>
     <string name="ip_str_no_permission">No permission</string>
     <string name="ip_str_no_camera_permission">No permission to capture photo</string>
+    <string name="ip_str_tips">Tips</string>
+    <string name="ip_need_to_del">Are you sure to delete this photo?</string>
+    <string name="ip_cancel">Cancel</string>
+    <string name="ip_str_confirm">Confirm</string>
 </resources>
