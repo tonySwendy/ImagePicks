@@ -1,13 +1,13 @@
 package com.lzy.imagepicker.view;
 
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 /**
  * author : zchu
  * date   : 2017/8/30
- * desc   : ÎªRecyclerview µÄGridLayoutManagerÌí¼ÓÁÐ¼ä¾à
+ * desc   : ÎªRecyclerview ï¿½ï¿½GridLayoutManagerï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½
  */
 
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
