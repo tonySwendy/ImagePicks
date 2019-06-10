@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -36,15 +36,15 @@ import java.util.List;
 
 /**
  * ================================================
- * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
- * °æ    ±¾£º1.0
- * ´´½¨ÈÕÆÚ£º2016/5/19
- * Ãè    Êö£º
- * ÐÞ¶©ÀúÊ·£º
+ * ï¿½ï¿½    ï¿½ß£ï¿½jeasonlzyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¢ Githubï¿½ï¿½Ö·ï¿½ï¿½https://github.com/jeasonlzy0216
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½1.0
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½2016/5/19
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½
+ * ï¿½Þ¶ï¿½ï¿½ï¿½Ê·ï¿½ï¿½
  * 2017-03-17
  *
  * @author nanchen
- * ÐÂÔö¿ÉÖ±½Ó´«µÝÊÇ·ñ²Ã¼ô²ÎÊý£¬ÒÔ¼°Ö±½ÓÅÄÕÕ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó´ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * ================================================
  */
 public class ImageGridActivity extends ImageBaseActivity implements ImageDataSource.OnImagesLoadedListener, OnImageItemClickListener, ImagePicker.OnImageSelectedListener, View.OnClickListener {
@@ -56,17 +56,17 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
     private ImagePicker imagePicker;
 
-    private boolean isOrigin = false;  //ÊÇ·ñÑ¡ÖÐÔ­Í¼
-    private View mFooterBar;     //µ×²¿À¸
-    private Button mBtnOk;       //È·¶¨°´Å¥
-    private View mllDir; //ÎÄ¼þ¼ÐÇÐ»»°´Å¥
-    private TextView mtvDir; //ÏÔÊ¾µ±Ç°ÎÄ¼þ¼Ð
-    private TextView mBtnPre;      //Ô¤ÀÀ°´Å¥
-    private ImageFolderAdapter mImageFolderAdapter;    //Í¼Æ¬ÎÄ¼þ¼ÐµÄÊÊÅäÆ÷
-    private FolderPopUpWindow mFolderPopupWindow;  //ImageSetµÄPopupWindow
-    private List<ImageFolder> mImageFolders;   //ËùÓÐµÄÍ¼Æ¬ÎÄ¼þ¼Ð
-    //    private ImageGridAdapter mImageGridAdapter;  //Í¼Æ¬¾Å¹¬¸ñÕ¹Ê¾µÄÊÊÅäÆ÷
-    private boolean directPhoto = false; // Ä¬ÈÏ²»ÊÇÖ±½Óµ÷È¡Ïà»ú
+    private boolean isOrigin = false;  //ï¿½Ç·ï¿½Ñ¡ï¿½ï¿½Ô­Í¼
+    private View mFooterBar;     //ï¿½×²ï¿½ï¿½ï¿½
+    private Button mBtnOk;       //È·ï¿½ï¿½ï¿½ï¿½Å¥
+    private View mllDir; //ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Å¥
+    private TextView mtvDir; //ï¿½ï¿½Ê¾ï¿½ï¿½Ç°ï¿½Ä¼ï¿½ï¿½ï¿½
+    private TextView mBtnPre;      //Ô¤ï¿½ï¿½ï¿½ï¿½Å¥
+    private ImageFolderAdapter mImageFolderAdapter;    //Í¼Æ¬ï¿½Ä¼ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private FolderPopUpWindow mFolderPopupWindow;  //ImageSetï¿½ï¿½PopupWindow
+    private List<ImageFolder> mImageFolders;   //ï¿½ï¿½ï¿½Ðµï¿½Í¼Æ¬ï¿½Ä¼ï¿½ï¿½ï¿½
+    //    private ImageGridAdapter mImageGridAdapter;  //Í¼Æ¬ï¿½Å¹ï¿½ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private boolean directPhoto = false; // Ä¬ï¿½Ï²ï¿½ï¿½ï¿½Ö±ï¿½Óµï¿½È¡ï¿½ï¿½ï¿½
     private RecyclerView mRecyclerView;
     private ImageRecyclerAdapter mRecyclerAdapter;
 
@@ -96,9 +96,9 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         }
 
         Intent data = getIntent();
-        // ÐÂÔö¿ÉÖ±½ÓÅÄÕÕ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (data != null && data.getExtras() != null) {
-            directPhoto = data.getBooleanExtra(EXTRAS_TAKE_PICKERS, false); // Ä¬ÈÏ²»ÊÇÖ±½Ó´ò¿ªÏà»ú
+            directPhoto = data.getBooleanExtra(EXTRAS_TAKE_PICKERS, false); // Ä¬ï¿½Ï²ï¿½ï¿½ï¿½Ö±ï¿½Ó´ï¿½ï¿½ï¿½ï¿½
             if (directPhoto) {
                 checkToCapture();
             }
@@ -188,21 +188,21 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         if (id == R.id.btn_ok) {
             Intent intent = new Intent();
             intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-            setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //¶àÑ¡²»ÔÊÐí²Ã¼ô²Ã¼ô£¬·µ»ØÊý¾Ý
+            setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             finish();
         } else if (id == R.id.ll_dir) {
             if (mImageFolders == null) {
-                Log.i("ImageGridActivity", "ÄúµÄÊÖ»úÃ»ÓÐÍ¼Æ¬");
+                Log.i("ImageGridActivity", "ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½Ã»ï¿½ï¿½Í¼Æ¬");
                 return;
             }
-            //µã»÷ÎÄ¼þ¼Ð°´Å¥
+            //ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ð°ï¿½Å¥
             createPopupFolderList();
-            mImageFolderAdapter.refreshData(mImageFolders);  //Ë¢ÐÂÊý¾Ý
+            mImageFolderAdapter.refreshData(mImageFolders);  //Ë¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (mFolderPopupWindow.isShowing()) {
                 mFolderPopupWindow.dismiss();
             } else {
                 mFolderPopupWindow.showAtLocation(mFooterBar, Gravity.NO_GRAVITY, 0, 0);
-                //Ä¬ÈÏÑ¡Ôñµ±Ç°Ñ¡ÔñµÄÉÏÒ»¸ö£¬µ±Ä¿Â¼ºÜ¶àÊ±£¬Ö±½Ó¶¨Î»µ½ÒÑÑ¡ÖÐµÄÌõÄ¿
+                //Ä¬ï¿½ï¿½Ñ¡ï¿½ï¿½Ç°Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½Ü¶ï¿½Ê±ï¿½ï¿½Ö±ï¿½Ó¶ï¿½Î»ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½Ðµï¿½ï¿½ï¿½Ä¿
                 int index = mImageFolderAdapter.getSelectIndex();
                 index = index == 0 ? index : index - 1;
                 mFolderPopupWindow.setSelection(index);
@@ -215,13 +215,13 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             intent.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
             startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);
         } else if (id == R.id.btn_back) {
-            //µã»÷·µ»Ø°´Å¥
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø°ï¿½Å¥
             finish();
         }
     }
 
     /**
-     * ´´½¨µ¯³öµÄListView
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ListView
      */
     private void createPopupFolderList() {
         mFolderPopupWindow = new FolderPopUpWindow(this, mImageFolderAdapter);
@@ -265,7 +265,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
     @Override
     public void onImageItemClick(View view, ImageItem imageItem, int position) {
-        //¸ù¾ÝÊÇ·ñÓÐÏà»ú°´Å¥È·¶¨Î»ÖÃ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥È·ï¿½ï¿½Î»ï¿½ï¿½
         position = imagePicker.isShowCamera() ? position - 1 : position;
         if (imagePicker.isMultiMode()) {
             Intent intent = new Intent(ImageGridActivity.this, ImagePreviewActivity.class);
@@ -274,29 +274,29 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             /**
              * 2017-03-20
              *
-             * ÒÀÈ»²ÉÓÃÈõÒýÓÃ½øÐÐ½â¾ö£¬²ÉÓÃµ¥Àý¼ÓËø·½Ê½´¦Àí
+             * ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
              */
 
-            // ¾ÝËµÕâÑù»áµ¼ÖÂ´óÁ¿Í¼Æ¬µÄÊ±ºò±ÀÀ£
+            // ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½Â´ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½
 //            intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getCurrentImageFolderItems());
 
-            // µ«²ÉÓÃÈõÒýÓÃ»áµ¼ÖÂÔ¤ÀÀÈõÒýÓÃÖ±½Ó·µ»Ø¿ÕÖ¸Õë
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»áµ¼ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó·ï¿½ï¿½Ø¿ï¿½Ö¸ï¿½ï¿½
             DataHolder.getInstance().save(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS, imagePicker.getCurrentImageFolderItems());
             intent.putExtra(ImagePreviewActivity.ISORIGIN, isOrigin);
-            startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);  //Èç¹ûÊÇ¶àÑ¡£¬µã»÷Í¼Æ¬½øÈëÔ¤ÀÀ½çÃæ
+            startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);  //ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         } else {
             imagePicker.clearSelectedImages();
             imagePicker.addSelectedImageItem(position, imagePicker.getCurrentImageFolderItems().get(position), true);
             if (imagePicker.isFreeCrop) {
                 Intent intent = new Intent(ImageGridActivity.this, FreeCropActivity.class);
-                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //½øÈë×ÔÓÉ²Ã¼ô½çÃæ
+                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É²Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½
             } else if (imagePicker.isCrop()) {
                 Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //½øÈëÀÏ°æ±¾²Ã¼ô½çÃæ
+                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //ï¿½ï¿½ï¿½ï¿½ï¿½Ï°æ±¾ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½
             } else {
                 Intent intent = new Intent();
                 intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //µ¥Ñ¡²»ÐèÒª²Ã¼ô£¬·µ»ØÊý¾Ý
+                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Òªï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 finish();
             }
         }
@@ -338,47 +338,47 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             if (resultCode == ImagePicker.RESULT_CODE_BACK) {
                 isOrigin = data.getBooleanExtra(ImagePreviewActivity.ISORIGIN, false);
             } else {
-                //´ÓÅÄÕÕ½çÃæ·µ»Ø
-                //µã»÷ X , Ã»ÓÐÑ¡ÔñÕÕÆ¬
+                //ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½æ·µï¿½ï¿½
+                //ï¿½ï¿½ï¿½ X , Ã»ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Æ¬
                 if (data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) == null) {
-                    //Ê²Ã´¶¼²»×ö Ö±½Óµ÷ÆðÏà»ú
+                    //Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ö±ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 } else {
-                    //ËµÃ÷ÊÇ´Ó²Ã¼ôÒ³Ãæ¹ýÀ´µÄÊý¾Ý£¬Ö±½Ó·µ»Ø¾Í¿ÉÒÔ
+                    //Ëµï¿½ï¿½ï¿½Ç´Ó²Ã¼ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½Ö±ï¿½Ó·ï¿½ï¿½Ø¾Í¿ï¿½ï¿½ï¿½
                     setResult(ImagePicker.RESULT_CODE_ITEMS, data);
                 }
                 finish();
             }
         } else {
-            //Èç¹ûÊÇÅÄÕÕ£¬ÒòÎª²Ã¼ôÖ¸¶¨ÁË´æ´¢µÄUri£¬ËùÒÔ·µ»ØµÄdataÒ»¶¨Îªnull
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ£ï¿½ï¿½ï¿½Îªï¿½Ã¼ï¿½Ö¸ï¿½ï¿½ï¿½Ë´æ´¢ï¿½ï¿½Uriï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½Øµï¿½dataÒ»ï¿½ï¿½Îªnull
             if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_TAKE) {
-                //·¢ËÍ¹ã²¥Í¨ÖªÍ¼Æ¬Ôö¼ÓÁË
+                //ï¿½ï¿½ï¿½Í¹ã²¥Í¨ÖªÍ¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ImagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
 
                 /**
-                 * 2017-03-21 ¶Ô»úÐÍ×öÐý×ª´¦Àí
+                 * 2017-03-21 ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½
                  */
                 String path = imagePicker.getTakeImageFile().getAbsolutePath();
 
-                //ÕÕÏà»ØÀ´£¬Ê×ÏÈÌí¼ÓÖÁÒÑÑ¡ÁÐ±íÖÐ
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½Ð±ï¿½ï¿½ï¿½
                 ImageItem imageItem = new ImageItem();
                 imageItem.path = path;
                 imagePicker.addSelectedImageItem(0, imageItem, true);
-                //ÊÇ·ñÐèÒª²Ã¼ô£¬µ¥Ñ¡Ä£Ê½²ÅÖ§³Ö²Ã¼ô
+                //ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡Ä£Ê½ï¿½ï¿½Ö§ï¿½Ö²Ã¼ï¿½
                 if (!imagePicker.isMultiMode()) {
                     if (imagePicker.isFreeCrop) {
                         Intent intent = new Intent(ImageGridActivity.this, FreeCropActivity.class);
-                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //½øÈë×ÔÓÉ²Ã¼ô½çÃæ
+                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É²Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½
                         return;
                     } else if (imagePicker.isCrop()) {
                         Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //½øÈëÀÏ°æ±¾²Ã¼ô½çÃæ
+                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //ï¿½ï¿½ï¿½ï¿½ï¿½Ï°æ±¾ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½
                         return;
                     }
                 }
 
                 Intent intent = new Intent();
                 intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //µ¥Ñ¡²»ÐèÒª²Ã¼ô£¬·µ»ØÊý¾Ý
+                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Òªï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 finish();
             } else if (directPhoto) {
                 finish();

@@ -1,17 +1,17 @@
 package com.lzy.imagepicker.view;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.SoundEffectConstants;
 
 /**
  * ================================================
- * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
- * °æ    ±¾£º1.0
- * ´´½¨ÈÕÆÚ£º2016/5/19
- * Ãè    Êö£º´øÉùÒôµÄCheckBox
- * ÐÞ¶©ÀúÊ·£º
+ * ï¿½ï¿½    ï¿½ß£ï¿½jeasonlzyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¢ Githubï¿½ï¿½Ö·ï¿½ï¿½https://github.com/jeasonlzy0216
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½1.0
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½2016/5/19
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CheckBox
+ * ï¿½Þ¶ï¿½ï¿½ï¿½Ê·ï¿½ï¿½
  * ================================================
  */
 public class SuperCheckBox extends AppCompatCheckBox {

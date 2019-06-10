@@ -1,9 +1,9 @@
 package com.lzy.imagepicker;
 
-import android.support.v4.content.FileProvider;
+import androidx.core.content.FileProvider;
 
 /**
- * 自定义一个Provider，以免和引入的项目的provider冲突
+ * 锟皆讹拷锟斤拷一锟斤拷Provider锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷目锟斤拷provider锟斤拷突
  *
  * Author: nanchen
  * Email: liushilin520@foxmail.com

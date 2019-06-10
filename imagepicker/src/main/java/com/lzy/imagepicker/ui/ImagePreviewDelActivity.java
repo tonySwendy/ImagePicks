@@ -4,8 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -16,11 +16,11 @@ import com.lzy.imagepicker.util.NavigationBarChangeListener;
 
 /**
  * ================================================
- * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢£©£¬ikkong £¨ikkong@163.com£©
- * °æ    ±¾£º1.0
- * ´´½¨ÈÕÆÚ£º2016/5/19
- * Ãè    Êö£º
- * ÐÞ¶©ÀúÊ·£ºÔ¤ÀÀÒÑ¾­Ñ¡ÔñµÄÍ¼Æ¬£¬²¢¿ÉÒÔÉ¾³ý, ¸ÐÐ» ikkong µÄÌá½»
+ * ï¿½ï¿½    ï¿½ß£ï¿½jeasonlzyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¢ï¿½ï¿½ï¿½ï¿½ikkong ï¿½ï¿½ikkong@163.comï¿½ï¿½
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½1.0
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½2016/5/19
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½
+ * ï¿½Þ¶ï¿½ï¿½ï¿½Ê·ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½Ñ¾ï¿½Ñ¡ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½, ï¿½ï¿½Ð» ikkong ï¿½ï¿½ï¿½á½»
  * ================================================
  */
 public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements View.OnClickListener {
@@ -35,7 +35,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         topBar.findViewById(R.id.btn_back).setOnClickListener(this);
 
         mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
-        //»¬¶¯ViewPagerµÄÊ±ºò£¬¸ù¾ÝÍâ½çµÄÊý¾Ý¸Ä±äµ±Ç°µÄÑ¡ÖÐ×´Ì¬ºÍµ±Ç°µÄÍ¼Æ¬µÄÎ»ÖÃÃèÊöÎÄ±¾
+        //ï¿½ï¿½ï¿½ï¿½ViewPagerï¿½ï¿½Ê±ï¿½ò£¬¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¸Ä±äµ±Ç°ï¿½ï¿½Ñ¡ï¿½ï¿½×´Ì¬ï¿½Íµï¿½Ç°ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -67,7 +67,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         }
     }
 
-    /** ÊÇ·ñÉ¾³ý´ËÕÅÍ¼Æ¬ */
+    /** ï¿½Ç·ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ */
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.ip_str_tips);
@@ -76,7 +76,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         builder.setPositiveButton(R.string.ip_str_confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //ÒÆ³ýµ±Ç°Í¼Æ¬Ë¢ÐÂ½çÃæ
+                //ï¿½Æ³ï¿½ï¿½ï¿½Ç°Í¼Æ¬Ë¢ï¿½Â½ï¿½ï¿½ï¿½
                 mImageItems.remove(mCurrentPosition);
                 if (mImageItems.size() > 0) {
                     mAdapter.setData(mImageItems);
@@ -93,27 +93,27 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        //´ø»Ø×îÐÂÊý¾Ý
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
         setResult(ImagePicker.RESULT_CODE_BACK, intent);
         finish();
         super.onBackPressed();
     }
 
-    /** µ¥»÷Ê±£¬Òþ²ØÍ·ºÍÎ² */
+    /** ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½Î² */
     @Override
     public void onImageSingleTap() {
         if (topBar.getVisibility() == View.VISIBLE) {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_out));
             topBar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//Í¨ÖªÀ¸ËùÐèÑÕÉ«
-            //¸ø×îÍâ²ã²¼¾Ö¼ÓÉÏÕâ¸öÊôÐÔ±íÊ¾£¬ActivityÈ«ÆÁÏÔÊ¾£¬ÇÒ×´Ì¬À¸±»Òþ²Ø¸²¸Çµô¡£
+            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã²¼ï¿½Ö¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Ê¾ï¿½ï¿½ActivityÈ«ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½Çµï¿½ï¿½ï¿½
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         } else {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_in));
             topBar.setVisibility(View.VISIBLE);
-            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//Í¨ÖªÀ¸ËùÐèÑÕÉ«
-            //ActivityÈ«ÆÁÏÔÊ¾£¬µ«×´Ì¬À¸²»»á±»Òþ²Ø¸²¸Ç£¬×´Ì¬À¸ÒÀÈ»¿É¼û£¬Activity¶¥¶Ë²¼¾Ö²¿·Ö»á±»×´Ì¬ÕÚ×¡
+            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+            //ActivityÈ«ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½Ç£ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½È»ï¿½É¼ï¿½ï¿½ï¿½Activityï¿½ï¿½ï¿½Ë²ï¿½ï¿½Ö²ï¿½ï¿½Ö»á±»×´Ì¬ï¿½ï¿½×¡
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }

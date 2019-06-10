@@ -4,9 +4,9 @@ import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -17,11 +17,11 @@ import com.lzy.imagepicker.view.SystemBarTintManager;
 
 /**
  * ================================================
- * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
- * °æ    ±¾£º1.0
- * ´´½¨ÈÕÆÚ£º2016/5/19
- * Ãè    Êö£º
- * ÐÞ¶©ÀúÊ·£º
+ * ï¿½ï¿½    ï¿½ß£ï¿½jeasonlzyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¢ Githubï¿½ï¿½Ö·ï¿½ï¿½https://github.com/jeasonlzy0216
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½1.0
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½2016/5/19
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½
+ * ï¿½Þ¶ï¿½ï¿½ï¿½Ê·ï¿½ï¿½
  * ================================================
  */
 public class ImageBaseActivity extends AppCompatActivity {
@@ -36,7 +36,7 @@ public class ImageBaseActivity extends AppCompatActivity {
         }
         tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);  //ÉèÖÃÉÏ·½×´Ì¬À¸µÄÑÕÉ«
+        tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);  //ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
     }
 
     @TargetApi(19)
