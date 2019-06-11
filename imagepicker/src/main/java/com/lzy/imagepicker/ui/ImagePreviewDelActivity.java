@@ -4,8 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -14,13 +12,16 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.util.NavigationBarChangeListener;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.viewpager.widget.ViewPager;
+
 /**
  * ================================================
- * ��    �ߣ�jeasonlzy������Ң����ikkong ��ikkong@163.com��
- * ��    ����1.0
- * �������ڣ�2016/5/19
- * ��    ����
- * �޶���ʷ��Ԥ���Ѿ�ѡ���ͼƬ��������ɾ��, ��л ikkong ���ύ
+ * ??    ???jeasonlzy???????????ikkong ??ikkong@163.com??
+ * ??    ????1.0
+ * ?????????2016/5/19
+ * ??    ????
+ * ???????????????????????????????, ??�� ikkong ????
  * ================================================
  */
 public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements View.OnClickListener {
@@ -35,7 +36,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         topBar.findViewById(R.id.btn_back).setOnClickListener(this);
 
         mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
-        //����ViewPager��ʱ�򣬸����������ݸı䵱ǰ��ѡ��״̬�͵�ǰ��ͼƬ��λ�������ı�
+        //????ViewPager????????????????????????????????????��?????????
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -67,7 +68,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         }
     }
 
-    /** �Ƿ�ɾ������ͼƬ */
+    /** ???????????? */
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.ip_str_tips);
@@ -76,7 +77,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         builder.setPositiveButton(R.string.ip_str_confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //�Ƴ���ǰͼƬˢ�½���
+                //??????????????
                 mImageItems.remove(mCurrentPosition);
                 if (mImageItems.size() > 0) {
                     mAdapter.setData(mImageItems);
@@ -93,27 +94,27 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        //������������
+        //????????????
         intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, mImageItems);
         setResult(ImagePicker.RESULT_CODE_BACK, intent);
         finish();
         super.onBackPressed();
     }
 
-    /** ����ʱ������ͷ��β */
+    /** ??????????????�� */
     @Override
     public void onImageSingleTap() {
         if (topBar.getVisibility() == View.VISIBLE) {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_out));
             topBar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//֪ͨ��������ɫ
-            //������㲼�ּ���������Ա�ʾ��Activityȫ����ʾ����״̬�������ظ��ǵ���
+            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//???????????
+            //???????????????????????Activity??????????????????????????
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         } else {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_in));
             topBar.setVisibility(View.VISIBLE);
-            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//֪ͨ��������ɫ
-            //Activityȫ����ʾ����״̬�����ᱻ���ظ��ǣ�״̬����Ȼ�ɼ���Activity���˲��ֲ��ֻᱻ״̬��ס
+            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//???????????
+            //Activity??????????????????????????????????????Activity????????????????
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }

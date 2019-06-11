@@ -6,11 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -34,17 +29,23 @@ import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * ================================================
- * ��    �ߣ�jeasonlzy������Ң Github��ַ��https://github.com/jeasonlzy0216
- * ��    ����1.0
- * �������ڣ�2016/5/19
- * ��    ����
- * �޶���ʷ��
+ * ??    ???jeasonlzy??????? Github?????https://github.com/jeasonlzy0216
+ * ??    ????1.0
+ * ?????????2016/5/19
+ * ??    ????
+ * ????????
  * 2017-03-17
  *
  * @author nanchen
- * ������ֱ�Ӵ����Ƿ�ü��������Լ�ֱ������
+ * ???????????????��?????????????????
  * ================================================
  */
 public class ImageGridActivity extends ImageBaseActivity implements ImageDataSource.OnImagesLoadedListener, OnImageItemClickListener, ImagePicker.OnImageSelectedListener, View.OnClickListener {
@@ -56,17 +57,17 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
     private ImagePicker imagePicker;
 
-    private boolean isOrigin = false;  //�Ƿ�ѡ��ԭͼ
-    private View mFooterBar;     //�ײ���
-    private Button mBtnOk;       //ȷ����ť
-    private View mllDir; //�ļ����л���ť
-    private TextView mtvDir; //��ʾ��ǰ�ļ���
-    private TextView mBtnPre;      //Ԥ����ť
-    private ImageFolderAdapter mImageFolderAdapter;    //ͼƬ�ļ��е�������
-    private FolderPopUpWindow mFolderPopupWindow;  //ImageSet��PopupWindow
-    private List<ImageFolder> mImageFolders;   //���е�ͼƬ�ļ���
-    //    private ImageGridAdapter mImageGridAdapter;  //ͼƬ�Ź���չʾ��������
-    private boolean directPhoto = false; // Ĭ�ϲ���ֱ�ӵ�ȡ���
+    private boolean isOrigin = false;  //????????
+    private View mFooterBar;     //?????
+    private Button mBtnOk;       //??????
+    private View mllDir; //??????��????
+    private TextView mtvDir; //???????????
+    private TextView mBtnPre;      //??????
+    private ImageFolderAdapter mImageFolderAdapter;    //??????��???????
+    private FolderPopUpWindow mFolderPopupWindow;  //ImageSet??PopupWindow
+    private List<ImageFolder> mImageFolders;   //???��????????
+    //    private ImageGridAdapter mImageGridAdapter;  //?????????????????
+    private boolean directPhoto = false; // ??????????????
     private RecyclerView mRecyclerView;
     private ImageRecyclerAdapter mRecyclerAdapter;
 
@@ -96,9 +97,9 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         }
 
         Intent data = getIntent();
-        // ������ֱ������
+        // ?????????????
         if (data != null && data.getExtras() != null) {
-            directPhoto = data.getBooleanExtra(EXTRAS_TAKE_PICKERS, false); // Ĭ�ϲ���ֱ�Ӵ����
+            directPhoto = data.getBooleanExtra(EXTRAS_TAKE_PICKERS, false); // ?????????????
             if (directPhoto) {
                 checkToCapture();
             }
@@ -188,21 +189,21 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         if (id == R.id.btn_ok) {
             Intent intent = new Intent();
             intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-            setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //��ѡ������ü��ü�����������
+            setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //?????????��??��???????????
             finish();
         } else if (id == R.id.ll_dir) {
             if (mImageFolders == null) {
-                Log.i("ImageGridActivity", "�����ֻ�û��ͼƬ");
+                Log.i("ImageGridActivity", "????????????");
                 return;
             }
-            //����ļ��а�ť
+            //???????��??
             createPopupFolderList();
-            mImageFolderAdapter.refreshData(mImageFolders);  //ˢ������
+            mImageFolderAdapter.refreshData(mImageFolders);  //???????
             if (mFolderPopupWindow.isShowing()) {
                 mFolderPopupWindow.dismiss();
             } else {
                 mFolderPopupWindow.showAtLocation(mFooterBar, Gravity.NO_GRAVITY, 0, 0);
-                //Ĭ��ѡ��ǰѡ�����һ������Ŀ¼�ܶ�ʱ��ֱ�Ӷ�λ����ѡ�е���Ŀ
+                //????????????????????????????????��??????��????
                 int index = mImageFolderAdapter.getSelectIndex();
                 index = index == 0 ? index : index - 1;
                 mFolderPopupWindow.setSelection(index);
@@ -215,13 +216,13 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             intent.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
             startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);
         } else if (id == R.id.btn_back) {
-            //������ذ�ť
+            //?????????
             finish();
         }
     }
 
     /**
-     * ����������ListView
+     * ??????????ListView
      */
     private void createPopupFolderList() {
         mFolderPopupWindow = new FolderPopUpWindow(this, mImageFolderAdapter);
@@ -265,7 +266,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
     @Override
     public void onImageItemClick(View view, ImageItem imageItem, int position) {
-        //�����Ƿ��������ťȷ��λ��
+        //??????????????????��??
         position = imagePicker.isShowCamera() ? position - 1 : position;
         if (imagePicker.isMultiMode()) {
             Intent intent = new Intent(ImageGridActivity.this, ImagePreviewActivity.class);
@@ -274,29 +275,29 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             /**
              * 2017-03-20
              *
-             * ��Ȼ���������ý��н�������õ���������ʽ����
+             * ???????????????��??????????????????????
              */
 
-            // ��˵�����ᵼ�´���ͼƬ��ʱ�����
+            // ????????????????????????
 //            intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getCurrentImageFolderItems());
 
-            // �����������ûᵼ��Ԥ��������ֱ�ӷ��ؿ�ָ��
+            // ??????????????????????????????????
             DataHolder.getInstance().save(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS, imagePicker.getCurrentImageFolderItems());
             intent.putExtra(ImagePreviewActivity.ISORIGIN, isOrigin);
-            startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);  //����Ƕ�ѡ�����ͼƬ����Ԥ������
+            startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);  //?????????????????????????
         } else {
             imagePicker.clearSelectedImages();
             imagePicker.addSelectedImageItem(position, imagePicker.getCurrentImageFolderItems().get(position), true);
             if (imagePicker.isFreeCrop) {
                 Intent intent = new Intent(ImageGridActivity.this, FreeCropActivity.class);
-                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //�������ɲü�����
+                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //????????��?????
             } else if (imagePicker.isCrop()) {
                 Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //�����ϰ汾�ü�����
+                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //??????��?��?????
             } else {
                 Intent intent = new Intent();
                 intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //��ѡ����Ҫ�ü�����������
+                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //?????????��???????????
                 finish();
             }
         }
@@ -338,47 +339,47 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             if (resultCode == ImagePicker.RESULT_CODE_BACK) {
                 isOrigin = data.getBooleanExtra(ImagePreviewActivity.ISORIGIN, false);
             } else {
-                //�����ս��淵��
-                //��� X , û��ѡ����Ƭ
+                //????????�Y??
+                //??? X , ?????????
                 if (data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) == null) {
-                    //ʲô������ ֱ�ӵ������
+                    //???????? ?????????
                 } else {
-                    //˵���ǴӲü�ҳ����������ݣ�ֱ�ӷ��ؾͿ���
+                    //??????��????????????????????????
                     setResult(ImagePicker.RESULT_CODE_ITEMS, data);
                 }
                 finish();
             }
         } else {
-            //��������գ���Ϊ�ü�ָ���˴洢��Uri�����Է��ص�dataһ��Ϊnull
+            //??????????????��??????��??Uri??????????data????null
             if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_TAKE) {
-                //���͹㲥֪ͨͼƬ������
+                //???????????????
                 ImagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
 
                 /**
-                 * 2017-03-21 �Ի�������ת����
+                 * 2017-03-21 ??????????????
                  */
                 String path = imagePicker.getTakeImageFile().getAbsolutePath();
 
-                //��������������������ѡ�б���
+                //??????????????????????��???
                 ImageItem imageItem = new ImageItem();
                 imageItem.path = path;
                 imagePicker.addSelectedImageItem(0, imageItem, true);
-                //�Ƿ���Ҫ�ü�����ѡģʽ��֧�ֲü�
+                //???????��?????????????��?
                 if (!imagePicker.isMultiMode()) {
                     if (imagePicker.isFreeCrop) {
                         Intent intent = new Intent(ImageGridActivity.this, FreeCropActivity.class);
-                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //�������ɲü�����
+                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //????????��?????
                         return;
                     } else if (imagePicker.isCrop()) {
                         Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
-                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //�����ϰ汾�ü�����
+                        startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //??????��?��?????
                         return;
                     }
                 }
 
                 Intent intent = new Intent();
                 intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //��ѡ����Ҫ�ü�����������
+                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //?????????��???????????
                 finish();
             } else if (directPhoto) {
                 finish();

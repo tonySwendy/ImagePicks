@@ -3,7 +3,6 @@ package com.lzy.imagepicker.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.viewpager.widget.ViewPager;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,23 +18,25 @@ import com.lzy.imagepicker.util.NavigationBarChangeListener;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.SuperCheckBox;
 
+import androidx.viewpager.widget.ViewPager;
+
 /**
  * ================================================
- * ��    �ߣ�jeasonlzy������Ң Github��ַ��https://github.com/jeasonlzy0216
- * ��    ����1.0
- * �������ڣ�2016/5/19
- * ��    ����
- * �޶���ʷ��
+ * ??    ???jeasonlzy??????? Github?????https://github.com/jeasonlzy0216
+ * ??    ????1.0
+ * ?????????2016/5/19
+ * ??    ????
+ * ????????
  * ================================================
  */
 public class ImagePreviewActivity extends ImagePreviewBaseActivity implements ImagePicker.OnImageSelectedListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public static final String ISORIGIN = "isOrigin";
 
-    private boolean isOrigin;                      //�Ƿ�ѡ��ԭͼ
-    private SuperCheckBox mCbCheck;                //�Ƿ�ѡ�е�ǰͼƬ��CheckBox
-    private SuperCheckBox mCbOrigin;               //ԭͼ
-    private Button mBtnOk;                         //ȷ��ͼƬ��ѡ��
+    private boolean isOrigin;                      //????????
+    private SuperCheckBox mCbCheck;                //?????��??????CheckBox
+    private SuperCheckBox mCbOrigin;               //??
+    private Button mBtnOk;                         //??????????
     private View bottomBar;
     private View marginView;
 
@@ -59,13 +60,13 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
         mCbOrigin.setOnCheckedChangeListener(this);
         mCbOrigin.setChecked(isOrigin);
 
-        //��ʼ����ǰҳ���״̬
+        //??????????????
         onImageSelected(0, null, false);
         ImageItem item = mImageItems.get(mCurrentPosition);
         boolean isSelected = imagePicker.isSelect(item);
         mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
         mCbCheck.setChecked(isSelected);
-        //����ViewPager��ʱ�򣬸����������ݸı䵱ǰ��ѡ��״̬�͵�ǰ��ͼƬ��λ�������ı�
+        //????ViewPager????????????????????????????????????��?????????
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -76,7 +77,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
                 mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
             }
         });
-        //�������ǰѡ�а�ť��ʱ����Ҫ���ݵ�ǰ��ѡ��״̬��Ӻ��Ƴ�ͼƬ
+        //??????????��????????????????????????????????
         mCbCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,8 +126,8 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
 
 
     /**
-     * ͼƬ��ӳɹ����޸ĵ�ǰͼƬ��ѡ������
-     * ������ addSelectedImageItem �� deleteSelectedImageItem ���ᴥ����ǰ�ص�
+     * ?????????????????????????
+     * ?????? addSelectedImageItem ?? deleteSelectedImageItem ????????????
      */
     @Override
     public void onImageSelected(int position, ImageItem item, boolean isAdd) {
@@ -201,7 +202,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
     }
 
     /**
-     * ����ʱ������ͷ��β
+     * ??????????????��
      */
     @Override
     public void onImageSingleTap() {
@@ -210,16 +211,16 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
             bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
             topBar.setVisibility(View.GONE);
             bottomBar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//֪ͨ��������ɫ
-            //������㲼�ּ���������Ա�ʾ��Activityȫ����ʾ����״̬�������ظ��ǵ���
+            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//???????????
+            //???????????????????????Activity??????????????????????????
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         } else {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
             bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             topBar.setVisibility(View.VISIBLE);
             bottomBar.setVisibility(View.VISIBLE);
-            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//֪ͨ��������ɫ
-            //Activityȫ����ʾ����״̬�����ᱻ���ظ��ǣ�״̬����Ȼ�ɼ���Activity���˲��ֲ��ֻᱻ״̬��ס
+            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//???????????
+            //Activity??????????????????????????????????????Activity????????????????
 //            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }
