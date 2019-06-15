@@ -3,7 +3,6 @@ package com.lzy.imagepickerdemo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,8 @@ import com.lzy.imagepickerdemo.wxdemo.WxDemoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * ================================================
@@ -97,7 +98,14 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         rb_glide.setChecked(true);
         rb_muti_select.setChecked(true);
         rb_crop_square.setChecked(true);
-
+        rb_muti_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton aCompoundButton, boolean aB) {
+                if (images != null&&aB) {
+                    images.clear();
+                }
+            }
+        });
         et_crop_width = (EditText) findViewById(R.id.et_crop_width);
         et_crop_width.setText("280");
         et_crop_height = (EditText) findViewById(R.id.et_crop_height);
