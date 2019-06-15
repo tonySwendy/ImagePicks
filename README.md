@@ -27,17 +27,12 @@ api 'com.cysion:ImagePicker:1.0.7.x'
 api 'com.cysion:ImagePicker:1.0.7'
 
 //若使用androidx，则需要这样添加依赖：
-
 api 'com.cysion:ImagePicker:1.0.7.x'
-
-
-* //若出现Failed to resolve: com.github.chrisbanes:PhotoView的问题，
-
+---
+//若出现Failed to resolve: com.github.chrisbanes:PhotoView的问题，
 //则应在项目的build.gradle添加如下：
-
  maven{url"https://jitpack.io"}
-*
-
+---
 //若出现依赖重复问题，可以这样;
 api('com.cysion:ImagePicker:1.0.7'){
    exclude group: 'com.android.support'
