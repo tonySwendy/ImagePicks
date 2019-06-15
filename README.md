@@ -1,7 +1,7 @@
 # ImagePicker
 Android自定义相册，完全仿微信UI，实现了拍照、图片选择（单选/多选）、 裁剪 、旋转、等功能。
 
-##### 新版本支持AndroidX
+## 新版本支持AndroidX(dev分支是非androidx版本)
 
 ## 原项目作者自2017.9就跑了，留下一些bug和待完善的一点功能，本项目fork过来继续，底部有版本更新说明
 
@@ -30,6 +30,12 @@ api 'com.cysion:ImagePicker:1.0.7'
 
 
 api 'com.cysion:ImagePicker:1.0.7.x'
+
+//若出现Failed to resolve: com.github.chrisbanes:PhotoView的问题，
+
+//则应在项目的build.gradle添加如下：photoview的maven仓库
+
+ maven{url"https://jitpack.io"}
 
 
 //若出现依赖重复问题，可以这样;
