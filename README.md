@@ -1,14 +1,19 @@
 # ImagePicker
 Android自定义相册，完全仿微信UI，实现了拍照、图片选择（单选/多选）、 裁剪 、旋转、等功能。
 
+##### 新版本支持AndroidX
+
 ## 原项目作者自2017.9就跑了，留下一些bug和待完善的一点功能，本项目fork过来继续，底部有版本更新说明
 
 ## 新版依赖方式有些变化，并不影响代码中的导入关系
 
  对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
- ```
- api 'com.cysion:ImagePicker:1.0.6'
+```
+ api 'com.cysion:ImagePicker:1.0.7'
+
+ //若使用androidx，则需要这样添加依赖：
+api 'com.cysion:ImagePicker:1.0.7.x'
  ```
 
 ## 演示
@@ -19,10 +24,16 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
 对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
 ```
-api 'com.cysion:ImagePicker:1.0.6'
+api 'com.cysion:ImagePicker:1.0.7'
 
-//若出现依赖重复问题，可以这样
-api('com.cysion:ImagePicker:1.0.6'){
+//若使用androidx，则需要这样添加依赖：
+
+
+api 'com.cysion:ImagePicker:1.0.7.x'
+
+
+//若出现依赖重复问题，可以这样;
+api('com.cysion:ImagePicker:1.0.7'){
    exclude group: 'com.android.support'
 }
 ```
@@ -139,6 +150,13 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 ## 更新日志
+
+
+V1.0.7
+
+ * 依赖方式改为  api 'com.cysion:ImagePicker:1.0.7'
+ * 修复单选 裁剪返回--拍照--裁剪的图片bug;
+ * 加入androidx支持，依赖版本为api 'com.cysion:ImagePicker:1.0.7.x'
 
 
 V1.0.6
