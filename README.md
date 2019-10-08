@@ -10,10 +10,10 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
  对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
 ```
- api 'com.cysion:ImagePicker:1.0.7'
+ api 'com.cysion:ImagePicker:1.0.8'
 
  //若使用androidx，则需要这样添加依赖：
-api 'com.cysion:ImagePicker:1.0.7.x'
+api 'com.cysion:ImagePicker:1.0.8.x'
  ```
 
 ## 演示
@@ -24,17 +24,17 @@ api 'com.cysion:ImagePicker:1.0.7.x'
 对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
 ```
-api 'com.cysion:ImagePicker:1.0.7'
+api 'com.cysion:ImagePicker:1.0.8'
 
 //若使用androidx，则需要这样添加依赖：
-api 'com.cysion:ImagePicker:1.0.7.x'
+api 'com.cysion:ImagePicker:1.0.8.x'
 ---
 //若出现Failed to resolve: com.github.chrisbanes:PhotoView的问题，
 //则应在项目的build.gradle添加如下：
  maven{url"https://jitpack.io"}
 ---
 //若出现依赖重复问题，可以这样;
-api('com.cysion:ImagePicker:1.0.7'){
+api('com.cysion:ImagePicker:1.0.8'){
    exclude group: 'com.android.support'
 }
 ```
@@ -63,6 +63,10 @@ api('com.cysion:ImagePicker:1.0.7'){
 更多使用，请下载demo参看源代码
 
 1. 首先你需要继承 `com.lzy.imagepicker.loader.ImageLoader` 这个接口,实现其中的方法,比如以下代码是使用 `Picasso` 三方加载库实现的
+
+**picasso 2.52版本有bug**
+
+
 ```java
 public class PicassoImageLoader implements ImageLoader {
 
@@ -151,6 +155,14 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 ## 更新日志
+
+
+
+V1.0.8
+
+ * 依赖方式改为  api 'com.cysion:ImagePicker:1.0.8'
+ * 修复没有图片时不显示相机icon的bug;
+
 
 
 V1.0.7
