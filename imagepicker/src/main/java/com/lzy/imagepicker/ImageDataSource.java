@@ -16,38 +16,26 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-/**
- * ================================================
- * ??    ???jeasonlzy??????? Github?????https://github.com/jeasonlzy0216
- * ??    ????1.0
- * ?????????2016/5/19
- * ??    ??????????????????
- * ????????
- * ================================================
- */
+
 public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final int LOADER_ALL = 0;         //??????????
-    public static final int LOADER_CATEGORY = 1;    //?????????
-    private final String[] IMAGE_PROJECTION = {     //????????????????
-            MediaStore.Images.Media.DISPLAY_NAME,   //???????????  aaa.jpg
-            MediaStore.Images.Media.DATA,           //???????¡¤??  /storage/emulated/0/pp/downloader/wallpaper/aaa.jpg
-            MediaStore.Images.Media.SIZE,           //?????§³??long??  132492
-            MediaStore.Images.Media.WIDTH,          //???????int??  1920
-            MediaStore.Images.Media.HEIGHT,         //???????int??  1080
-            MediaStore.Images.Media.MIME_TYPE,      //????????     image/jpeg
-            MediaStore.Images.Media.DATE_ADDED};    //???????????long??  1450518608
+    public static final int LOADER_ALL = 0;
+    public static final int LOADER_CATEGORY = 1;
+    private final String[] IMAGE_PROJECTION = {
+            MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.DATA,
+            MediaStore.Images.Media.SIZE,
+            MediaStore.Images.Media.WIDTH,
+            MediaStore.Images.Media.HEIGHT,
+            MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.DATE_ADDED};
 
     private FragmentActivity activity;
-    private OnImagesLoadedListener loadedListener;                     //???????????????
-    private ArrayList<ImageFolder> imageFolders = new ArrayList<>();   //???§Ö????????
+    private OnImagesLoadedListener loadedListener;
+    private ArrayList<ImageFolder> imageFolders = new ArrayList<>();
     private int mLoadedCount = 0;
 
-    /**
-     * @param activity       ????????LoaderManager??????????2.3
-     * @param path           ????????????????????? null??????????????
-     * @param loadedListener ?????????????
-     */
+
     public ImageDataSource(FragmentActivity activity, String path, OnImagesLoadedListener loadedListener) {
         this.activity = activity;
         this.loadedListener = loadedListener;
@@ -55,9 +43,8 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
         LoaderManager loaderManager = activity.getSupportLoaderManager();
         if (path == null) {
-            loaderManager.initLoader(LOADER_ALL, null, this);//???????§Ö???
+            loaderManager.initLoader(LOADER_ALL, null, this);
         } else {
-            //?????????????
             Bundle bundle = new Bundle();
             bundle.putString("path", path);
             loaderManager.initLoader(LOADER_CATEGORY, bundle, this);
@@ -67,10 +54,8 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         CursorLoader cursorLoader = null;
-        //?????????
         if (id == LOADER_ALL)
             cursorLoader = new CursorLoader(activity, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[6] + " DESC");
-        //?????????????
         if (id == LOADER_CATEGORY)
             cursorLoader = new CursorLoader(activity, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, IMAGE_PROJECTION[1] + " like '%" + args.getString("path") + "%'", null, IMAGE_PROJECTION[6] + " DESC");
 
@@ -87,9 +72,8 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
         }
         imageFolders.clear();
         mLoadedCount = data.getCount();
-        ArrayList<ImageItem> allImages = new ArrayList<>();   //???????????,?????????
+        ArrayList<ImageItem> allImages = new ArrayList<>();
         while (data.moveToNext()) {
-            //???????
             String imageName = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
             String imagePath = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
 
@@ -103,7 +87,6 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
             int imageHeight = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]));
             String imageMimeType = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[5]));
             long imageAddTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[6]));
-            //??????
             ImageItem imageItem = new ImageItem();
             imageItem.name = imageName;
             imageItem.path = imagePath;
@@ -113,7 +96,6 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
             imageItem.mimeType = imageMimeType;
             imageItem.addTime = imageAddTime;
             allImages.add(imageItem);
-            //?????¡¤??????????
             File imageFile = new File(imagePath);
             File imageParentFile = imageFile.getParentFile();
             ImageFolder imageFolder = new ImageFolder();
@@ -130,17 +112,14 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
                 imageFolders.get(imageFolders.indexOf(imageFolder)).images.add(imageItem);
             }
         }
-        //????????????
         if (data.getCount() > 0 && allImages.size() > 0) {
-            //???????????????
             ImageFolder allImagesFolder = new ImageFolder();
             allImagesFolder.name = activity.getResources().getString(R.string.ip_all_images);
             allImagesFolder.path = "/";
             allImagesFolder.cover = allImages.get(0);
             allImagesFolder.images = allImages;
-            imageFolders.add(0, allImagesFolder);  //????????????????
+            imageFolders.add(0, allImagesFolder);
         }
-        //?????????????????????
         ImagePicker.getInstance().setImageFolders(imageFolders);
         loadedListener.onImagesLoaded(imageFolders);
     }
@@ -150,9 +129,6 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
         System.out.println("--------");
     }
 
-    /**
-     * ???????????????????
-     */
     public interface OnImagesLoadedListener {
         void onImagesLoaded(List<ImageFolder> imageFolders);
     }

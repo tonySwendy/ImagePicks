@@ -11,7 +11,6 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import com.isseiaoki.simplecropview.FreeCropImageView;
 import com.lzy.imagepicker.bean.ImageFolder;
@@ -31,19 +30,7 @@ import java.util.Locale;
 
 import androidx.core.content.FileProvider;
 
-/**
- * ================================================
- * ??    ???jeasonlzy??????? Github?????https://github.com/jeasonlzy0216
- * ??    ????1.0
- * ?????????2016/5/19
- * ??    ???????????????
- * ????????
- * 2017-03-20
- *
- * @author nanchen
- * ?????????????????Intent?????????????
- * ================================================
- */
+
 public class ImagePicker {
 
     public static final String TAG = ImagePicker.class.getSimpleName();
@@ -58,27 +45,26 @@ public class ImagePicker {
     public static final String EXTRA_IMAGE_ITEMS = "extra_image_items";
     public static final String EXTRA_FROM_ITEMS = "extra_from_items";
 
-    private boolean multiMode = true;    //???????
-    private int selectLimit = 9;         //????????????
-    private boolean crop = true;         //?®π?
-    private boolean showCamera = true;   //??????
-    private boolean isSaveRectangle = false;  //?®π?????????????¶≤????????®π???????
-    private int outPutX = 800;           //?®π???????
-    private int outPutY = 800;           //?®π???????
-    private int focusWidth = 280;         //????????
-    private int focusHeight = 280;        //????????
-    private ImageLoader imageLoader;     //????????
-    private CropImageView.Style style = CropImageView.Style.RECTANGLE; //?®π???????
+    private boolean multiMode = true;
+    private int selectLimit = 9;
+    private boolean crop = true;
+    private boolean showCamera = true;
+    private boolean isSaveRectangle = false;
+    private int outPutX = 800;
+    private int outPutY = 800;
+    private int focusWidth = 280;
+    private int focusHeight = 280;
+    private ImageLoader imageLoader;
+    private CropImageView.Style style = CropImageView.Style.RECTANGLE;
     private File cropCacheFolder;
     private File takeImageFile;
 
-    //????????®π?????????????????
     public FreeCropImageView.CropMode mFreeCropMode = com.isseiaoki.simplecropview.FreeCropImageView.CropMode.FREE;
-    public boolean isFreeCrop = false;//?????????®π????????????®π???????????
-    private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();   //??ß÷???????
-    private List<ImageFolder> mImageFolders;      //???ß÷????????
-    private int mCurrentImageFolderPosition = 0;  //?????ß÷??????¶À?? 0?????????
-    private List<OnImageSelectedListener> mImageSelectedListeners;          // ????ß÷???????
+    public boolean isFreeCrop = false;
+    private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();
+    private List<ImageFolder> mImageFolders;
+    private int mCurrentImageFolderPosition = 0;
+    private List<OnImageSelectedListener> mImageSelectedListeners;
 
     private static ImagePicker mInstance;
 
@@ -254,9 +240,7 @@ public class ImagePicker {
         mCurrentImageFolderPosition = 0;
     }
 
-    /**
-     * ????????
-     */
+
     public void takePicture(Activity activity, int requestCode) {
         PackageManager packageManager = activity.getPackageManager();
         if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
@@ -271,22 +255,12 @@ public class ImagePicker {
             else takeImageFile = Environment.getDataDirectory();
             takeImageFile = createFile(takeImageFile, "IMG_", ".jpg");
             if (takeImageFile != null) {
-                // ???????????????????intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                // ??????????????õ•°§??????????????????????????????????????????
-                // ???????dat extra??????????¶À?®¢????????????????uri??data??????????
-                // ?????????uri????data????????????
-
                 Uri uri;
                 if (VERSION.SDK_INT <= VERSION_CODES.M) {
                     uri = Uri.fromFile(takeImageFile);
                 } else {
 
-                    /**
-                     * 7.0 ???????????????????????Uri?????????ùI?FileProvider
-                     * ??????????????MIUI???????????size?0?????
-                     */
                     uri = FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), takeImageFile);
-                    //????uri??? ??????????????????
                     List<ResolveInfo> resInfoList = activity.getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
                     for (ResolveInfo resolveInfo : resInfoList) {
                         String packageName = resolveInfo.activityInfo.packageName;
@@ -294,16 +268,12 @@ public class ImagePicker {
                     }
                 }
 
-                Log.e("nanchen", ProviderUtil.getFileProviderName(activity));
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             }
         }
         activity.startActivityForResult(takePictureIntent, requestCode);
     }
 
-    /**
-     * ??????????????????????????
-     */
     public static File createFile(File folder, String prefix, String suffix) {
         if (!folder.exists() || !folder.isDirectory()) folder.mkdirs();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
@@ -311,9 +281,7 @@ public class ImagePicker {
         return new File(folder, filename);
     }
 
-    /**
-     * ?????
-     */
+
     public static void galleryAddPic(Context context, File file) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri contentUri = Uri.fromFile(file);
@@ -321,9 +289,6 @@ public class ImagePicker {
         context.sendBroadcast(mediaScanIntent);
     }
 
-    /**
-     * ????ß÷????
-     */
     public interface OnImageSelectedListener {
         void onImageSelected(int position, ImageItem item, boolean isAdd);
     }
@@ -358,9 +323,6 @@ public class ImagePicker {
         }
     }
 
-    /**
-     * ?????????÷Œ??????????????????????????
-     */
     public void restoreInstanceState(Bundle savedInstanceState) {
         cropCacheFolder = (File) savedInstanceState.getSerializable("cropCacheFolder");
         takeImageFile = (File) savedInstanceState.getSerializable("takeImageFile");
@@ -377,9 +339,7 @@ public class ImagePicker {
         focusHeight = savedInstanceState.getInt("focusHeight");
     }
 
-    /**
-     * ?????????÷Œ??????????????????????
-     */
+
     public void saveInstanceState(Bundle outState) {
         outState.putSerializable("cropCacheFolder", cropCacheFolder);
         outState.putSerializable("takeImageFile", takeImageFile);
@@ -397,7 +357,6 @@ public class ImagePicker {
     }
 
 
-    //???????toast?????
     public void setIToaster(Context aContext, InnerToaster.IToaster aIToaster) {
         InnerToaster.obj(aContext).setIToaster(aIToaster);
     }

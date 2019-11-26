@@ -1,7 +1,6 @@
 package com.lzy.imagepicker.adapter;
 
 import android.app.Activity;
-import androidx.viewpager.widget.PagerAdapter;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +9,14 @@ import android.widget.ImageView;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.lzy.imagepicker.ImagePicker;
-import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.util.Utils;
 
 import java.util.ArrayList;
 
+import androidx.viewpager.widget.PagerAdapter;
 
-/**
- * ================================================
- * ��    �ߣ�jeasonlzy������Ң Github��ַ��https://github.com/jeasonlzy0216
- * ��    ����1.0
- * �������ڣ�2016/5/19
- * ��    ����
- * �޶���ʷ��
- * ================================================
- */
+
 public class ImagePageAdapter extends PagerAdapter {
 
     private int screenWidth;

@@ -20,23 +20,14 @@ import com.lzy.imagepicker.view.SuperCheckBox;
 
 import androidx.viewpager.widget.ViewPager;
 
-/**
- * ================================================
- * ??    ???jeasonlzy??????? Github?????https://github.com/jeasonlzy0216
- * ??    ????1.0
- * ?????????2016/5/19
- * ??    ????
- * ????????
- * ================================================
- */
 public class ImagePreviewActivity extends ImagePreviewBaseActivity implements ImagePicker.OnImageSelectedListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public static final String ISORIGIN = "isOrigin";
 
-    private boolean isOrigin;                      //????????
-    private SuperCheckBox mCbCheck;                //?????§Ö??????CheckBox
-    private SuperCheckBox mCbOrigin;               //??
-    private Button mBtnOk;                         //??????????
+    private boolean isOrigin;
+    private SuperCheckBox mCbCheck;
+    private SuperCheckBox mCbOrigin;
+    private Button mBtnOk;
     private View bottomBar;
     private View marginView;
 
@@ -60,13 +51,11 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
         mCbOrigin.setOnCheckedChangeListener(this);
         mCbOrigin.setChecked(isOrigin);
 
-        //??????????????
         onImageSelected(0, null, false);
         ImageItem item = mImageItems.get(mCurrentPosition);
         boolean isSelected = imagePicker.isSelect(item);
         mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
         mCbCheck.setChecked(isSelected);
-        //????ViewPager????????????????????????????????????¦Ë?????????
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -77,7 +66,6 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
                 mTitleCount.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
             }
         });
-        //??????????§Ñ????????????????????????????????
         mCbCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,12 +111,6 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
                 });
     }
 
-
-
-    /**
-     * ?????????????????????????
-     * ?????? addSelectedImageItem ?? deleteSelectedImageItem ????????????
-     */
     @Override
     public void onImageSelected(int position, ImageItem item, boolean isAdd) {
         if (imagePicker.getSelectImageCount() > 0) {
@@ -201,9 +183,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
         super.onDestroy();
     }
 
-    /**
-     * ??????????????¦Â
-     */
+
     @Override
     public void onImageSingleTap() {
         if (topBar.getVisibility() == View.VISIBLE) {
@@ -211,17 +191,13 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
             bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
             topBar.setVisibility(View.GONE);
             bottomBar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//???????????
-            //???????????????????????Activity??????????????????????????
-//            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+            tintManager.setStatusBarTintResource(Color.TRANSPARENT);
         } else {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
             bottomBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             topBar.setVisibility(View.VISIBLE);
             bottomBar.setVisibility(View.VISIBLE);
-            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//???????????
-            //Activity??????????????????????????????????????Activity????????????????
-//            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);
         }
     }
 }

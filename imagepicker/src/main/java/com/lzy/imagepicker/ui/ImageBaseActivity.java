@@ -4,9 +4,6 @@ import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -15,15 +12,11 @@ import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.util.InnerToaster;
 import com.lzy.imagepicker.view.SystemBarTintManager;
 
-/**
- * ================================================
- * ��    �ߣ�jeasonlzy������Ң Github��ַ��https://github.com/jeasonlzy0216
- * ��    ����1.0
- * �������ڣ�2016/5/19
- * ��    ����
- * �޶���ʷ��
- * ================================================
- */
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+
 public class ImageBaseActivity extends AppCompatActivity {
 
     protected SystemBarTintManager tintManager;
@@ -36,7 +29,7 @@ public class ImageBaseActivity extends AppCompatActivity {
         }
         tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);  //�����Ϸ�״̬������ɫ
+        tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);
     }
 
     @TargetApi(19)

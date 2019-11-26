@@ -4,11 +4,7 @@ import android.graphics.Rect;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
-/**
- * author : zchu
- * date   : 2017/8/30
- * desc   : ΪRecyclerview ��GridLayoutManager����м��
- */
+
 
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 

@@ -18,15 +18,6 @@ import com.lzy.imagepicker.view.CropImageView;
 import java.io.File;
 import java.util.ArrayList;
 
-/**
- * ================================================
- * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
- * °æ    ±¾£º1.0
- * ´´½¨ÈÕÆÚ£º2016/5/19
- * Ãè    Êö£º
- * ÐÞ¶©ÀúÊ·£º
- * ================================================
- */
 public class ImageCropActivity extends ImageBaseActivity implements View.OnClickListener, CropImageView.OnBitmapSaveCompleteListener {
 
     private CropImageView mCropImageView;
@@ -44,7 +35,6 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
 
         imagePicker = ImagePicker.getInstance();
 
-        //³õÊ¼»¯View
         findViewById(R.id.btn_back).setOnClickListener(this);
         Button btn_ok = (Button) findViewById(R.id.btn_ok);
         btn_ok.setText(getString(R.string.ip_complete));
@@ -54,7 +44,6 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         mCropImageView = (CropImageView) findViewById(R.id.cv_crop_image);
         mCropImageView.setOnBitmapSaveCompleteListener(this);
 
-        //»ñÈ¡ÐèÒªµÄ²ÎÊý
         mOutputX = imagePicker.getOutPutX();
         mOutputY = imagePicker.getOutPutY();
         mIsSaveRectangle = imagePicker.isSaveRectangle();
@@ -65,7 +54,6 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         mCropImageView.setFocusWidth(imagePicker.getFocusWidth());
         mCropImageView.setFocusHeight(imagePicker.getFocusHeight());
 
-        //Ëõ·ÅÍ¼Æ¬
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(imagePath, options);
@@ -73,11 +61,7 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         options.inSampleSize = calculateInSampleSize(options, displayMetrics.widthPixels, displayMetrics.heightPixels);
         options.inJustDecodeBounds = false;
         mBitmap = BitmapFactory.decodeFile(imagePath, options);
-//        mCropImageView.setImageBitmap(mBitmap);
-        //ÉèÖÃÄ¬ÈÏÐý×ª½Ç¶È
         mCropImageView.setImageBitmap(mCropImageView.rotate(mBitmap, BitmapUtil.getBitmapDegree(imagePath)));
-
-//        mCropImageView.setImageURI(Uri.fromFile(new File(imagePath)));
     }
 
     public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -108,7 +92,7 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
     @Override
     public void onBitmapSaveSuccess(File file) {
 
-        //²Ã¼ôºóÌæ»»µô·µ»ØÊý¾ÝµÄÄÚÈÝ£¬µ«ÊÇ²»Òª¸Ä±äÈ«¾ÖÖÐµÄÑ¡ÖÐÊý¾Ý
+        //ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½æ»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½Ç²ï¿½Òªï¿½Ä±ï¿½È«ï¿½ï¿½ï¿½Ðµï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         mImageItems.remove(0);
         ImageItem imageItem = new ImageItem();
         imageItem.path = file.getAbsolutePath();
@@ -116,7 +100,7 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
 
         Intent intent = new Intent();
         intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, mImageItems);
-        setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //µ¥Ñ¡²»ÐèÒª²Ã¼ô£¬·µ»ØÊý¾Ý
+        setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Òªï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         finish();
     }
 

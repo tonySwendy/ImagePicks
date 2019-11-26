@@ -5,15 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/**
- * ================================================
- * ��    �ߣ�jeasonlzy������Ң Github��ַ��https://github.com/jeasonlzy0216
- * ��    ����1.0
- * �������ڣ�2016/5/19
- * ��    �����޸�ͼƬ��ViewPager�ؼ������ű����BUG
- * �޶���ʷ��
- * ================================================
- */
+
 public class ViewPagerFixed extends ViewPager {
 
     public ViewPagerFixed(Context context) {

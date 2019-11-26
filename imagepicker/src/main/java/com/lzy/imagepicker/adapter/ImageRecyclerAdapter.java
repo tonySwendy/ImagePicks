@@ -23,33 +23,20 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
-/**
- * ???????????RecyclerView??????
- *
- * ?????ùI??????GridView??????????????????????????????
- *
- * ?ùI?RecyclerView??????????????????
- *
- * ????????????????????????????????picasso?????????????
- *
- * Author: nanchen
- * Email: liushilin520@foxmail.com
- * Date: 2017-04-05  10:04
- */
 
 public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
 
-    private static final int ITEM_TYPE_CAMERA = 0;  //?????????????
-    private static final int ITEM_TYPE_NORMAL = 1;  //???????????????
+    private static final int ITEM_TYPE_CAMERA = 0;
+    private static final int ITEM_TYPE_NORMAL = 1;
     private ImagePicker imagePicker;
     private Activity mActivity;
-    private ArrayList<ImageItem> images;       //??????????????ß÷???????
-    private ArrayList<ImageItem> mSelectedImages; //????????????ß÷???????
-    private boolean isShowCamera;         //????????????
-    private int mImageSize;               //?????????ß≥
+    private ArrayList<ImageItem> images;
+    private ArrayList<ImageItem> mSelectedImages;
+    private boolean isShowCamera;
+    private int mImageSize;
     private LayoutInflater mInflater;
-    private OnImageItemClickListener listener;   //????????????
+    private OnImageItemClickListener listener;
 
     public void setOnImageItemClickListener(OnImageItemClickListener listener) {
         this.listener = listener;
@@ -65,9 +52,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         notifyDataSetChanged();
     }
 
-    /**
-     * ??????
-     */
+
     public ImageRecyclerAdapter(Activity activity, ArrayList<ImageItem> images) {
         this.mActivity = activity;
         if (images == null || images.size() == 0) this.images = new ArrayList<>();
@@ -138,7 +123,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             mask = itemView.findViewById(R.id.mask);
             checkView=itemView.findViewById(R.id.checkView);
             cbCheck = (SuperCheckBox) itemView.findViewById(R.id.cb_check);
-            itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //?????????????
+            itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize));
         }
 
         void bind(final int position){
@@ -164,7 +149,6 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                     }
                 }
             });
-            //????????????????????checkbox
             if (imagePicker.isMultiMode()) {
                 cbCheck.setVisibility(View.VISIBLE);
                 boolean checked = mSelectedImages.contains(imageItem);
@@ -178,7 +162,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             } else {
                 cbCheck.setVisibility(View.GONE);
             }
-            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize); //?????
+            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize);
         }
 
     }
@@ -193,7 +177,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         }
 
         void bindCamera(){
-            mItemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //?????????????
+            mItemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize));
             mItemView.setTag(null);
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
