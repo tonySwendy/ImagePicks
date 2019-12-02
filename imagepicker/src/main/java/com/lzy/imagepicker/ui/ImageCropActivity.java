@@ -92,7 +92,6 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
     @Override
     public void onBitmapSaveSuccess(File file) {
 
-        //�ü����滻���������ݵ����ݣ����ǲ�Ҫ�ı�ȫ���е�ѡ������
         mImageItems.remove(0);
         ImageItem imageItem = new ImageItem();
         imageItem.path = file.getAbsolutePath();
@@ -100,7 +99,7 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
 
         Intent intent = new Intent();
         intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, mImageItems);
-        setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //��ѡ����Ҫ�ü�����������
+        setResult(ImagePicker.RESULT_CODE_ITEMS, intent);
         finish();
     }
 
