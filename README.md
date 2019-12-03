@@ -68,6 +68,7 @@ api('com.cysion:ImagePicker:1.0.8'){
 |outPutY|裁剪后需要保存的图片高度,仅对crop有效，对isFreeCrop无效|
 |isSaveRectangle|裁剪后的图片是按矩形区域保存还是裁剪框的形状，例如圆形裁剪的时候，该参数给true，那么保存的图片是矩形区域，如果该参数给fale，保存的图片是圆形区域|
 |imageLoader|需要使用的图片加载器，自需要实现ImageLoader接口即可,推荐glide|
+|isOrigin|选择的图片是否采用原图，在图片选择好之后根据此参数判断，android Q版本|
 
 ## 3.代码参考
 
