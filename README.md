@@ -1,7 +1,9 @@
 # ImagePicker
-Android自定义相册，完全仿微信UI，实现了拍照、图片选择（单选/多选）、 裁剪 、旋转、等功能。
+Android自定义相册，仿微信UI，实现了拍照、图片选择（单选/多选）、裁剪等功能。
 
 ## 新版本支持AndroidX(dev分支是非androidx版本)
+
+## 新特性版本适配了Android Q(feature分支,1.0.9.Q)
 
 ## 原项目作者自2017.9就跑了，留下一些bug和待完善的一点功能，本项目fork过来继续，底部有版本更新说明
 
@@ -10,10 +12,19 @@ Android自定义相册，完全仿微信UI，实现了拍照、图片选择（�
  对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
 ```
- api 'com.cysion:ImagePicker:1.0.8'
 
- //若使用androidx，则需要这样添加依赖：
+//老版本，非androidx，targetsdk<29:
+
+api 'com.cysion:ImagePicker:1.0.8'
+
+//若使用androidx，则需要这样添加依赖：
 api 'com.cysion:ImagePicker:1.0.8.x'
+
+//若targetsdk>=29 ,则需要这样添加依赖：
+api 'com.cysion:ImagePicker:1.0.9.Q'
+
+注意，Android Q 对存储框架有较大改动，最主要的是无法通过文件路径获得文件，在本库中，也完全放弃了文件路径的方式，全部是以Uri的方式提供文件访问。
+
  ```
 
 ## 演示
@@ -49,12 +60,12 @@ api('com.cysion:ImagePicker:1.0.8'){
 |selectLimit|多选限制数量，默认为9|
 |showCamera|选择照片时是否显示拍照按钮|
 |crop|是否允许裁剪（单选有效）|
-|isFreeCrop|是否允许自由裁剪(单选有效,默认FREE,自由比例)新版本添加，推荐使用，会覆盖crop|
+|isFreeCrop|是否允许自由裁剪(单选有效,默认FREE,自由比例)新版本添加，推荐使用，**会覆盖crop设置**|
 |style|有裁剪时，裁剪框是矩形还是圆形|
 |focusWidth|矩形裁剪框宽度（圆形自动取宽高最小值）|
 |focusHeight|矩形裁剪框高度（圆形自动取宽高最小值）|
-|outPutX|裁剪后需要保存的图片宽度|
-|outPutY|裁剪后需要保存的图片高度|
+|outPutX|裁剪后需要保存的图片宽度,仅对crop有效，对isFreeCrop无效|
+|outPutY|裁剪后需要保存的图片高度,仅对crop有效，对isFreeCrop无效|
 |isSaveRectangle|裁剪后的图片是按矩形区域保存还是裁剪框的形状，例如圆形裁剪的时候，该参数给true，那么保存的图片是矩形区域，如果该参数给fale，保存的图片是圆形区域|
 |imageLoader|需要使用的图片加载器，自需要实现ImageLoader接口即可,推荐glide|
 
@@ -87,6 +98,30 @@ public class PicassoImageLoader implements ImageLoader {
         //这里是清除缓存的方法,根据需要自己实现
     }
 }
+
+
+Android Q 版本，废弃了文件路径访问方式：
+
+
+public class PicassoImageLoader implements ImageLoader {
+
+    @Override
+    public void displayImage(Activity activity, Uri aUri, ImageView imageView, int width, int height) {
+        Picasso.get()//
+                .load(aUri)//
+                .placeholder(R.drawable.ic_default_image)//
+                .error(R.drawable.ic_default_image)//
+                .resize(width, height)//
+                .centerInside()//
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)//
+                .into(imageView);
+    }
+
+    @Override
+    public void clearMemoryCache() {
+    }
+}
+
 ```
 
 2. 然后配置图片选择器，一般在Application初始化配置一次就可以,这里就需要将上面的图片加载器设置进来,其余的配置根据需要设置
@@ -103,10 +138,10 @@ protected void onCreate(Bundle savedInstanceState) {
     imagePicker.setSaveRectangle(true); //是否按矩形区域保存
     imagePicker.setSelectLimit(9);    //选中数量限制
     imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
-    imagePicker.setFocusWidth(800);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-    imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-    imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
-    imagePicker.setOutPutY(1000);//保存文件的高度。单位像素
+    imagePicker.setFocusWidth(800);   //裁剪框的宽度，仅对crop有效，对isFreeCrop无效
+    imagePicker.setFocusHeight(800);  //裁剪框的高度，仅对crop有效，对isFreeCrop无效
+    imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素，仅对crop有效，对isFreeCrop无效
+    imagePicker.setOutPutY(1000);//保存文件的高度。单位像素，仅对crop有效，对isFreeCrop无效
     imagePicker.setIToaster(this, new InnerToaster.IToaster());//设置吐司代理,保持lib与app中吐司风格一致
 }
 ```
@@ -157,12 +192,17 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ## 更新日志
 
 
+V1.0.9.Q
+
+ * 依赖方式改为  api 'com.cysion:ImagePicker:1.0.9.Q'
+ * 适配Android Q,完全以Uri的方式获得图片，废弃文件路径;
+ * 增加原图选项；
+
 
 V1.0.8
 
  * 依赖方式改为  api 'com.cysion:ImagePicker:1.0.8'
  * 修复没有图片时不显示相机icon的bug;
-
 
 
 V1.0.7
