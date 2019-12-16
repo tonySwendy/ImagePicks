@@ -1,13 +1,7 @@
 # ImagePicker
 Android自定义相册，仿微信UI，实现了拍照、图片选择（单选/多选）、裁剪等功能。
 
-## 新版本支持AndroidX(dev分支是非androidx版本)
-
-## 新特性版本适配了Android Q(feature分支,1.0.9.Q)
-
-## 原项目作者自2017.9就跑了，留下一些bug和待完善的一点功能，本项目fork过来继续，底部有版本更新说明
-
-## 新版依赖方式有些变化，并不影响代码中的导入关系
+## 支持AndroidX(master分支),支持AndroidQ(feature分支),老版本见dev分支。
 
  对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
@@ -15,15 +9,15 @@ Android自定义相册，仿微信UI，实现了拍照、图片选择（单选/�
 
 //老版本，非androidx，targetsdk<29:
 
-api 'com.cysion:ImagePicker:1.0.8'
+api 'com.cysion:ImagePicker:1.2.0'
 
-//若使用androidx，则需要这样添加依赖：
-api 'com.cysion:ImagePicker:1.0.8.x'
+//若使用androidx，target sdk <29，则需要这样添加依赖：
+
+api 'com.cysion:ImagePicker:1.2.0.x'
 
 //若targetsdk>=29 ,则需要这样添加依赖：
-api 'com.cysion:ImagePicker:1.0.9.Q'
-
-注意，Android Q 对存储框架有较大改动，最主要的是无法通过文件路径获得文件，在本库中，也完全放弃了文件路径的方式，全部是以Uri的方式提供文件访问。
+api 'com.cysion:ImagePicker:1.2.0.Q'
+注意，Android Q 对存储框架有较大改动，最主要的是无法通过文件路径获得非*应用专有文件*，在本版本库中，也完全放弃了文件路径的方式，全部是以Uri的方式提供文件访问。
 
  ```
 
@@ -35,19 +29,18 @@ api 'com.cysion:ImagePicker:1.0.9.Q'
 对于Android Studio(建议用3.0版本+)的用户，可以选择添加:
 
 ```
-api 'com.cysion:ImagePicker:1.0.8'
+//老版本至此不再维护
+api 'com.cysion:ImagePicker:1.2.0'
 
 //若使用androidx，则需要这样添加依赖：
-api 'com.cysion:ImagePicker:1.0.8.x'
+api 'com.cysion:ImagePicker:1.2.0.x'
+
 ---
+
 //若出现Failed to resolve: com.github.chrisbanes:PhotoView的问题，
 //则应在项目的build.gradle添加如下：
  maven{url"https://jitpack.io"}
----
-//若出现依赖重复问题，可以这样;
-api('com.cysion:ImagePicker:1.0.8'){
-   exclude group: 'com.android.support'
-}
+
 ```
 
 
@@ -69,6 +62,7 @@ api('com.cysion:ImagePicker:1.0.8'){
 |isSaveRectangle|裁剪后的图片是按矩形区域保存还是裁剪框的形状，例如圆形裁剪的时候，该参数给true，那么保存的图片是矩形区域，如果该参数给fale，保存的图片是圆形区域|
 |imageLoader|需要使用的图片加载器，自需要实现ImageLoader接口即可,推荐glide|
 |isOrigin|选择的图片是否采用原图，在图片选择好之后根据此参数判断，android Q版本|
+|setCropCacheFolder|设置裁剪图片的存储位置，建议设置为应用专有目录|
 
 ## 3.代码参考
 
@@ -191,6 +185,12 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 ## 更新日志
+
+
+V1.2.0
+
+ * 统一library版本；老版本1.2.0;   andx:1.2.0.x;  targetsdk >= 29：1.2.0.Q
+ * 优化配置裁剪图片存储逻辑;
 
 
 V1.0.9.Q
