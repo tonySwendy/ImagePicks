@@ -19,6 +19,8 @@ api 'com.cysion:ImagePicker:1.2.0.x'
 api 'com.cysion:ImagePicker:1.2.0.Q'
 注意，Android Q 对存储框架有较大改动，最主要的是无法通过文件路径获得非*应用专有文件*，在本版本库中，也完全放弃了文件路径的方式，全部是以Uri的方式提供文件访问。
 
+注意：若没有用到AndroidX，则不支持targetSdk>=29
+
  ```
 
 ## 演示
