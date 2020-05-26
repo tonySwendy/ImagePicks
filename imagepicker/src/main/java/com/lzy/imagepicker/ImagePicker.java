@@ -244,7 +244,7 @@ public class ImagePicker {
 
     public void takePicture(Activity activity, int requestCode) {
         PackageManager packageManager = activity.getPackageManager();
-        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
             InnerToaster.obj(activity).show(R.string.ip_str_no_camera);
             return;
         }
