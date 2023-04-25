@@ -2,14 +2,18 @@ package com.lzy.imagepicker.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lzy.imagepicker.DataHolder;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -202,6 +207,8 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         }
     }
 
+     AlertDialog dialog ;
+
     private void createPopupFolderList() {
         mFolderPopupWindow = new FolderPopUpWindow(this, mImageFolderAdapter);
         mFolderPopupWindow.setOnItemClickListener(new FolderPopUpWindow.OnItemClickListener() {
@@ -221,21 +228,52 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     }
 
     @Override
-    public void onImagesLoaded(List<ImageFolder> imageFolders) {
-        this.mImageFolders = imageFolders;
-        imagePicker.setImageFolders(imageFolders);
-        if (imageFolders.size() == 0) {
-            mRecyclerAdapter.refreshData(null);
-        } else {
-            mRecyclerAdapter.refreshData(imageFolders.get(0).images);
-        }
-        mRecyclerAdapter.setOnImageItemClickListener(this);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        if (mRecyclerView.getItemDecorationCount() < 1) {
-            mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 2), false));
-        }
-        mRecyclerView.setAdapter(mRecyclerAdapter);
-        mImageFolderAdapter.refreshData(imageFolders);
+    public void onImagesStart(List<ImageFolder> imageFolders) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ImageGridActivity.this);
+        builder.setMessage("Loading..."); // 设置对话框显示的文字
+
+// 创建一个 ProgressBar 对象，并设置样式
+        ProgressBar progressBar = new ProgressBar(ImageGridActivity.this, null, android.R.attr.progressBarStyleLarge);
+
+// 创建一个 LinearLayout 对象，并将 ProgressBar 添加到其中
+        LinearLayout layout = new LinearLayout(ImageGridActivity.this);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setGravity(Gravity.CENTER);
+        layout.addView(progressBar, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+// 将 LinearLayout 添加到 AlertDialog 中
+        builder.setView(layout);
+
+// 创建并显示 AlertDialog
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false); // 设置对话框不可取消
+        dialog.show();
+    }
+
+    @Override
+    public void onImagesLoaded(final List<ImageFolder> imageFolders) {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+                ImageGridActivity.this.mImageFolders = imageFolders;
+                imagePicker.setImageFolders(imageFolders);
+                if (imageFolders.size() == 0) {
+                    mRecyclerAdapter.refreshData(null);
+                } else {
+                    mRecyclerAdapter.refreshData(imageFolders.get(0).images);
+                }
+                mRecyclerAdapter.setOnImageItemClickListener(ImageGridActivity.this);
+                mRecyclerView.setLayoutManager(new GridLayoutManager(ImageGridActivity.this, 3));
+                if (mRecyclerView.getItemDecorationCount() < 1) {
+                    mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(ImageGridActivity.this, 2), false));
+                }
+                mRecyclerView.setAdapter(mRecyclerAdapter);
+                mImageFolderAdapter.refreshData(imageFolders);
+            }
+        });
+
     }
 
     @Override

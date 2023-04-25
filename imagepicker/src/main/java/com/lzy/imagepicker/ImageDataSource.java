@@ -9,6 +9,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.fragment.app.FragmentActivity;
@@ -32,7 +33,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private FragmentActivity activity;
     private OnImagesLoadedListener loadedListener;
-    private ArrayList<ImageFolder> imageFolders = new ArrayList<>();
+    private List<ImageFolder> imageFolders = Collections.synchronizedList(new ArrayList<ImageFolder>());
     private int mLoadedCount = 0;
 
 
@@ -63,7 +64,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
         if (data == null || data.getCount() == 0) {
             return;
         }
@@ -72,56 +73,63 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
         }
         imageFolders.clear();
         mLoadedCount = data.getCount();
-        ArrayList<ImageItem> allImages = new ArrayList<>();
-        while (data.moveToNext()) {
-            String imageName = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
-            String imagePath = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
+        loadedListener.onImagesStart(null);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<ImageItem> allImages = new ArrayList<>();
+                while (data.moveToNext()) {
+                    String imageName = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
+                    String imagePath = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
 
-            File file = new File(imagePath);
-            if (!file.exists() || file.length() <= 0) {
-                continue;
+                    File file = new File(imagePath);
+                    if (!file.exists() || file.length() <= 0) {
+                        continue;
+                    }
+
+                    long imageSize = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
+                    int imageWidth = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[3]));
+                    int imageHeight = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]));
+                    String imageMimeType = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[5]));
+                    long imageAddTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[6]));
+                    ImageItem imageItem = new ImageItem();
+                    imageItem.name = imageName;
+                    imageItem.path = imagePath;
+                    imageItem.size = imageSize;
+                    imageItem.width = imageWidth;
+                    imageItem.height = imageHeight;
+                    imageItem.mimeType = imageMimeType;
+                    imageItem.addTime = imageAddTime;
+                    allImages.add(imageItem);
+                    File imageFile = new File(imagePath);
+                    File imageParentFile = imageFile.getParentFile();
+                    ImageFolder imageFolder = new ImageFolder();
+                    imageFolder.name = imageParentFile.getName();
+                    imageFolder.path = imageParentFile.getAbsolutePath();
+
+                    if (!imageFolders.contains(imageFolder)) {
+                        ArrayList<ImageItem> images = new ArrayList<>();
+                        images.add(imageItem);
+                        imageFolder.cover = imageItem;
+                        imageFolder.images = images;
+                        imageFolders.add(imageFolder);
+                    } else {
+                        imageFolders.get(imageFolders.indexOf(imageFolder)).images.add(imageItem);
+                    }
+                }
+                if (data.getCount() > 0 && allImages.size() > 0) {
+                    ImageFolder allImagesFolder = new ImageFolder();
+                    allImagesFolder.name = activity.getResources().getString(R.string.ip_all_images);
+                    allImagesFolder.path = "/";
+                    allImagesFolder.cover = allImages.get(0);
+                    allImagesFolder.images = allImages;
+                    imageFolders.add(0, allImagesFolder);
+                }
+                ImagePicker.getInstance().setImageFolders(imageFolders);
+                loadedListener.onImagesLoaded(imageFolders);
             }
+        },"nhj").start();
 
-            long imageSize = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
-            int imageWidth = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[3]));
-            int imageHeight = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]));
-            String imageMimeType = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[5]));
-            long imageAddTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[6]));
-            ImageItem imageItem = new ImageItem();
-            imageItem.name = imageName;
-            imageItem.path = imagePath;
-            imageItem.size = imageSize;
-            imageItem.width = imageWidth;
-            imageItem.height = imageHeight;
-            imageItem.mimeType = imageMimeType;
-            imageItem.addTime = imageAddTime;
-            allImages.add(imageItem);
-            File imageFile = new File(imagePath);
-            File imageParentFile = imageFile.getParentFile();
-            ImageFolder imageFolder = new ImageFolder();
-            imageFolder.name = imageParentFile.getName();
-            imageFolder.path = imageParentFile.getAbsolutePath();
-
-            if (!imageFolders.contains(imageFolder)) {
-                ArrayList<ImageItem> images = new ArrayList<>();
-                images.add(imageItem);
-                imageFolder.cover = imageItem;
-                imageFolder.images = images;
-                imageFolders.add(imageFolder);
-            } else {
-                imageFolders.get(imageFolders.indexOf(imageFolder)).images.add(imageItem);
-            }
-        }
-        if (data.getCount() > 0 && allImages.size() > 0) {
-            ImageFolder allImagesFolder = new ImageFolder();
-            allImagesFolder.name = activity.getResources().getString(R.string.ip_all_images);
-            allImagesFolder.path = "/";
-            allImagesFolder.cover = allImages.get(0);
-            allImagesFolder.images = allImages;
-            imageFolders.add(0, allImagesFolder);
-        }
-        ImagePicker.getInstance().setImageFolders(imageFolders);
-        loadedListener.onImagesLoaded(imageFolders);
     }
 
     @Override
@@ -130,6 +138,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     public interface OnImagesLoadedListener {
+        void onImagesStart(List<ImageFolder> imageFolders);
         void onImagesLoaded(List<ImageFolder> imageFolders);
     }
-}
+    }
