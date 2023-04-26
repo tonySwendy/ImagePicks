@@ -229,7 +229,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
     @Override
     public void onImagesStart(List<ImageFolder> imageFolders) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ImageGridActivity.this);
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(ImageGridActivity.this);
         builder.setMessage("Loading..."); // 设置对话框显示的文字
 
 // 创建一个 ProgressBar 对象，并设置样式
@@ -248,7 +248,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 // 创建并显示 AlertDialog
         final AlertDialog dialog = builder.create();
         dialog.setCancelable(false); // 设置对话框不可取消
-        dialog.show();
+        dialog.show();*/
     }
 
     @Override
@@ -256,7 +256,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                dialog.dismiss();
+//                dialog.dismiss();
                 ImageGridActivity.this.mImageFolders = imageFolders;
                 imagePicker.setImageFolders(imageFolders);
                 if (imageFolders.size() == 0) {

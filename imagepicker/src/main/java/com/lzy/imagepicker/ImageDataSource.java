@@ -3,6 +3,7 @@ package com.lzy.imagepicker;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.lzy.imagepicker.bean.ImageFolder;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -127,6 +128,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
                 }
                 ImagePicker.getInstance().setImageFolders(imageFolders);
                 loadedListener.onImagesLoaded(imageFolders);
+                Log.i("nhj","--------"+Thread.currentThread().getName());
             }
         },"nhj").start();
 
