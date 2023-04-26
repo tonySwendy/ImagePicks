@@ -16,7 +16,7 @@ import org.xutils.x;
  * 版    本：1.0
  * 创建日期：2016/4/13
  * 描    述：我的Github地址  https://github.com/jeasonlzy0216
- * 修订历史：
+ * 修订历史：//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
  * ================================================
  */
 public class GApp extends Application {
